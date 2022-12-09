@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get '/domains/:id', to: "domains#dns"
+  get '/domains/', to: redirect("/")
   get '/domains/:id/dns', to: redirect("/domains/%{id}")
   get '/domains/:id/email', to: "domains#email"
   get '/domains/:id/links', to: "domains#links"

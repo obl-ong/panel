@@ -1,3 +1,28 @@
 
-<h1><%= @domain.host %>.obl.ong DNS pane</h1>
-<p>Find me in app/views/domains/dns.html.erb</p>
+<h1><%= @domain.host %>.obl.ong</h1>
+
+<h2> Records </h2>
+
+<table>
+  <tr>
+    <th>Type </th>
+    <th>Name</th>
+    <th>Value</th>
+    <th>TTL</th>
+  </tr>
+ <% @records.each do |record| %>
+  <tr>
+    <td><%= record.type %></td>
+    <td><%= record.name.blank? ? "@" : record.name %></td>
+    <td><%= record.content %></td>
+    <td><%= record.ttl %></td>
+  </tr>
+  <% end %>
+</table>
+
+<style>
+td {
+  border: black solid 2px;
+  padding: 0.5rem;
+}
+</style>
