@@ -10,15 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_08_161653) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_09_075212) do
   create_table "domains", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "host"
+    t.integer "users_id"
+    t.index ["users_id"], name: "index_domains_on_users_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
   end
 
+  add_foreign_key "domains", "users", column: "users_id"
 end
