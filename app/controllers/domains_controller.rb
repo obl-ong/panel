@@ -45,4 +45,15 @@ class DomainsController < ApplicationController
       render json: @domain.errors, status: 418
     end
   end
+  
+  def add_record
+    @domain = Domain.find_by(host: params[:id])
+    
+    if @domain.add_record(params["name"], params["type"], params["content"], ttl: params["ttl"], priority: params["priority"])
+      redirect_to action: "dns", id: params[:id]
+    else
+      render json: @domain.errors, status: 418
+    end
+    
+  end
 end

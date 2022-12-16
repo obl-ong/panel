@@ -20,7 +20,7 @@ class Domain < ApplicationRecord
   end
 
   def add_record(name, type, content, ttl: 300, priority: 0)
-    client.zones.create_zone_record(Rails.application.credentials.dnsimple.account_id, host + "." + ENV["DOMAIN"], name: name, type: type, content: content, ttl: ttl, priority: priority)
+    client.zones.create_zone_record(Rails.application.credentials.dnsimple.account_id, host + "." + ENV["DOMAIN"], name: name, type: type, content: content, ttl: ttl.blank? ? 300 : ttl, priority: priority.blank? ? 0 : priority)
   end
 
   def destroy_record(id)

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/domains/:id/links', to: "domains#links"
   get '/domains/:id/settings', to: "domains#settings"
   get '/domains/:id/destroy', to: "domains#destroy"
+  get '/domains/:id/addRecord', to: "domains#add_record"
   get 'users/auth'
   get 'users/login'
   get 'users/logout'
