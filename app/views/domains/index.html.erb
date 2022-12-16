@@ -1,5 +1,5 @@
 <h1>All Domains</h1>
 
 <% @domains.each do |domain| %>
-    <a href="/domains/<%= domain.host %>"><li> <%= domain.host + "." + ENV["DOMAIN"] %> </li></a>
+    <a href="/domains/<%= domain.host %>"><li><%= domain.host + "." + ENV["DOMAIN"] %> </li></a>
 <% end %>

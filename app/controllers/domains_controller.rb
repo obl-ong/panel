@@ -12,6 +12,14 @@ class DomainsController < ApplicationController
     params["id"] + "." + ENV["DOMAIN"]).data
   end
 
+  def destroy
+    @domain = Domain.find_by(host: params["id"])
+    if @domain.destroy
+    redirect_to root_url
+    else
+    render json: @domain.errors, status: 503
+  end
+
   def email
     @domain = Domain.find_by(host: params["id"])
   end
@@ -25,6 +33,11 @@ class DomainsController < ApplicationController
   end
 
   def new
+    @domain = Domain.new(host: params[:host], users_id: session[:current_user_id])
+    if @domain.save
+      redirect_to action: "dns", id: params[:host]
+    else
+      render json: @domain.errors, status: 418
+    end
   end
-
 end
