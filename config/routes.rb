@@ -6,8 +6,11 @@ Rails.application.routes.draw do
   get '/domains/:id/email', to: "domains#email"
   get '/domains/:id/links', to: "domains#links"
   get '/domains/:id/settings', to: "domains#settings"
+  get '/domains/:id/destroy', to: "domains#destroy"
   get 'users/auth'
   get 'users/login'
+  get 'users/logout'
+  get 'users/new'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

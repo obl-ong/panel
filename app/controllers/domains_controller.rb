@@ -2,7 +2,11 @@ class DomainsController < ApplicationController
   helper DnsimpleHelper
 
   def index
-   @domains = Domain.all
+    if !current_user
+      redirect_to controller: "users", action: "auth"
+    else
+      @domains = Domain.where(users_id: current_user)
+    end
   end
 
   def dns
@@ -15,9 +19,10 @@ class DomainsController < ApplicationController
   def destroy
     @domain = Domain.find_by(host: params["id"])
     if @domain.destroy
-    redirect_to root_url
+      redirect_to root_url
     else
-    render json: @domain.errors, status: 503
+      render json: @domain.errors, status: 418
+    end
   end
 
   def email
@@ -33,7 +38,7 @@ class DomainsController < ApplicationController
   end
 
   def new
-    @domain = Domain.new(host: params[:host], users_id: session[:current_user_id])
+    @domain = Domain.new(host: params[:host], users_id: current_user)
     if @domain.save
       redirect_to action: "dns", id: params[:host]
     else
