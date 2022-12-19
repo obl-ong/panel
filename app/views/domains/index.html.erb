@@ -1,4 +1,14 @@
+<form action="/users/logout" method="GET">
+  <input type="submit" value="Logout">
+</form>
 <h1>All Domains</h1>
+
+<form action="/domains/new" method="POST">
+<label for="host">Host: </label>
+<input type="text" name="host" required>
+<input type="submit" value="New domain">
+</form>
+<br>
 
 <% @domains.each do |domain| %>
     <a href="/domains/<%= domain.host %>"><li><%= domain.host + "." + ENV["DOMAIN"] %> </li></a>

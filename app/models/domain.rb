@@ -23,8 +23,8 @@ class Domain < ApplicationRecord
     client.zones.create_zone_record(Rails.application.credentials.dnsimple.account_id, host + "." + ENV["DOMAIN"], name: name, type: type, content: content, ttl: ttl.blank? ? 300 : ttl, priority: priority.blank? ? 0 : priority)
   end
 
-  def destroy_record(id)
-    client.zones.delete_zone_record(Rails.application.credentials.dnsimple.account_id, host + "." + ENV["DOMAIN"], id)
+  def destroy_record(recordId)
+    client.zones.delete_zone_record(Rails.application.credentials.dnsimple.account_id, host + "." + ENV["DOMAIN"], recordId)
   end
 
   def list_records

@@ -1,8 +1,30 @@
 
 <h1><%= @domain.host + "." + ENV["DOMAIN"] %></h1>
+<form method="GET" action="<%= "/domains/" + params[:id] + "/destroy" %>">
+<input type="submit" value="Destroy">
+</form>
 
 <h2> Records </h2>
 
+<h3>Add record </h3>
+<form method="POST" action="<%= "/domains/" + params[:id] + "/addRecord" %>">
+<label for="name">Name: </label>
+<input type="text" name="name">
+<label for="type">Type: </label>
+<select name="type">
+	<option value="A">A</option>
+	<option value="URL">URL</option>
+	<option value="CNAME">CNAME</option>
+</select>
+<label for="content">Content: </label>
+<input type="text" name="content">
+<label for="ttl">TTL: </label>
+<input type="number" name="ttl">
+<label for="priority">Priority: </label>
+<input type="number" name="priority">
+<input type="submit" value="Create record">
+</form>
+<br>
 <table>
   <tr>
     <th>Type </th>
@@ -17,6 +39,12 @@
         <td><%= record.name.blank? ? "@" : record.name %></td>
         <td><%= record.content %></td>
         <td><%= record.ttl %></td>
+        <td>
+          <form method="POST" action="<%= "/domains/" + params[:id] + "/destroyRecord" %>">
+					  <input type="hidden" value="<%= record.id %>" name="recordId">
+						<input type="submit" value="Destroy record">
+					</form>
+				</td>
       </tr>
     <% end %>
   <% end %>

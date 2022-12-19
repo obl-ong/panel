@@ -38,7 +38,7 @@ class DomainsController < ApplicationController
   end
 
   def new
-    @domain = Domain.new(host: params[:host], users_id: current_user)
+    @domain = Domain.new(host: params[:host], users_id: current_user.id)
     if @domain.save
       redirect_to action: "dns", id: params[:host]
     else
@@ -56,4 +56,14 @@ class DomainsController < ApplicationController
     end
     
   end
+
+  def destroy_record
+    @domain = Domain.find_by(host: params[:id])
+    if @domain.destroy_record(params["recordId"])
+      redirect_to action: "dns", id: params[:id]
+    else
+      render_json @domain.errors, status: 418
+    end
+  end
+
 end

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get '/domains/new', to: "domains#new"
+  post '/domains/new', to: "domains#new"
   get '/domains/:id', to: "domains#dns"
   get '/domains/', to: redirect("/")
   get '/domains/:id/dns', to: redirect("/domains/%{id}")
@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   get '/domains/:id/links', to: "domains#links"
   get '/domains/:id/settings', to: "domains#settings"
   get '/domains/:id/destroy', to: "domains#destroy"
-  get '/domains/:id/addRecord', to: "domains#add_record"
+  post '/domains/:id/addRecord', to: "domains#add_record"
+  post '/domains/:id/destroyRecord', to: "domains#destroy_record"
   get 'users/auth'
   get 'users/login'
   get 'users/logout'
