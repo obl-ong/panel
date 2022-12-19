@@ -6,6 +6,8 @@ class UsersController < ApplicationController
     if user = User.find_by(id: params[:id])
       session[:current_user_id] = user.id
       redirect_to root_url
+    else
+      render json: "User not found", status: 418
     end
   end
 
