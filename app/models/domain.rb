@@ -19,6 +19,12 @@ class Domain < ApplicationRecord
     for record in client.zones.all_zone_records(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], filter: { name: host }).data
       client.zones.delete_zone_record(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], record.id)
     end
+    
+    for record in client.domains.all_email_forwards(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"]).data
+      if record.from == host + "@" + ENV["DOMAIN"]
+        client.domains.delete_email_forward(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], record.id)
+      end
+    end
   end
 
   def add_record(name, type, content, ttl: 300, priority: 0)
