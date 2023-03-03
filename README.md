@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## Development
+
+For hot reload functionality, make sure to have Redis installed.
