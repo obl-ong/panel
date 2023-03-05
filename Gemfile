@@ -52,7 +52,12 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'rubocop'
+  gem 'sorbet'
+  gem 'tapioca', require: false
+  gem 'solargraph'
 end
+
+gem 'sorbet-runtime'
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
@@ -79,3 +84,7 @@ gem "jsbundling-rails", "~> 1.0"
 gem "dnsimple", "~> 8.1"
 
 gem "tailwindcss-rails", "~> 2.0"
+
+gem "dalli", "~> 3.2"
+
+gem "rails_nestable_layouts", path: "gems/rails_nestable_layouts"

@@ -1,0 +1,3 @@
+[submodule "gems/rails_nestable_layouts"]
+	path = gems/rails_nestable_layouts
+	url = https://github.com/Merlin04/rails_nestable_layouts

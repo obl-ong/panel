@@ -1,14 +1,18 @@
 @tailwind base;
-/*
+@tailwind components;
+@tailwind utilities;
 
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+
+/* @layer components {
+  .testing {
+    @apply bg-red-200;
   }
-}
+  .btn-primary {
+    @apply py-2 px-4;
+  }
+} */
 
-*/
-
+/* Fonts */
 @layer base {
     /**
      * CSS for Telegraf
@@ -167,17 +171,18 @@
         U+2018-201A, U+201C-201E, U+2022, U+2026, U+2030, U+2039-203A, U+2044,
         U+20AC, U+2122, U+2212, U+2248, U+2260;
     }
-
-    button {
-        cursor: pointer;
-    }
-
-
-
-    html {
-        @apply font-body bg-background text-text;
-    }
 }
 
-@tailwind components;
-@tailwind utilities;
+@layer base {
+  button {
+      cursor: pointer;
+  }
+
+  html {
+      @apply font-body bg-background text-text;
+  }
+
+  body {
+      @apply min-h-screen;
+  }
+}
