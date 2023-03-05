@@ -10,10 +10,10 @@ module.exports = {
   ],
   theme: {
     screens: {
-      "0": "40em",
-      "1": "52em",
-      "2": "64em",
-      "3": "100em"
+      "sm": "40em",
+      "md": "52em",
+      "lg": "64em",
+      "xl": "100em"
     },
     fontFamily: {
       body: "Telegraf, sans-serif",
@@ -24,20 +24,20 @@ module.exports = {
       "0": 16,
       "1": 20,
       "2": 24,
-      "3": 32,
-      "4": 48,
-      "5": 64,
-      "6": 72
+      "3": [32, "100%"],
+      "4": [48, "100%"],
+      "5": [64, "100%"],
+      "6": [72, "100%"]
     },
     fontWeight: {
       body: 400,
-      heading: 400,
+      heading: 700,
       bold: 500
     },
-    lineHeight: {
+    /*lineHeight: {
       body: 1.5,
-      heading: 1.125
-    },
+      heading: 1
+    },*/
     letterSpacing: {
       body: "normal"
     },

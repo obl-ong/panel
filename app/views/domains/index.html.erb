@@ -1,3 +1,7 @@
+<div class="flex flex-col items-center">
+
+<h1 class="text-blue text-center text-4 lg:text-5 xl:text-6 font-heading">Manage your domains</h1>
+
 <form action="/users/logout" method="GET">
   <input type="submit" value="Logout">
 </form>
@@ -13,3 +17,5 @@
 <% @domains.each do |domain| %>
     <a href="/domains/<%= domain.host %>"><li><%= domain.host + "." + ENV["DOMAIN"] %> </li></a>
 <% end %>
+
+</div>
