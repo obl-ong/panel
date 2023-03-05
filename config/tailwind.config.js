@@ -69,68 +69,67 @@ module.exports = {
     plugin(function({ addComponents, theme }) {
       const makeTransition = (...properties) => properties.map(p => `${p} 0.2s ease-in-out`).join(", ");
       const defaultTransition = makeTransition("box-shadow", "border-color", "background-color", "color", "outline");
-
-      /** @type CSSStyleDeclaration */
-      const buttonLgBase = {
-        paddingTop: "1rem",
-        paddingBottom: "1rem",
-        paddingLeft: "1.375rem",
-        paddingRight: "1.375rem",
-        borderRadius: "100px", // arbitrarily large value
-        fontWeight: theme("fontWeight.body"),
-        fontSize: "2.625rem",
-        letterSpacing: "-0.03em",
-        lineHeight: "100%",
-        fontFamily: theme("fontFamily.body")
-      };
-
       const focusStyle = (color) => ({
         outline: "none",
         borderColor: color,
         boxShadow: "0 0 0 3px rgba(65, 234, 212, 0.5)" // thanks copilot
-      })
-      
-      const buttonMdFactory = (text, bg) => {
+      });
+
+      /** @type {(...args: (CSSStyleDeclaration | (p: any) => CSSStyleDeclaration)[]) => (p: any) => CSSStyleDeclaration} */
+      const extend = (...a) => p => a.reduce((acc, s) => ({ ...acc, ...(typeof s === "object" ? s : s(p)) }), {});
+
+
+      const componentBase = ({ bg }) => {
         /** @type CSSStyleDeclaration */
         return {
-          border: "1px solid",
-          borderColor: theme("colors.black"),
-          color: text,
-          backgroundColor: bg,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "0.5rem 0.625rem",
-          borderRadius: "100px",
-          fontSize: "1.5rem",
-          lineHeight: "100%",
-          "&:focus": focusStyle(bg),
           transition: defaultTransition,
-          fontFamily: theme("fontFamily.body")
-        };
-      };
-      
-      const badgeFactory = (text, bg) => {
-        /** @type CSSStyleDeclaration */
-        return {
-          padding: "0.5rem 0.6875rem",
-          borderRadius: "100px",
-          // display: "flex",
-          // flexDirection: "row",
-          // alignItems: "flex-start",
-          backgroundColor: bg,
-          color: text,
-          fontSize: "1.25rem",
+          fontFamily: theme("fontFamily.body"),
           lineHeight: "100%",
-          fontWeight: 500,
-          fontFamily: "body",
-          textTransform: "uppercase"
+          "&:focus": focusStyle(bg)
         };
       };
 
-      /** @type CSSStyleDeclaration */
-      const input = {
+      const buttonBase = extend(componentBase, ({ bg, text }) => ({
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        boxShadow: "0px 3.61px 3.61px rgba(0, 0, 0, 0.25)",
+        borderRadius: "100px",
+        backgroundColor: bg,
+        color: text
+      }));
+
+      const buttons = {
+        "md": extend(buttonBase, {
+          padding: "0.625rem 0.90625rem",
+          fontWeight: theme("fontWeight.body"),
+          fontSize: "1.75rem"  
+        }),
+        "sm": extend(buttonBase, {
+          padding: "0.5rem 0.75rem",
+          fontWeight: "700",
+          fontSize: "1.25rem"
+        }),
+        "lg": extend(buttonBase, {
+          padding: "1rem 1.375rem",
+          fontWeight: theme("fontWeight.body"),
+          fontSize: "2.625rem"
+        })
+      };
+      
+      const chip = extend(componentBase, (text, bg) => ({
+        padding: "0.5rem 0.6875rem",
+        borderRadius: "100px",
+        backgroundColor: bg,
+        color: text,
+        fontSize: "1.25rem",
+        lineHeight: "100%",
+        fontWeight: 500,
+        fontFamily: "body",
+        textTransform: "uppercase"
+      }));
+
+      const input = extend(componentBase({ bg: theme("colors.blue") }), {
         backgroundColor: theme("colors.text"),
         color: theme("colors.black"),
         border: "1px solid",
@@ -140,15 +139,11 @@ module.exports = {
         display: "flex",
         alignItems: "flex-start",
         fontSize: "1rem",
-        lineHeight: "100%",
         // placeholder color
         "&::placeholder": {
             color: "#686868"
-        },
-        transition: defaultTransition,
-        "&:focus": focusStyle(theme("colors.blue")),
-        fontFamily: theme("fontFamily.body")
-      }
+        }
+      });
 
       /** @type CSSStyleDeclaration */
       const label = {
@@ -158,23 +153,19 @@ module.exports = {
         marginBottom: "0.25rem"
       };
 
+      const colors = {
+        "white": { bg: theme("colors.white"), text: theme("colors.black") },
+        "blue": { bg: theme("colors.blue"), text: theme("colors.black") },
+        "pink": { bg: theme("colors.pink"), text: theme("colors.white") },
+        "yellow": { bg: theme("colors.yellow"), text: theme("colors.black") }
+      };
+
       addComponents({
-        ".btn-lg-primary": {
-          ...buttonLgBase,
-          color: theme("colors.black"),
-          backgroundColor: theme("colors.white")
-        },
-        ".btn-md-white": buttonMdFactory(theme("colors.black"), theme("colors.white")),
-        ".btn-md-blue": buttonMdFactory(theme("colors.black"), theme("colors.blue")),
-        ".btn-md-pink": buttonMdFactory(theme("colors.white"), theme("colors.pink")),
-        ".btn-md-yellow": buttonMdFactory(theme("colors.black"), theme("colors.yellow")),
-        ".badge-white": badgeFactory(theme("colors.black"), theme("colors.white")),
-        ".badge-blue": badgeFactory(theme("colors.black"), theme("colors.blue")),
-        ".badge-pink": badgeFactory(theme("colors.white"), theme("colors.pink")),
-        ".badge-yellow": badgeFactory(theme("colors.black"), theme("colors.yellow")),
-        ".input": input,
+        ...Object.fromEntries(Object.entries(buttons).map(([size, s]) => Object.entries(colors).map(([color, c]) => [`.btn-${size}-${color}`, s(c)])).flat()),
+        ...Object.fromEntries(Object.entries(colors).map(([color, c]) => [`.chip-${color}`, chip(c)])),
+        ".input": input(),
         ".label": label
-      })
+      });
     })
   ]
 };
