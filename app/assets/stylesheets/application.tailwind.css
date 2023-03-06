@@ -186,3 +186,18 @@
       @apply min-h-screen;
   }
 }
+
+@layer components {
+    .side-menu > * {
+        @apply flex flex-row gap-3 items-center;
+    }
+    .side-menu > * > span {
+        @apply font-heading text-3;
+    }
+    .side-menu > * > svg {
+        @apply fill-pink w-10 h-10 xl:w-12 xl:h-12;
+    }
+    .side-menu > * > svg.active {
+        @apply fill-yellow;
+    }
+}

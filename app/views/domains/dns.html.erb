@@ -1,28 +1,31 @@
+<h2 class="font-body text-yellow text-3 leading-loose">Records</h2>
 
-<h1><%= @domain.host + "." + ENV["DOMAIN"] %></h1>
-<form method="GET" action="<%= "/domains/" + params[:id] + "/destroy" %>">
-<input type="submit" value="Destroy">
-</form>
-
-<h2> Records </h2>
-
-<h3>Add record </h3>
-<form method="POST" action="<%= "/domains/" + params[:id] + "/addRecord" %>">
-<label for="name">Name: </label>
-<input type="text" name="name">
-<label for="type">Type: </label>
-<select name="type">
+<form class="flex flex-wrap flex-row gap-6 items-end" method="POST" action="<%= "/domains/" + params[:id] + "/addRecord" %>">
+<div>
+<label class="label" for="type">Type: </label>
+<select name="type" class="input h-[41.2px]">
 	<option value="A">A</option>
 	<option value="URL">URL</option>
 	<option value="CNAME">CNAME</option>
 </select>
-<label for="content">Content: </label>
-<input type="text" name="content">
-<label for="ttl">TTL: </label>
-<input type="number" name="ttl">
-<label for="priority">Priority: </label>
-<input type="number" name="priority">
-<input type="submit" value="Create record">
+</div>
+<div>
+<label class="label" for="name">Name: </label>
+<input class="input w-56" type="text" name="name">
+</div>
+<div>
+<label class="label" for="content">Content: </label>
+<input class="input w-56" type="text" name="content">
+</div>
+<div>
+<label class="label" for="ttl">TTL: </label>
+<input class="input w-24" type="number" name="ttl">
+</div>
+<div>
+<label class="label" for="priority">Priority: </label>
+<input class="input w-24" type="number" name="priority">
+</div>
+<input class="btn-sm-pink" type="submit" value="Create record">
 </form>
 <br>
 <table>
@@ -56,3 +59,7 @@ td {
   padding: 0.5rem;
 }
 </style>
+
+<form method="GET" action="<%= "/domains/" + params[:id] + "/destroy" %>">
+<input type="submit" value="Destroy">
+</form>

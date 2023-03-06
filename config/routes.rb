@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   post '/domains/new', to: "domains#new"
   get '/domains/:id', to: "domains#dns"
   get '/domains/', to: redirect("/")
+  get '/request', to: "domains#request_domain"
   get '/domains/:id/dns', to: redirect("/domains/%{id}")
   get '/domains/:id/email', to: "domains#email"
   get '/domains/:id/links', to: "domains#links"
