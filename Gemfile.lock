@@ -102,6 +102,10 @@ GEM
     diff-lcs (1.5.0)
     dnsimple (8.1.0)
       httparty
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     e2mmap (0.1.0)
     erubi (1.12.0)
     ffi (1.15.5)
@@ -327,6 +331,7 @@ DEPENDENCIES
   dalli (~> 3.2)
   debug
   dnsimple (~> 8.1)
+  dotenv-rails
   importmap-rails
   jbuilder
   jsbundling-rails (~> 1.0)

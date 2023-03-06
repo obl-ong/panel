@@ -54,7 +54,8 @@ module.exports = {
       "blue": "#41EAD4",
       "pink": "#FF206E",
       "yellow": "#FBFF12",
-      "black": "#0C0F0A"
+      "black": "#0C0F0A",
+      "green": "#56FF53"
     },
     container: {
       center: true,
@@ -117,7 +118,7 @@ module.exports = {
         })
       };
       
-      const chip = extend(componentBase, (text, bg) => ({
+      const chip = extend(componentBase, ({ text, bg }) => ({
         padding: "0.5rem 0.6875rem",
         borderRadius: "100px",
         backgroundColor: bg,
@@ -125,7 +126,7 @@ module.exports = {
         fontSize: "1.25rem",
         lineHeight: "100%",
         fontWeight: 500,
-        fontFamily: "body",
+        fontFamily: theme("fontFamily.body"),
         textTransform: "uppercase"
       }));
 

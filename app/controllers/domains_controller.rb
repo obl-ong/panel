@@ -1,6 +1,7 @@
 class DomainsController < ApplicationController
   helper DnsimpleHelper
-  nested_layouts 'layouts/admin', 'layouts/application'
+  nested_layouts 'layouts/admin', 'layouts/domain', 'layouts/application', except: [:index]
+  nested_layouts 'layouts/admin', 'layouts/application', only: [:index]
 
   def index
     if !current_user

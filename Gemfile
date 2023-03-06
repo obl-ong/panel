@@ -88,3 +88,5 @@ gem "tailwindcss-rails", "~> 2.0"
 gem "dalli", "~> 3.2"
 
 gem "rails_nestable_layouts", path: "gems/rails_nestable_layouts"
+
+gem 'dotenv-rails', groups: [:development, :test]
