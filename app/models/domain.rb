@@ -42,4 +42,8 @@ class Domain < ApplicationRecord
   def update_record(id, **args)
     client.zones.update_zone_record(Rails.application.credentials.dnsimple.account_id, host + "." + ENV["DOMAIN"], id, **args)
   end
+
+  def to_param
+    host
+  end
 end

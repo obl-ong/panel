@@ -70,6 +70,7 @@ group :development do
   # gem "spring"
 
   gem "rails_hotreload"
+  gem "erb-formatter"
 end
 
 group :test do

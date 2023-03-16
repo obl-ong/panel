@@ -200,4 +200,47 @@
     .side-menu > * > svg.active {
         @apply fill-yellow;
     }
+
+    .table {
+        @apply w-full;
+    }
+    .table > thead {
+        @apply text-yellow font-heading text-1 md:text-2 xl:text-3 text-left;
+    }
+    .table > tbody {
+        @apply bg-[#444343];
+    }
+    .table td {
+        @apply border-collapse border-y text-1 md:text-2 px-6 py-3 md:py-4;
+        border-color: rgba(245, 245, 245, 0.5);
+    }
+    .table th {
+        @apply px-6 py-1;
+    }
+
+    .admin-h2 {
+        @apply font-body text-yellow text-3 leading-loose;
+    }
+
+    .blink {
+        animation: blink 0.5s ease-in-out infinite;
+      }
+      
+      @keyframes blink {
+        0% {
+          /* opacity: 1; */
+          background-color: blue;
+          transform: scale(1);
+        }
+        50% {
+          /* opacity: 0; */
+          background-color: magenta;
+          transform: scale(1.2);
+        }
+        100% {
+          /* opacity: 1; */
+          background-color: blue;
+          transform: scale(1);
+        }
+      }
 }
