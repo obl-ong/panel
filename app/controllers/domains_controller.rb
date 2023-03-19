@@ -13,11 +13,16 @@ class DomainsController < ApplicationController
 
   def dns
     @domain = Domain.find_by(host: params['host'])
+  end
+
+  def dns_frame_records
+    @domain = Domain.find_by(host: params['host'])
     # records for domain which aren't system_record
     @records = helpers.client.zones.list_zone_records(
       Rails.application.credentials.dnsimple.account_id,
       params['host'] + '.' + ENV['DOMAIN']
     ).data.select { |record| !record.system_record }
+
   end
 
   def destroy

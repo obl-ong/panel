@@ -1,4 +1,7 @@
 import { Application } from "@hotwired/stimulus"
+import "@hotwired/turbo-rails"
+
+Turbo.setProgressBarDelay(200)
 
 const application = Application.start()
 

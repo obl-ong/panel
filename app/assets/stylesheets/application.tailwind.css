@@ -244,3 +244,7 @@
         }
       }
 }
+
+.turbo-progress-bar {
+    @apply bg-pink;
+}

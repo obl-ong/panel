@@ -6,11 +6,12 @@ Rails.application.routes.draw do
     member do
       get '/', to: 'domains#dns'
       get 'dns'
+      get 'dns_frame_records'
       get 'email'
       get 'links'
       get 'settings'
-      post 'addRecord'
-      post 'destroyRecord'
+      post 'add_record'
+      post 'destroy_record'
     end
     collection do
       get '/', to: redirect("/")
