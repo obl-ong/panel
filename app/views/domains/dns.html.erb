@@ -8,7 +8,7 @@
   <div>
     <label class="label" for="type">Type
     </label>
-    <select name="type" class="input h-[41.2px]">
+    <select name="type" class="input h-[41.2px] pr-[2em]">
       <option value="A">A</option>
       <option value="URL">URL</option>
       <option value="CNAME">CNAME</option>
@@ -22,7 +22,7 @@
   <div>
     <label class="label" for="content">Value
     </label>
-    <input class="input w-56" type="text" name="content" placeholder="random.cdn.local">
+    <input class="input w-56" type="text" name="content" placeholder="100.100.100.100">
   </div>
   <div>
     <label class="label" for="ttl">TTL
@@ -40,5 +40,10 @@
 <br>
 
 <%= turbo_frame_tag "dns_records", src: dns_frame_records_domain_path(@domain) do %>
-Loading... (TODO this should be spinny)
+<div class="placeholder-box" aria-live="polite" aria-busy="true">
+  <svg class="motion-safe:animate-spin animation-fast w-8 h-8 text-yellow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+  </svg>
+</div>
 <% end %>

@@ -165,7 +165,10 @@ module.exports = {
         ...Object.fromEntries(Object.entries(buttons).map(([size, s]) => Object.entries(colors).map(([color, c]) => [`.btn-${size}-${color}`, s(c)])).flat()),
         ...Object.fromEntries(Object.entries(colors).map(([color, c]) => [`.chip-${color}`, chip(c)])),
         ".input": input(),
-        ".label": label
+        ".label": label,
+        ".animation-fast": {
+          animationDuration: "0.4s !important"
+        }
       });
     })
   ]

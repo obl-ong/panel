@@ -12,10 +12,12 @@ Rails.application.routes.draw do
       get 'settings'
       post 'add_record'
       post 'destroy_record'
+      post 'update_record'
     end
     collection do
       get '/', to: redirect("/")
       get 'request', to: 'domains#request_domain'
+      post 'new'
     end
   end
 

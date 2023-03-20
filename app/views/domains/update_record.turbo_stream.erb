@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "record-#{@record.id}" do %>
+    <%= render partial: 'dns_record', locals: { record: @record } %>
+<% end %>

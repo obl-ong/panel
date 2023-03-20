@@ -29,7 +29,7 @@
   </a>
 <% end %>
 <div class="flex flex-col shadow-md p-4 rounded-2xl bg-text text-black">
-<form action="/domains/new" method="POST">
+<form action="<%= new_domain_path %>" method="POST">
 <label for="host">Host: </label>
 <input class="input" type="text" name="host" required>
 <input class="btn-sm-pink" type="submit" value="New domain">

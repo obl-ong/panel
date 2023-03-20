@@ -222,29 +222,22 @@
         @apply font-body text-yellow text-3 leading-loose;
     }
 
-    .blink {
-        animation: blink 0.5s ease-in-out infinite;
-      }
-      
-      @keyframes blink {
-        0% {
-          /* opacity: 1; */
-          background-color: blue;
-          transform: scale(1);
-        }
-        50% {
-          /* opacity: 0; */
-          background-color: magenta;
-          transform: scale(1.2);
-        }
-        100% {
-          /* opacity: 1; */
-          background-color: blue;
-          transform: scale(1);
-        }
-      }
-}
+    .placeholder-box {
+        @apply flex flex-col items-center justify-center bg-black bg-opacity-25 rounded-lg p-8 gap-2;
+    }
 
+    .link {
+        @apply text-yellow underline;
+    }
+}
+ 
 .turbo-progress-bar {
     @apply bg-pink;
+}
+
+#dns_records > [data-empty="true"] > :last-child {
+    @apply hidden;
+}
+#dns_records > [data-empty="false"] > :first-child {
+    @apply hidden;
 }
