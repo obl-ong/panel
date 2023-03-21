@@ -200,4 +200,44 @@
     .side-menu > * > svg.active {
         @apply fill-yellow;
     }
+
+    .table {
+        @apply w-full;
+    }
+    .table > thead {
+        @apply text-yellow font-heading text-1 md:text-2 xl:text-3 text-left;
+    }
+    .table > tbody {
+        @apply bg-[#444343];
+    }
+    .table td {
+        @apply border-collapse border-y text-1 md:text-2 px-6 py-3 md:py-4;
+        border-color: rgba(245, 245, 245, 0.5);
+    }
+    .table th {
+        @apply px-6 py-1;
+    }
+
+    .admin-h2 {
+        @apply font-body text-yellow text-3 leading-loose;
+    }
+
+    .placeholder-box {
+        @apply flex flex-col items-center justify-center bg-black bg-opacity-25 rounded-lg p-8 gap-2;
+    }
+
+    .link {
+        @apply text-yellow underline;
+    }
+}
+ 
+.turbo-progress-bar {
+    @apply bg-pink;
+}
+
+#dns_records > [data-empty="true"] > :last-child {
+    @apply hidden;
+}
+#dns_records > [data-empty="false"] > :first-child {
+    @apply hidden;
 }
