@@ -2975,7 +2975,7 @@ module ActiveSupport::Configurable
   #     include ActiveSupport::Configurable
   #   end
   #
-  #   user = User.new
+  #   user = User::User.new
   #
   #   user.config.allowed_access = true
   #   user.config.level = 1
@@ -3009,16 +3009,16 @@ module ActiveSupport::Configurable::ClassMethods
   #     config_accessor :allowed_access
   #   end
   #
-  #   User.allowed_access # => nil
-  #   User.allowed_access = false
-  #   User.allowed_access # => false
+  #   User::User.allowed_access # => nil
+  #   User::User.allowed_access = false
+  #   User::User.allowed_access # => false
   #
-  #   user = User.new
+  #   user = User::User.new
   #   user.allowed_access # => false
   #   user.allowed_access = true
   #   user.allowed_access # => true
   #
-  #   User.allowed_access # => false
+  #   User::User.allowed_access # => false
   #
   # The attribute name must be a valid method name in Ruby.
   #
@@ -3036,11 +3036,11 @@ module ActiveSupport::Configurable::ClassMethods
   #     config_accessor :allowed_access, instance_reader: false, instance_writer: false
   #   end
   #
-  #   User.allowed_access = false
-  #   User.allowed_access # => false
+  #   User::User.allowed_access = false
+  #   User::User.allowed_access # => false
   #
-  #   User.new.allowed_access = true # => NoMethodError
-  #   User.new.allowed_access        # => NoMethodError
+  #   User::User.new.allowed_access = true # => NoMethodError
+  #   User::User.new.allowed_access        # => NoMethodError
   #
   # Or pass <tt>instance_accessor: false</tt>, to omit both instance methods.
   #
@@ -3049,11 +3049,11 @@ module ActiveSupport::Configurable::ClassMethods
   #     config_accessor :allowed_access, instance_accessor: false
   #   end
   #
-  #   User.allowed_access = false
-  #   User.allowed_access # => false
+  #   User::User.allowed_access = false
+  #   User::User.allowed_access # => false
   #
-  #   User.new.allowed_access = true # => NoMethodError
-  #   User.new.allowed_access        # => NoMethodError
+  #   User::User.new.allowed_access = true # => NoMethodError
+  #   User::User.new.allowed_access        # => NoMethodError
   #
   # Also you can pass <tt>default</tt> or a block to set up the attribute with a default value.
   #
@@ -3065,8 +3065,8 @@ module ActiveSupport::Configurable::ClassMethods
   #     end
   #   end
   #
-  #   User.allowed_access # => false
-  #   User.hair_colors # => [:brown, :black, :blonde, :red]
+  #   User::User.allowed_access # => false
+  #   User::User.hair_colors # => [:brown, :black, :blonde, :red]
   #
   # source://activesupport//lib/active_support/configurable.rb#109
   def config_accessor(*names, instance_reader: T.unsafe(nil), instance_writer: T.unsafe(nil), instance_accessor: T.unsafe(nil), default: T.unsafe(nil)); end
@@ -3150,7 +3150,7 @@ class ActiveSupport::ConfigurationFile::FormatError < ::StandardError; end
 #
 #     private
 #       def authenticate
-#         if authenticated_user = User.find_by(id: cookies.encrypted[:user_id])
+#         if authenticated_user = User::User.find_by(id: cookies.encrypted[:user_id])
 #           Current.user = authenticated_user
 #         else
 #           redirect_to new_session_url
@@ -4958,8 +4958,8 @@ ActiveSupport::EnvironmentInquirer::DEFAULT_ENVIRONMENTS = T.let(T.unsafe(nil), 
 # rescuing an error, a fallback can be provided. The fallback must be a callable whose result will
 # be returned when the block raises and is handled:
 #
-#   user = Rails.error.handle(fallback: -> { User.anonymous }) do
-#     User.find_by(params)
+#   user = Rails.error.handle(fallback: -> { User::User.anonymous }) do
+#     User::User.find_by(params)
 #   end
 #
 # source://activesupport//lib/active_support/error_reporter.rb#41
@@ -7395,7 +7395,7 @@ ActiveSupport::MessageEncryptor::OpenSSLCipherError = OpenSSL::Cipher::CipherErr
 #
 #   id, time = @verifier.verify(cookies[:remember_me])
 #   if Time.now < time
-#     self.current_user = User.find(id)
+#     self.current_user = User::User.find(id)
 #   end
 #
 # By default it uses Marshal to serialize the message. If you want to use
@@ -11533,7 +11533,7 @@ module ActiveSupport::Testing::TimeHelpers
   #   Time.current # => Sun, 09 Jul 2017 15:34:49 EST -05:00
   #   freeze_time do
   #     sleep(1)
-  #     User.create.created_at # => Sun, 09 Jul 2017 15:34:49 EST -05:00
+  #     User::User.create.created_at # => Sun, 09 Jul 2017 15:34:49 EST -05:00
   #   end
   #   Time.current # => Sun, 09 Jul 2017 15:34:50 EST -05:00
   #
@@ -11555,7 +11555,7 @@ module ActiveSupport::Testing::TimeHelpers
   #
   #   Time.current # => Sat, 09 Nov 2013 15:34:49 EST -05:00
   #   travel 1.day do
-  #     User.create.created_at # => Sun, 10 Nov 2013 15:34:49 EST -05:00
+  #     User::User.create.created_at # => Sun, 10 Nov 2013 15:34:49 EST -05:00
   #   end
   #   Time.current # => Sat, 09 Nov 2013 15:34:49 EST -05:00
   #
@@ -16507,9 +16507,9 @@ class Module
   #     end
   #   end
   #
-  #   User.new.first_name # => "Tomas"
-  #   User.new.date_of_birth # => NoMethodError: private method `date_of_birth' called for #<User:0x00000008221340>
-  #   User.new.age # => 2
+  #   User::User.new.first_name # => "Tomas"
+  #   User::User.new.date_of_birth # => NoMethodError: private method `date_of_birth' called for #<User:0x00000008221340>
+  #   User::User.new.age # => 2
   #
   # If the target is +nil+ and does not respond to the delegated method a
   # +Module::DelegationError+ is raised. If you wish to instead return +nil+,
@@ -16520,7 +16520,7 @@ class Module
   #     delegate :age, to: :profile
   #   end
   #
-  #   User.new.age
+  #   User::User.new.age
   #   # => Module::DelegationError: User#age delegated to profile.age, but profile is nil
   #
   # But if not having a profile yet is fine and should not be an error
@@ -16531,7 +16531,7 @@ class Module
   #     delegate :age, to: :profile, allow_nil: true
   #   end
   #
-  #   User.new.age # nil
+  #   User::User.new.age # nil
   #
   # Note that if the target is not +nil+ then the call is attempted regardless of the
   # <tt>:allow_nil</tt> option, and thus an exception is still raised if said object

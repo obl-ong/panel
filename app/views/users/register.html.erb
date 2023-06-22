@@ -1,0 +1,30 @@
+<main>
+	<h1>Register</h1>
+	<%= form_with url: "/users/create", method: :post do |form| %>
+	  <%= form.label :name, "Name" %>
+	  <%= form.text_field :name %>
+		<%= form.label :email, "Email" %>
+	  <%= form.email_field :email %>
+	  <%= form.submit "Register!" %>
+	<% end %>
+</main>
+
+<style>
+	main {
+		padding: 5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	
+	form {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	
+	input[type="submit"] {
+		background-color: red;
+		padding: 1rem;
+	}
+</style>

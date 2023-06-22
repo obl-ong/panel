@@ -7478,19 +7478,19 @@ end
 # method is especially useful when you're receiving the data from somewhere else, like an
 # HTTP request. It works like this:
 #
-#   user = User.new(name: "David", occupation: "Code Artist")
+#   user = User::User.new(name: "David", occupation: "Code Artist")
 #   user.name # => "David"
 #
 # You can also use block initialization:
 #
-#   user = User.new do |u|
+#   user = User::User.new do |u|
 #     u.name = "David"
 #     u.occupation = "Code Artist"
 #   end
 #
 # And of course you can just create a bare object and specify the attributes after the fact:
 #
-#   user = User.new
+#   user = User::User.new
 #   user.name = "David"
 #   user.occupation = "Code Artist"
 #
@@ -7580,10 +7580,10 @@ end
 # For example, an Active Record User with the <tt>name</tt> attribute has a <tt>name?</tt> method that you can call
 # to determine whether the user has a name:
 #
-#   user = User.new(name: "David")
+#   user = User::User.new(name: "David")
 #   user.name? # => true
 #
-#   anonymous = User.new(name: "")
+#   anonymous = User::User.new(name: "")
 #   anonymous.name? # => false
 #
 # Query methods will also respect any overrides of default accessors:
@@ -7648,8 +7648,8 @@ end
 #     serialize :preferences
 #   end
 #
-#   user = User.create(preferences: { "background" => "black", "display" => large })
-#   User.find(user.id).preferences # => { "background" => "black", "display" => large }
+#   user = User::User.create(preferences: { "background" => "black", "display" => large })
+#   User::User.find(user.id).preferences # => { "background" => "black", "display" => large }
 #
 # You can also specify a class option as the second parameter that'll raise an exception
 # if a serialized object is retrieved as a descendant of a class not in the hierarchy.
@@ -7658,8 +7658,8 @@ end
 #     serialize :preferences, Hash
 #   end
 #
-#   user = User.create(preferences: %w( one two three ))
-#   User.find(user.id).preferences    # raises SerializationTypeMismatch
+#   user = User::User.create(preferences: %w( one two three ))
+#   User::User.find(user.id).preferences    # raises SerializationTypeMismatch
 #
 # When you specify a class option, the default value for that attribute will be a new
 # instance of that class.
@@ -7668,7 +7668,7 @@ end
 #     serialize :preferences, OpenStruct
 #   end
 #
-#   user = User.new
+#   user = User::User.new
 #   user.preferences.theme_color = "red"
 #
 #
@@ -15782,7 +15782,7 @@ module ActiveRecord::Core
   #
   # ==== Example:
   #   # Instantiates a single new object
-  #   User.new(first_name: 'Jamie')
+  #   User::User.new(first_name: 'Jamie')
   #
   # @yield [_self]
   # @yieldparam _self [ActiveRecord::Core] the object that the method was called on
@@ -15929,7 +15929,7 @@ module ActiveRecord::Core
   # Sets the record to strict_loading mode. This will raise an error
   # if the record tries to lazily load an association.
   #
-  #   user = User.first
+  #   user = User::User.first
   #   user.strict_loading! # => true
   #   user.comments
   #   => ActiveRecord::StrictLoadingViolationError
@@ -15943,7 +15943,7 @@ module ActiveRecord::Core
   #
   # === Example:
   #
-  #   user = User.first
+  #   user = User::User.first
   #   user.strict_loading!(false) # => false
   #   user.comments
   #   => #<ActiveRecord::Associations::CollectionProxy>
@@ -21276,7 +21276,7 @@ module ActiveRecord::Integration
   # <tt>resources :users</tt> route. Normally, +user_path+ will
   # construct a path with the user object's 'id' in it:
   #
-  #   user = User.find_by(name: 'Phusion')
+  #   user = User::User.find_by(name: 'Phusion')
   #   user_path(user)  # => "/users/1"
   #
   # You can override +to_param+ in your model to make +user_path+ construct
@@ -21288,7 +21288,7 @@ module ActiveRecord::Integration
   #     end
   #   end
   #
-  #   user = User.find_by(name: 'Phusion')
+  #   user = User::User.find_by(name: 'Phusion')
   #   user_path(user)  # => "/users/Phusion"
   #
   # source://activerecord//lib/active_record/integration.rb#57
@@ -21362,14 +21362,14 @@ module ActiveRecord::Integration::ClassMethods
   #     to_param :name
   #   end
   #
-  #   user = User.find_by(name: 'Fancy Pants')
+  #   user = User::User.find_by(name: 'Fancy Pants')
   #   user.id         # => 123
   #   user_path(user) # => "/users/123-fancy-pants"
   #
   # Values longer than 20 characters will be truncated. The value
   # is truncated word by word.
   #
-  #   user = User.find_by(name: 'David Heinemeier Hansson')
+  #   user = User::User.find_by(name: 'David Heinemeier Hansson')
   #   user.id         # => 125
   #   user_path(user) # => "/users/125-david-heinemeier"
   #
@@ -21377,7 +21377,7 @@ module ActiveRecord::Integration::ClassMethods
   # suitable for passing to +find+. In a controller, for example:
   #
   #   params[:id]               # => "123-fancy-pants"
-  #   User.find(params[:id]).id # => 123
+  #   User::User.find(params[:id]).id # => 123
   #
   # source://activerecord//lib/active_record/integration.rb#147
   def to_param(method_name = T.unsafe(nil)); end
@@ -22575,8 +22575,8 @@ class ActiveRecord::Migration
   #        add_column :users, :last_name, :string
   #
   #        reversible do |dir|
-  #          User.reset_column_information
-  #          User.all.each do |u|
+  #          User::User.reset_column_information
+  #          User::User.all.each do |u|
   #            dir.up   { u.first_name, u.last_name = u.full_name.split(' ') }
   #            dir.down { u.full_name = "#{u.first_name} #{u.last_name}" }
   #            u.save
@@ -25138,7 +25138,7 @@ module ActiveRecord::Persistence
   #
   # Example:
   #
-  #   user = User.first
+  #   user = User::User.first
   #   user.banned? # => false
   #   user.toggle(:banned)
   #   user.banned? # => true
@@ -25345,18 +25345,18 @@ module ActiveRecord::Persistence::ClassMethods
   #
   # ==== Examples
   #   # Create a single new object
-  #   User.create(first_name: 'Jamie')
+  #   User::User.create(first_name: 'Jamie')
   #
   #   # Create an Array of new objects
-  #   User.create([{ first_name: 'Jamie' }, { first_name: 'Jeremy' }])
+  #   User::User.create([{ first_name: 'Jamie' }, { first_name: 'Jeremy' }])
   #
   #   # Create a single object and pass it into a block to set other attributes.
-  #   User.create(first_name: 'Jamie') do |u|
+  #   User::User.create(first_name: 'Jamie') do |u|
   #     u.is_admin = false
   #   end
   #
   #   # Creating an Array of new objects using a block, where the block is executed for each object:
-  #   User.create([{ first_name: 'Jamie' }, { first_name: 'Jeremy' }]) do |u|
+  #   User::User.create([{ first_name: 'Jamie' }, { first_name: 'Jeremy' }]) do |u|
   #     u.is_admin = false
   #   end
   #
@@ -26225,10 +26225,10 @@ module ActiveRecord::QueryMethods
 
   # Adds an SQL comment to queries generated from this relation. For example:
   #
-  #   User.annotate("selecting user names").select(:name)
+  #   User::User.annotate("selecting user names").select(:name)
   #   # SELECT "users"."name" FROM "users" /* selecting user names */
   #
-  #   User.annotate("selecting", "user", "names").select(:name)
+  #   User::User.annotate("selecting", "user", "names").select(:name)
   #   # SELECT "users"."name" FROM "users" /* selecting */ /* user */ /* names */
   #
   # The SQL block comment delimiters, "/*" and "*/", will be added automatically.
@@ -26260,7 +26260,7 @@ module ActiveRecord::QueryMethods
   # Sets attributes to be used when creating new records from a
   # relation object.
   #
-  #   users = User.where(name: 'Oscar')
+  #   users = User::User.where(name: 'Oscar')
   #   users.new.name # => 'Oscar'
   #
   #   users = users.create_with(name: 'DHH')
@@ -26285,13 +26285,13 @@ module ActiveRecord::QueryMethods
 
   # Specifies whether the records should be unique or not. For example:
   #
-  #   User.select(:name)
+  #   User::User.select(:name)
   #   # Might return two records with the same name
   #
-  #   User.select(:name).distinct
+  #   User::User.select(:name).distinct
   #   # Returns 1 record per distinct name
   #
-  #   User.select(:name).distinct.distinct(false)
+  #   User::User.select(:name).distinct.distinct(false)
   #   # You can also remove the uniqueness
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#1102
@@ -26310,7 +26310,7 @@ module ActiveRecord::QueryMethods
 
   # Forces eager loading by performing a LEFT OUTER JOIN on +args+:
   #
-  #   User.eager_load(:posts)
+  #   User::User.eager_load(:posts)
   #   # SELECT "users"."id" AS t0_r0, "users"."name" AS t0_r1, ...
   #   # FROM "users" LEFT OUTER JOIN "posts" ON "posts"."user_id" =
   #   # "users"."id"
@@ -26467,23 +26467,23 @@ module ActiveRecord::QueryMethods
 
   # Allows to specify a group attribute:
   #
-  #   User.group(:name)
+  #   User::User.group(:name)
   #   # SELECT "users".* FROM "users" GROUP BY name
   #
   # Returns an array with distinct records based on the +group+ attribute:
   #
-  #   User.select([:id, :name])
+  #   User::User.select([:id, :name])
   #   # => [#<User id: 1, name: "Oscar">, #<User id: 2, name: "Oscar">, #<User id: 3, name: "Foo">]
   #
-  #   User.group(:name)
+  #   User::User.group(:name)
   #   # => [#<User id: 3, name: "Foo", ...>, #<User id: 2, name: "Oscar", ...>]
   #
-  #   User.group('name AS grouped_name, age')
+  #   User::User.group('name AS grouped_name, age')
   #   # => [#<User id: 3, name: "Foo", age: 21, ...>, #<User id: 2, name: "Oscar", age: 21, ...>, #<User id: 5, name: "Foo", age: 23, ...>]
   #
   # Passing in an array of attributes to group by is also supported.
   #
-  #   User.select([:id, :first_name]).group(:id, :first_name).first(3)
+  #   User::User.select([:id, :first_name]).group(:id, :first_name).first(3)
   #   # => [#<User id: 1, first_name: "Bill">, #<User id: 2, first_name: "Earl">, #<User id: 3, first_name: "Beto">]
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#363
@@ -26518,7 +26518,7 @@ module ActiveRecord::QueryMethods
   # Allows to specify an order by a specific set of values. Depending on your
   # adapter this will either use a CASE statement or a built-in function.
   #
-  #   User.in_order_of(:id, [1, 5, 3])
+  #   User::User.in_order_of(:id, [1, 5, 3])
   #   # SELECT "users".* FROM "users"
   #   #   ORDER BY FIELD("users"."id", 1, 5, 3)
   #   #   WHERE "users"."id" IN (1, 5, 3)
@@ -26529,7 +26529,7 @@ module ActiveRecord::QueryMethods
   # Specify relationships to be included in the result set. For
   # example:
   #
-  #   users = User.includes(:address)
+  #   users = User::User.includes(:address)
   #   users.each do |user|
   #     user.address.city
   #   end
@@ -26540,22 +26540,22 @@ module ActiveRecord::QueryMethods
   #
   # You can also specify multiple relationships, like this:
   #
-  #   users = User.includes(:address, :friends)
+  #   users = User::User.includes(:address, :friends)
   #
   # Loading nested relationships is possible using a Hash:
   #
-  #   users = User.includes(:address, friends: [:address, :followers])
+  #   users = User::User.includes(:address, friends: [:address, :followers])
   #
   # === Conditions
   #
   # If you want to add string conditions to your included models, you'll have
   # to explicitly reference them. For example:
   #
-  #   User.includes(:posts).where('posts.name = ?', 'example')
+  #   User::User.includes(:posts).where('posts.name = ?', 'example')
   #
   # Will throw an error, but this will work:
   #
-  #   User.includes(:posts).where('posts.name = ?', 'example').references(:posts)
+  #   User::User.includes(:posts).where('posts.name = ?', 'example').references(:posts)
   #
   # Note that #includes works with association names while #references needs
   # the actual table name.
@@ -26564,7 +26564,7 @@ module ActiveRecord::QueryMethods
   # explicitly, as #where references the tables for you. For example, this
   # will work correctly:
   #
-  #   User.includes(:posts).where(posts: { name: 'example' })
+  #   User::User.includes(:posts).where(posts: { name: 'example' })
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#191
   def includes(*args); end
@@ -26584,16 +26584,16 @@ module ActiveRecord::QueryMethods
   #     scope :active, -> { where(accepted: true, locked: false) }
   #   end
   #
-  #   User.where(accepted: true)
+  #   User::User.where(accepted: true)
   #   # WHERE `accepted` = 1
   #
-  #   User.where(accepted: true).invert_where
+  #   User::User.where(accepted: true).invert_where
   #   # WHERE `accepted` != 1
   #
-  #   User.active
+  #   User::User.active
   #   # WHERE `accepted` = 1 AND `locked` = 0
   #
-  #   User.active.invert_where
+  #   User::User.active.invert_where
   #   # WHERE NOT (`accepted` = 1 AND `locked` = 0)
   #
   # Be careful because this inverts all conditions before +invert_where+ call.
@@ -26604,7 +26604,7 @@ module ActiveRecord::QueryMethods
   #   end
   #
   #   # It also inverts `where(role: 'admin')` unexpectedly.
-  #   User.where(role: 'admin').inactive
+  #   User::User.where(role: 'admin').inactive
   #   # WHERE NOT (`role` = 'admin' AND `accepted` = 1 AND `locked` = 0)
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#811
@@ -26616,14 +26616,14 @@ module ActiveRecord::QueryMethods
   # Performs JOINs on +args+. The given symbol(s) should match the name of
   # the association(s).
   #
-  #   User.joins(:posts)
+  #   User::User.joins(:posts)
   #   # SELECT "users".*
   #   # FROM "users"
   #   # INNER JOIN "posts" ON "posts"."user_id" = "users"."id"
   #
   # Multiple joins:
   #
-  #   User.joins(:posts, :account)
+  #   User::User.joins(:posts, :account)
   #   # SELECT "users".*
   #   # FROM "users"
   #   # INNER JOIN "posts" ON "posts"."user_id" = "users"."id"
@@ -26631,7 +26631,7 @@ module ActiveRecord::QueryMethods
   #
   # Nested joins:
   #
-  #   User.joins(posts: [:comments])
+  #   User::User.joins(posts: [:comments])
   #   # SELECT "users".*
   #   # FROM "users"
   #   # INNER JOIN "posts" ON "posts"."user_id" = "users"."id"
@@ -26639,7 +26639,7 @@ module ActiveRecord::QueryMethods
   #
   # You can use strings in order to customize your joins:
   #
-  #   User.joins("LEFT JOIN bookmarks ON bookmarks.bookmarkable_type = 'Post' AND bookmarks.user_id = users.id")
+  #   User::User.joins("LEFT JOIN bookmarks ON bookmarks.bookmarkable_type = 'Post' AND bookmarks.user_id = users.id")
   #   # SELECT "users".* FROM "users" LEFT JOIN bookmarks ON bookmarks.bookmarkable_type = 'Post' AND bookmarks.user_id = users.id
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#586
@@ -26656,7 +26656,7 @@ module ActiveRecord::QueryMethods
 
   # Performs LEFT OUTER JOINs on +args+:
   #
-  #   User.left_outer_joins(:posts)
+  #   User::User.left_outer_joins(:posts)
   #   => SELECT "users".* FROM "users" LEFT OUTER JOIN "posts" ON "posts"."user_id" = "users"."id"
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#601
@@ -26664,7 +26664,7 @@ module ActiveRecord::QueryMethods
 
   # Performs LEFT OUTER JOINs on +args+:
   #
-  #   User.left_outer_joins(:posts)
+  #   User::User.left_outer_joins(:posts)
   #   => SELECT "users".* FROM "users" LEFT OUTER JOIN "posts" ON "posts"."user_id" = "users"."id"
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#601
@@ -26681,9 +26681,9 @@ module ActiveRecord::QueryMethods
 
   # Specifies a limit for the number of records to retrieve.
   #
-  #   User.limit(10) # generated SQL has 'LIMIT 10'
+  #   User::User.limit(10) # generated SQL has 'LIMIT 10'
   #
-  #   User.limit(10).limit(20) # generated SQL has 'LIMIT 20'
+  #   User::User.limit(10).limit(20) # generated SQL has 'LIMIT 20'
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#917
   def limit(value); end
@@ -26748,11 +26748,11 @@ module ActiveRecord::QueryMethods
 
   # Specifies the number of rows to skip before returning rows.
   #
-  #   User.offset(10) # generated SQL has "OFFSET 10"
+  #   User::User.offset(10) # generated SQL has "OFFSET 10"
   #
   # Should be used with order.
   #
-  #   User.offset(10).order("name ASC")
+  #   User::User.offset(10).order("name ASC")
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#933
   def offset(value); end
@@ -26814,18 +26814,18 @@ module ActiveRecord::QueryMethods
   #
   # The symbol represents the name of the column you want to order the results by.
   #
-  #   User.order(:name)
+  #   User::User.order(:name)
   #   # SELECT "users".* FROM "users" ORDER BY "users"."name" ASC
   #
   # By default, the order is ascending. If you want descending order, you can
   # map the column name symbol to +:desc+.
   #
-  #   User.order(email: :desc)
+  #   User::User.order(email: :desc)
   #   # SELECT "users".* FROM "users" ORDER BY "users"."email" DESC
   #
   # Multiple columns can be passed this way, and they will be applied in the order specified.
   #
-  #   User.order(:name, email: :desc)
+  #   User::User.order(:name, email: :desc)
   #   # SELECT "users".* FROM "users" ORDER BY "users"."name" ASC, "users"."email" DESC
   #
   # === strings
@@ -26837,13 +26837,13 @@ module ActiveRecord::QueryMethods
   # column names and simple <code>function(column_name)</code> expressions
   # with optional +ASC+/+DESC+ modifiers are allowed.
   #
-  #   User.order('name')
+  #   User::User.order('name')
   #   # SELECT "users".* FROM "users" ORDER BY name
   #
-  #   User.order('name DESC')
+  #   User::User.order('name DESC')
   #   # SELECT "users".* FROM "users" ORDER BY name DESC
   #
-  #   User.order('name DESC, email')
+  #   User::User.order('name DESC, email')
   #   # SELECT "users".* FROM "users" ORDER BY name DESC, email
   #
   # === Arel
@@ -26851,12 +26851,12 @@ module ActiveRecord::QueryMethods
   # If you need to pass in complicated expressions that you have verified
   # are safe for the database, you can use Arel.
   #
-  #   User.order(Arel.sql('end_date - start_date'))
+  #   User::User.order(Arel.sql('end_date - start_date'))
   #   # SELECT "users".* FROM "users" ORDER BY end_date - start_date
   #
   # Custom query syntax, like JSON columns for Postgres, is supported in this way.
   #
-  #   User.order(Arel.sql("payload->>'kind'"))
+  #   User::User.order(Arel.sql("payload->>'kind'"))
   #   # SELECT "users".* FROM "users" ORDER BY payload->>'kind'
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#425
@@ -26875,7 +26875,7 @@ module ActiveRecord::QueryMethods
 
   # Allows preloading of +args+, in the same way that #includes does:
   #
-  #   User.preload(:posts)
+  #   User::User.preload(:posts)
   #   # SELECT "posts".* FROM "posts" WHERE "posts"."user_id" IN (1, 2, 3)
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#221
@@ -26893,7 +26893,7 @@ module ActiveRecord::QueryMethods
   # Sets readonly attributes for the returned relation. If value is
   # true (default), attempting to update a record will result in an error.
   #
-  #   users = User.readonly
+  #   users = User::User.readonly
   #   users.first.save
   #   => ActiveRecord::ReadOnlyRecord: User is marked as readonly
   #
@@ -26914,10 +26914,10 @@ module ActiveRecord::QueryMethods
   # This method only works in conjunction with #includes.
   # See #includes for more details.
   #
-  #   User.includes(:posts).where("posts.name = 'foo'")
+  #   User::User.includes(:posts).where("posts.name = 'foo'")
   #   # Doesn't JOIN the posts table, resulting in an error.
   #
-  #   User.includes(:posts).where("posts.name = 'foo'").references(:posts)
+  #   User::User.includes(:posts).where("posts.name = 'foo'").references(:posts)
   #   # Query now knows the string references posts, so adds a JOIN
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#254
@@ -26934,11 +26934,11 @@ module ActiveRecord::QueryMethods
 
   # Replaces any existing order defined on the relation with the specified order.
   #
-  #   User.order('email DESC').reorder('id ASC') # generated SQL has 'ORDER BY id ASC'
+  #   User::User.order('email DESC').reorder('id ASC') # generated SQL has 'ORDER BY id ASC'
   #
   # Subsequent calls to order on the same relation will be appended. For example:
   #
-  #   User.order('email DESC').reorder('id ASC').order('name ASC')
+  #   User::User.order('email DESC').reorder('id ASC').order('name ASC')
   #
   # generates a query with 'ORDER BY id ASC, name ASC'.
   #
@@ -26977,7 +26977,7 @@ module ActiveRecord::QueryMethods
 
   # Reverse the existing order clause on the relation.
   #
-  #   User.order('name ASC').reverse_order # generated SQL has 'ORDER BY name DESC'
+  #   User::User.order('name ASC').reverse_order # generated SQL has 'ORDER BY name DESC'
   #
   # source://activerecord//lib/active_record/relation/query_methods.rb#1190
   def reverse_order; end
@@ -27073,7 +27073,7 @@ module ActiveRecord::QueryMethods
   # Sets the returned relation to strict_loading mode. This will raise an error
   # if the record tries to lazily load an association.
   #
-  #   user = User.strict_loading.first
+  #   user = User::User.strict_loading.first
   #   user.comments.to_a
   #   => ActiveRecord::StrictLoadingViolationError
   #
@@ -27114,30 +27114,30 @@ module ActiveRecord::QueryMethods
   # This is useful when passing around chains of relations and would like to
   # modify the relations without reconstructing the entire chain.
   #
-  #   User.order('email DESC').unscope(:order) == User.all
+  #   User::User.order('email DESC').unscope(:order) == User::User.all
   #
   # The method arguments are symbols which correspond to the names of the methods
   # which should be unscoped. The valid arguments are given in VALID_UNSCOPING_VALUES.
   # The method can also be called with multiple arguments. For example:
   #
-  #   User.order('email DESC').select('id').where(name: "John")
-  #       .unscope(:order, :select, :where) == User.all
+  #   User::User.order('email DESC').select('id').where(name: "John")
+  #       .unscope(:order, :select, :where) == User::User.all
   #
   # One can additionally pass a hash as an argument to unscope specific +:where+ values.
   # This is done by passing a hash with a single key-value pair. The key should be
   # +:where+ and the value should be the where value to unscope. For example:
   #
-  #   User.where(name: "John", active: true).unscope(where: :name)
-  #       == User.where(active: true)
+  #   User::User.where(name: "John", active: true).unscope(where: :name)
+  #       == User::User.where(active: true)
   #
   # This method is similar to #except, but unlike
   # #except, it persists across merges:
   #
-  #   User.order('email').merge(User.except(:order))
-  #       == User.order('email')
+  #   User::User.order('email').merge(User::User.except(:order))
+  #       == User::User.order('email')
   #
-  #   User.order('email').merge(User.unscope(:order))
-  #       == User.all
+  #   User::User.order('email').merge(User::User.unscope(:order))
+  #       == User::User.all
   #
   # This means it can be used in association definitions:
   #
@@ -27182,14 +27182,14 @@ module ActiveRecord::QueryMethods
   # convert from the ruby type to the database type where needed. Elements are inserted
   # into the string in the order in which they appear.
   #
-  #   User.where(["name = ? and email = ?", "Joe", "joe@example.com"])
+  #   User::User.where(["name = ? and email = ?", "Joe", "joe@example.com"])
   #   # SELECT * FROM users WHERE name = 'Joe' AND email = 'joe@example.com';
   #
   # Alternatively, you can use named placeholders in the template, and pass a hash as the
   # second element of the array. The names in the template are replaced with the corresponding
   # values from the hash.
   #
-  #   User.where(["name = :name and email = :email", { name: "Joe", email: "joe@example.com" }])
+  #   User::User.where(["name = :name and email = :email", { name: "Joe", email: "joe@example.com" }])
   #   # SELECT * FROM users WHERE name = 'Joe' AND email = 'joe@example.com';
   #
   # This can make for more readable code in complex queries.
@@ -27200,13 +27200,13 @@ module ActiveRecord::QueryMethods
   # is responsible for ensuring they are enclosed in quotes in the resulting SQL. After quoting,
   # the values are inserted using the same escapes as the Ruby core method +Kernel::sprintf+.
   #
-  #   User.where(["name = '%s' and email = '%s'", "Joe", "joe@example.com"])
+  #   User::User.where(["name = '%s' and email = '%s'", "Joe", "joe@example.com"])
   #   # SELECT * FROM users WHERE name = 'Joe' AND email = 'joe@example.com';
   #
   # If #where is called with multiple arguments, these are treated as if they were passed as
   # the elements of a single array.
   #
-  #   User.where("name = :name and email = :email", { name: "Joe", email: "joe@example.com" })
+  #   User::User.where("name = :name and email = :email", { name: "Joe", email: "joe@example.com" })
   #   # SELECT * FROM users WHERE name = 'Joe' AND email = 'joe@example.com';
   #
   # When using strings to specify conditions, you can use any operator available from
@@ -27221,13 +27221,13 @@ module ActiveRecord::QueryMethods
   #
   # Fields can be symbols or strings. Values can be single values, arrays, or ranges.
   #
-  #    User.where(name: "Joe", email: "joe@example.com")
+  #    User::User.where(name: "Joe", email: "joe@example.com")
   #    # SELECT * FROM users WHERE name = 'Joe' AND email = 'joe@example.com'
   #
-  #    User.where(name: ["Alice", "Bob"])
+  #    User::User.where(name: ["Alice", "Bob"])
   #    # SELECT * FROM users WHERE name IN ('Alice', 'Bob')
   #
-  #    User.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
+  #    User::User.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
   #    # SELECT * FROM users WHERE (created_at BETWEEN '2012-06-09 07:00:00.000000' AND '2012-06-10 07:00:00.000000')
   #
   # In the case of a belongs_to relationship, an association key can be used
@@ -27253,12 +27253,12 @@ module ActiveRecord::QueryMethods
   # If the relation is the result of a join, you may create a condition which uses any of the
   # tables in the join. For string and array conditions, use the table name in the condition.
   #
-  #    User.joins(:posts).where("posts.created_at < ?", Time.now)
+  #    User::User.joins(:posts).where("posts.created_at < ?", Time.now)
   #
   # For hash conditions, you can either use the table name in the key, or use a sub-hash.
   #
-  #    User.joins(:posts).where("posts.published" => true)
-  #    User.joins(:posts).where(posts: { published: true })
+  #    User::User.joins(:posts).where("posts.published" => true)
+  #    User::User.joins(:posts).where(posts: { published: true })
   #
   # === no argument
   #
@@ -27267,7 +27267,7 @@ module ActiveRecord::QueryMethods
   #
   # Chaining with WhereChain#not:
   #
-  #    User.where.not(name: "Jon")
+  #    User::User.where.not(name: "Jon")
   #    # SELECT * FROM users WHERE name != 'Jon'
   #
   # Chaining with WhereChain#associated:
@@ -27515,28 +27515,28 @@ class ActiveRecord::QueryMethods::WhereChain
   # #not accepts conditions as a string, array, or hash. See QueryMethods#where for
   # more details on each format.
   #
-  #    User.where.not("name = 'Jon'")
+  #    User::User.where.not("name = 'Jon'")
   #    # SELECT * FROM users WHERE NOT (name = 'Jon')
   #
-  #    User.where.not(["name = ?", "Jon"])
+  #    User::User.where.not(["name = ?", "Jon"])
   #    # SELECT * FROM users WHERE NOT (name = 'Jon')
   #
-  #    User.where.not(name: "Jon")
+  #    User::User.where.not(name: "Jon")
   #    # SELECT * FROM users WHERE name != 'Jon'
   #
-  #    User.where.not(name: nil)
+  #    User::User.where.not(name: nil)
   #    # SELECT * FROM users WHERE name IS NOT NULL
   #
-  #    User.where.not(name: %w(Ko1 Nobu))
+  #    User::User.where.not(name: %w(Ko1 Nobu))
   #    # SELECT * FROM users WHERE name NOT IN ('Ko1', 'Nobu')
   #
-  #    User.where.not(name: "Jon", role: "admin")
+  #    User::User.where.not(name: "Jon", role: "admin")
   #    # SELECT * FROM users WHERE NOT (name == 'Jon' AND role == 'admin')
   #
   # If there is a non-nil condition on a nullable column in the hash condition, the records that have
   # nil values on the nullable column won't be returned.
-  #    User.create!(nullable_country: nil)
-  #    User.where.not(nullable_country: "UK")
+  #    User::User.create!(nullable_country: nil)
+  #    User::User.where.not(nullable_country: "UK")
   #    # SELECT * FROM users WHERE NOT (nullable_country = 'UK')
   #    # => []
   #
@@ -29094,7 +29094,7 @@ class ActiveRecord::Relation
   #
   # Expects arguments in the same format as {ActiveRecord::Base.new}[rdoc-ref:Core.new].
   #
-  #   users = User.where(name: 'DHH')
+  #   users = User::User.where(name: 'DHH')
   #   user = users.new # => #<User id: nil, name: "DHH", created_at: nil, updated_at: nil>
   #
   # You can also pass a block to new with the new record as argument:
@@ -29153,7 +29153,7 @@ class ActiveRecord::Relation
   #
   # ==== Examples
   #
-  #   users = User.where(name: 'Oscar')
+  #   users = User::User.where(name: 'Oscar')
   #   users.create # => #<User id: 3, name: "Oscar", ...>
   #
   #   users.create(name: 'fxn')
@@ -29328,17 +29328,17 @@ class ActiveRecord::Relation
   # with the attributes if one is not found:
   #
   #   # Find the first user named "Penélope" or create a new one.
-  #   User.find_or_create_by(first_name: 'Penélope')
+  #   User::User.find_or_create_by(first_name: 'Penélope')
   #   # => #<User id: 1, first_name: "Penélope", last_name: nil>
   #
   #   # Find the first user named "Penélope" or create a new one.
   #   # We already have one so the existing record will be returned.
-  #   User.find_or_create_by(first_name: 'Penélope')
+  #   User::User.find_or_create_by(first_name: 'Penélope')
   #   # => #<User id: 1, first_name: "Penélope", last_name: nil>
   #
   #   # Find the first user named "Scarlett" or create a new one with
   #   # a particular last name.
-  #   User.create_with(last_name: 'Johansson').find_or_create_by(first_name: 'Scarlett')
+  #   User::User.create_with(last_name: 'Johansson').find_or_create_by(first_name: 'Scarlett')
   #   # => #<User id: 2, first_name: "Scarlett", last_name: "Johansson">
   #
   # This method accepts a block, which is passed down to #create. The last example
@@ -29346,7 +29346,7 @@ class ActiveRecord::Relation
   #
   #   # Find the first user named "Scarlett" or create a new one with a
   #   # particular last name.
-  #   User.find_or_create_by(first_name: 'Scarlett') do |user|
+  #   User::User.find_or_create_by(first_name: 'Scarlett') do |user|
   #     user.last_name = 'Johansson'
   #   end
   #   # => #<User id: 2, first_name: "Scarlett", last_name: "Johansson">
@@ -29470,7 +29470,7 @@ class ActiveRecord::Relation
   #
   # Expects arguments in the same format as {ActiveRecord::Base.new}[rdoc-ref:Core.new].
   #
-  #   users = User.where(name: 'DHH')
+  #   users = User::User.where(name: 'DHH')
   #   user = users.new # => #<User id: nil, name: "DHH", created_at: nil, updated_at: nil>
   #
   # You can also pass a block to new with the new record as argument:
@@ -29580,7 +29580,7 @@ class ActiveRecord::Relation
 
   # Returns sql statement for the relation.
   #
-  #   User.where(name: 'Oscar').to_sql
+  #   User::User.where(name: 'Oscar').to_sql
   #   # => SELECT "users".* FROM "users"  WHERE "users"."name" = 'Oscar'
   #
   # source://activerecord//lib/active_record/relation.rb#724
@@ -29673,7 +29673,7 @@ class ActiveRecord::Relation
 
   # Returns a hash of where conditions.
   #
-  #   User.where(name: 'Oscar').where_values_hash
+  #   User::User.where(name: 'Oscar').where_values_hash
   #   # => {name: "Oscar"}
   #
   # source://activerecord//lib/active_record/relation.rb#740
@@ -31150,7 +31150,7 @@ module ActiveRecord::SecureToken::ClassMethods
   #     has_secure_token :auth_token, length: 36
   #   end
   #
-  #   user = User.new
+  #   user = User::User.new
   #   user.save
   #   user.token # => "pX27zsMN2ViQKta1bGfLmVJE"
   #   user.auth_token # => "tU9bLuZseefXQ4yQxQo8wjtBvsAfPc78os6R"
@@ -31276,15 +31276,15 @@ module ActiveRecord::SignedId::ClassMethods
   #
   # ==== Examples
   #
-  #   signed_id = User.first.signed_id expires_in: 15.minutes, purpose: :password_reset
+  #   signed_id = User::User.first.signed_id expires_in: 15.minutes, purpose: :password_reset
   #
-  #   User.find_signed signed_id # => nil, since the purpose does not match
+  #   User::User.find_signed signed_id # => nil, since the purpose does not match
   #
   #   travel 16.minutes
-  #   User.find_signed signed_id, purpose: :password_reset # => nil, since the signed id has expired
+  #   User::User.find_signed signed_id, purpose: :password_reset # => nil, since the signed id has expired
   #
   #   travel_back
-  #   User.find_signed signed_id, purpose: :password_reset # => User.first
+  #   User::User.find_signed signed_id, purpose: :password_reset # => User::User.first
   #
   # @raise [UnknownPrimaryKey]
   #
@@ -31298,11 +31298,11 @@ module ActiveRecord::SignedId::ClassMethods
   #
   # === Examples
   #
-  #   User.find_signed! "bad data" # => ActiveSupport::MessageVerifier::InvalidSignature
+  #   User::User.find_signed! "bad data" # => ActiveSupport::MessageVerifier::InvalidSignature
   #
-  #   signed_id = User.first.signed_id
-  #   User.first.destroy
-  #   User.find_signed! signed_id # => ActiveRecord::RecordNotFound
+  #   signed_id = User::User.first.signed_id
+  #   User::User.first.destroy
+  #   User::User.find_signed! signed_id # => ActiveRecord::RecordNotFound
   #
   # source://activerecord//lib/active_record/signed_id.rb#62
   def find_signed!(signed_id, purpose: T.unsafe(nil)); end
@@ -31630,7 +31630,7 @@ class ActiveRecord::StatementTimeout < ::ActiveRecord::QueryAborted; end
 #     store :settings, accessors: [ :login_retry ], suffix: :config
 #   end
 #
-#   u = User.new(color: 'black', homepage: '37signals.com', parent_name: 'Mary', partner_name: 'Lily')
+#   u = User::User.new(color: 'black', homepage: '37signals.com', parent_name: 'Mary', partner_name: 'Lily')
 #   u.color                          # Accessor stored attribute
 #   u.parent_name                    # Accessor stored attribute with prefix
 #   u.partner_name                   # Accessor stored attribute with custom prefix
@@ -31657,7 +31657,7 @@ class ActiveRecord::StatementTimeout < ::ActiveRecord::QueryAborted; end
 #
 # The stored attribute names can be retrieved using {.stored_attributes}[rdoc-ref:rdoc-ref:ClassMethods#stored_attributes].
 #
-#   User.stored_attributes[:settings] # [:color, :homepage, :two_factor_auth, :login_retry]
+#   User::User.stored_attributes[:settings] # [:color, :homepage, :two_factor_auth, :login_retry]
 #
 # == Overwriting default accessors
 #
@@ -33003,10 +33003,10 @@ ActiveRecord::Transactions::ACTIONS = T.let(T.unsafe(nil), Array)
 # statements in the nested transaction block become part of the parent
 # transaction. For example, the following behavior may be surprising:
 #
-#   User.transaction do
-#     User.create(username: 'Kotori')
-#     User.transaction do
-#       User.create(username: 'Nemu')
+#   User::User.transaction do
+#     User::User.create(username: 'Kotori')
+#     User::User.transaction do
+#       User::User.create(username: 'Nemu')
 #       raise ActiveRecord::Rollback
 #     end
 #   end
@@ -33021,10 +33021,10 @@ ActiveRecord::Transactions::ACTIONS = T.let(T.unsafe(nil), Array)
 # the database rolls back to the beginning of the sub-transaction without rolling
 # back the parent transaction. If we add it to the previous example:
 #
-#   User.transaction do
-#     User.create(username: 'Kotori')
-#     User.transaction(requires_new: true) do
-#       User.create(username: 'Nemu')
+#   User::User.transaction do
+#     User::User.create(username: 'Kotori')
+#     User::User.transaction(requires_new: true) do
+#       User::User.create(username: 'Nemu')
 #       raise ActiveRecord::Rollback
 #     end
 #   end

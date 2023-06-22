@@ -873,7 +873,7 @@ module AbstractController::Helpers::ClassMethods
   #     helper_method :current_user, :logged_in?
   #
   #     def current_user
-  #       @current_user ||= User.find_by(id: session[:user])
+  #       @current_user ||= User::User.find_by(id: session[:user])
   #     end
   #
   #     def logged_in?
@@ -5849,7 +5849,7 @@ ActionController::Parameters::PERMITTED_SCALAR_TYPES = T.let(T.unsafe(nil), Arra
 # <tt>attribute_names</tt>.
 #
 # If you're going to pass the parameters to an +ActiveModel+ object (such as
-# <tt>User.new(params[:user])</tt>), you might consider passing the model class to
+# <tt>User::User.new(params[:user])</tt>), you might consider passing the model class to
 # the method instead. The +ParamsWrapper+ will actually try to determine the
 # list of attribute names from the model and only wrap those attributes:
 #
@@ -6034,7 +6034,7 @@ class ActionController::ParamsWrapper::Options < ::Struct
   # will try to find if the +User+ model exists.
   #
   # This method also does namespace lookup. Foo::Bar::UsersController will
-  # try to find Foo::Bar::User, Foo::User and finally User.
+  # try to find Foo::Bar::User, Foo::User and finally User::User.
   #
   # source://actionpack//lib/action_controller/metal/params_wrapper.rb#165
   def _default_wrap_model; end
@@ -15587,7 +15587,7 @@ module ActionDispatch::Routing::Mapper::Base
   #        end
   #      end
   #
-  #      user = User.find_by(name: 'Phusion')
+  #      user = User::User.find_by(name: 'Phusion')
   #      user_path(user)  # => "/users/Phusion"
   #
   # [:path]
@@ -18254,7 +18254,7 @@ ActionDispatch::Routing::SEPARATORS = T.let(T.unsafe(nil), Array)
 #     end
 #   end
 #
-#   User.find(1).base_uri # => "/users/1"
+#   User::User.find(1).base_uri # => "/users/1"
 #
 # source://actionpack//lib/action_dispatch/routing/url_for.rb#87
 module ActionDispatch::Routing::UrlFor

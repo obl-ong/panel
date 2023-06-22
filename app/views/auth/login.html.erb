@@ -1,0 +1,28 @@
+<!--
+TODO: Replace with turbo form instead of jank stimulus
+-->
+
+<section data-controller="webauthn" data-webauthn-options-value="<%= @options.to_json %>" data-webauthn-csrf-value="<%= session[:_csrf_token]%>">
+	<h1>Login</h1>
+	<button data-action="click->webauthn#askAndLogin">Login with Passkey</button>
+</section>
+
+<style>
+	main {
+		padding: 5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	
+	form {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	
+	button {
+		background-color: red;
+		padding: 1rem;
+	}
+</style>

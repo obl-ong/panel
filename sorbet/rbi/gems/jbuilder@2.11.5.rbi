@@ -121,12 +121,12 @@ class Jbuilder < ::ActiveSupport::ProxyObject
   #
   # Example:
   #   json.ignore_nil! false
-  #   json.id User.new.id
+  #   json.id User::User.new.id
   #
   #   { "id": null }
   #
   #   json.ignore_nil!
-  #   json.id User.new.id
+  #   json.id User::User.new.id
   #
   #   {}
   #

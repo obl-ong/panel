@@ -10,20 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_09_075212) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_11_224458) do
   create_table "domains", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "host"
-    t.integer "users_id"
-    t.index ["users_id"], name: "index_domains_on_users_id"
+    t.integer "user_users_id"
+    t.index ["user_users_id"], name: "index_domains_on_user_users_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "user_credentials", force: :cascade do |t|
+    t.string "webauthn_id"
+    t.string "public_key"
+    t.integer "sign_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_user_credentials_on_user_id"
   end
 
-  add_foreign_key "domains", "users", column: "users_id"
+  create_table "user_users", force: :cascade do |t|
+    t.string "email"
+    t.string "name"
+    t.string "webauthn_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "domains", "user_users", column: "user_users_id"
+  add_foreign_key "user_credentials", "user_users", column: "user_id"
 end
