@@ -9,6 +9,7 @@ function utf8_to_b64(str) {
 export default class extends Controller {
 	
 	static values = { options: String, csrf: String }
+	static targets = [ "error" ];
 	
 	connect() {
 		console.log("hai")
@@ -23,10 +24,10 @@ export default class extends Controller {
 		return response;
 	}
 	
-	async createAndCut() {
+	async create() {
 		try {
 			const key = await this.createKey()
-			const req = await fetch("/auth/cut_key", {
+			const req = await fetch("/auth/add_key", {
 				method: "PATCH",
 				body: JSON.stringify(key), 
   			credentials: 'include',
@@ -37,13 +38,13 @@ export default class extends Controller {
 				}
 			})
 			const res = await req.json()
+			
 			if(res.error) {
-				throw new Error(res.error)
+				throw new Error(res.error);
 			}
 			
 			window.location.pathname = "/"
-		}
-		catch(e) {
+		} catch(e) {
 			console.error(e);
 		}
 		
@@ -58,6 +59,7 @@ export default class extends Controller {
 	
 	async askAndLogin() {
 		try {
+			this.errorTarget.textContent = null;
 			const key = await this.askForKey()
 			const req = await fetch("/auth/verify_key", {
 				method: "POST",
@@ -70,14 +72,20 @@ export default class extends Controller {
 				}
 			})
 			const res = await req.json()
+			console.log(res);
 			if(res.error) {
-				throw new Error(res.error)
+				throw new Error(res.message)
 			}
 			
 			window.location.pathname = "/"
 		}
 		catch(e) {
 			console.error(e);
+			console.log("caught!")
+			if(e.toString().startsWith("NotAllowedError")) {
+				e = new Error("Looks like you clicked cancel or was not allowed by your browser")
+			}
+			this.errorTarget.textContent = e.toString();
 		}
 		
 	}

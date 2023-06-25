@@ -23,12 +23,12 @@ Rails.application.routes.draw do
 
   get 'users/register'
   post 'users/create'
+  get 'users/email_verification'
+  post 'users/verify_email'
   get 'users/logout'
-  
-  # this should be POST, but because I can't redirect to POST, it must be GET
-  get 'auth/blank_key'
-  get 'auth/sign_key'
-  patch 'auth/cut_key'
+
+  get 'auth/create_key'
+  patch 'auth/add_key'
   
   get 'auth/login'
   # need to send request body, made it POST

@@ -1,10 +1,13 @@
-<!--
-TODO: Replace with turbo form instead of jank stimulus
--->
-
 <section data-controller="webauthn" data-webauthn-options-value="<%= @options.to_json %>" data-webauthn-csrf-value="<%= session[:_csrf_token]%>">
-	<h1>Login</h1>
-	<button data-action="click->webauthn#askAndLogin">Login with Passkey</button>
+	<%= image_tag "oval.svg", size: "200" %>
+	<h1>Login to continue to <br><b>Obl.ong</b></h1>
+	<p>Don't have an account? <a href="/users/register">Register</a></p>
+	<button data-action="click->webauthn#askAndLogin">Select Passkey</button>
+	<p data-webauthn-target="error" class="error"></p>
+	<div style="margin-top: 7rem">
+		<p>Having trouble? <a href="mailto:support@obl.ong">support@obl.ong</a></p>
+		<p><a href="https://obl.ong">What's Obl.ong?</a></p>
+	</div>
 </section>
 
 <style>
@@ -12,7 +15,40 @@ TODO: Replace with turbo form instead of jank stimulus
 		padding: 5rem;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		gap: 1rem;
+		min-height: 100vh;
+	}
+
+	.error {
+		font-style: italic;
+		color: var(--lemon-glacier);
+	}
+
+	h1 {
+		font-weight: 300;
+		font-size: 2.5rem;
+		padding: 0;
+		margin: 0;
+	}
+
+	div {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	a {
+		color: var(--winter-sky);
+	}
+
+	a:hover {
+		font-style: italic;
+	}
+	
+	b {
+		font-weight: 700; 
 	}
 	
 	form {
@@ -20,9 +56,12 @@ TODO: Replace with turbo form instead of jank stimulus
 		flex-direction: column;
 		gap: 1rem;
 	}
-	
-	button {
-		background-color: red;
-		padding: 1rem;
+
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		align-items: center;
+		text-align: center;
 	}
 </style>

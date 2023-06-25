@@ -13,24 +13,30 @@ class AuthController < ApplicationController
     @options = options.as_json
   end
   
-  def blank_key
-    
+  def create_key
+
     user = User::User.find_by(id: session[:current_user_id])
-    options = WebAuthn::Credential.options_for_create(
+
+    if session[:email_verified] != true && user.verified != true
+      redirect_to controller: "users", action: "email_verification" and return
+    end
+    
+
+    @options = WebAuthn::Credential.options_for_create(
       user: { id: user.webauthn_id, name: user.email }
     )
     
-    session[:creation_challenge] = options.challenge
-    
-    redirect_to action: 'sign_key', params: options.as_json
+    session[:creation_challenge] = @options.challenge
   end
   
-  def sign_key
-    @options = params
-  end
-  
-  def cut_key
+  def add_key
+
+    user = User::User.find_by(id: session[:current_user_id])
         
+    if session[:email_verified] != true && user.verified != true
+      redirect_to controller: "users", action: "email_verification" and return
+    end
+
     webauthn_credential = WebAuthn::Credential.from_create(params)
 
     begin
@@ -39,16 +45,22 @@ class AuthController < ApplicationController
       credo = User::Credential.create(
         webauthn_id: webauthn_credential.id,
         public_key: webauthn_credential.public_key,
-        sign_count: webauthn_credential.sign_count
+        sign_count: webauthn_credential.sign_count,
+        user_users_id: session[:current_user_id]
       )
-    
-      credo.add_user_association(session[:current_user_id])
-    
+
+      credo.save
+
+      if session[:email_verified] && user.verified != true
+        user.verified = true
+        user.save
+      end
+        
       session[:authenticated] = true
     
       render json: { authenticated: true }
     rescue WebAuthn::Error => e
-      render json: { error: true }
+      render json: { error: true, message: "An error occurred." }
     end
   end
   
@@ -56,6 +68,10 @@ class AuthController < ApplicationController
     webauthn_credential = WebAuthn::Credential.from_get(params)
 
     stored_credential = User::Credential.find_by(webauthn_id: webauthn_credential.id)
+    
+    if stored_credential == nil
+      render json: { error: true, message: "No account found with that key"} and return
+    end
 
     begin
       webauthn_credential.verify(
@@ -67,7 +83,7 @@ class AuthController < ApplicationController
       stored_credential.update!(sign_count: webauthn_credential.sign_count)
       
       session[:authenticated] = true
-      session[:current_user_id] = stored_credential.user_id 
+      session[:current_user_id] = stored_credential.user_users_id 
         
       render json: { authenticated: true }
       
@@ -77,7 +93,7 @@ class AuthController < ApplicationController
       render json: { authenticated: true }
     
     rescue WebAuthn::Error => e
-      render json: { error: true }
+      render json: { error: true, message: "An error occurred;" }
     end
   end
   

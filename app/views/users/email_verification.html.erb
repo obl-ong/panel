@@ -1,27 +1,20 @@
 <section>
-	<%= image_tag "oval.svg", size: "200" %>
-	<%= turbo_frame_tag "registration" do %>
-		<h1>Register to continue to <br><b>Obl.ong</b></h1>
-		<p>Already have an account? <a href="/auth/login">Login</a></p>
-		<%= form_with url: "/users/create", method: :post do |form| %>
-			<div>
-				<%= form.label :name, "Full name" %>
-				<%= form.text_field :name %>
-			</div>
-			<div>
-				<%= form.label :email, "Email" %>
-				<%= form.email_field :email %>
-			</div>
-			<%= form.submit "Register!" %>
-		<% end %>
-	<% end %>
-
-	<div id="error"></div>
-	
-	<div>
-		<p>Having trouble? <a href="mailto:support@obl.ong">support@obl.ong</a></p>
-		<p><a href="https://obl.ong">What's Obl.ong?</a></p>
-	</div>
+    <%= image_tag "oval.svg", size: "200" %>
+    <%= turbo_frame_tag "registration" do %>
+        <h1>Verify your email</h1>
+        <p>A one-time code was sent to your email</p>
+        <%= form_with url: "/users/verify_email", method: :post do |form| %>
+            <div>
+                <%= form.text_field :code, placeholder: "One-time code" %>
+            </div>
+            <%= form.submit "Verify" %>
+        <% end %>
+        <%= link_to "Resend Code" %>
+    <% end %>
+    <div>
+        <p>Having trouble? <a href="mailto:support@obl.ong">support@obl.ong</a></p>
+        <p><a href="https://obl.ong">What's Obl.ong?</a></p>
+    </div>
 </section>
 
 <style>
@@ -75,7 +68,7 @@
 		align-self: center;
 	}
 
-	section, turbo-frame {
+	section, turbo-frame#registration {
 		display: flex;
 		flex-direction: column;
 		gap: 1.25rem;

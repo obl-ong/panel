@@ -76,9 +76,12 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
+    android_key_attestation (0.3.0)
     ast (2.4.2)
+    awrence (1.2.1)
     backport (1.2.0)
     benchmark (0.2.1)
+    bindata (2.4.15)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -92,7 +95,11 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    cbor (0.5.9.6)
     concurrent-ruby (1.2.2)
+    cose (1.3.0)
+      cbor (~> 0.5.9)
+      openssl-signature_algorithm (~> 1.0)
     crass (1.0.6)
     dalli (3.2.4)
     date (3.3.3)
@@ -131,6 +138,7 @@ GEM
     jsbundling-rails (1.1.1)
       railties (>= 6.0.0)
     json (2.6.3)
+    jwt (2.7.1)
     kramdown (2.4.0)
       rexml
     kramdown-parser-gfm (1.1.0)
@@ -168,9 +176,17 @@ GEM
       racc (~> 1.4)
     nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
+    openssl (3.1.0)
+    openssl-signature_algorithm (1.3.0)
+      openssl (> 2.0)
     parallel (1.22.1)
     parser (3.2.1.0)
       ast (~> 2.4.1)
+    postmark (1.24.0)
+      json
+    postmark-rails (0.22.1)
+      actionmailer (>= 3.0.0)
+      postmark (>= 1.21.3, < 2.0)
     prettier_print (1.2.0)
     public_suffix (5.0.1)
     puma (5.6.5)
@@ -226,6 +242,7 @@ GEM
     reverse_markdown (2.1.1)
       nokogiri
     rexml (3.2.5)
+    rotp (6.2.2)
     rubocop (1.46.0)
       json (~> 2.3)
       parallel (~> 1.10)
@@ -240,6 +257,8 @@ GEM
       parser (>= 3.2.1.0)
     ruby-progressbar (1.11.0)
     rubyzip (2.3.2)
+    safety_net_attestation (0.4.0)
+      jwt (~> 2.0)
     selenium-webdriver (4.8.1)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -300,6 +319,10 @@ GEM
     thor (1.2.1)
     tilt (2.1.0)
     timeout (0.3.2)
+    tpm-key_attestation (0.12.0)
+      bindata (~> 2.4)
+      openssl (> 2.0)
+      openssl-signature_algorithm (~> 1.0)
     turbo-rails (1.3.3)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
@@ -315,6 +338,15 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
+    webauthn (3.0.0)
+      android_key_attestation (~> 0.3.0)
+      awrence (~> 1.1)
+      bindata (~> 2.4)
+      cbor (~> 0.5.9)
+      cose (~> 1.1)
+      openssl (>= 2.2)
+      safety_net_attestation (~> 0.4.0)
+      tpm-key_attestation (~> 0.12.0)
     webdrivers (5.2.0)
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
@@ -348,11 +380,13 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   jsbundling-rails (~> 1.0)
+  postmark-rails
   puma (~> 5.0)
   rails (~> 7.0.4)
   rails_hotreload
   rails_nestable_layouts!
   redis (~> 4.0)
+  rotp
   rubocop
   selenium-webdriver
   solargraph
@@ -366,6 +400,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
+  webauthn
   webdrivers
 
 RUBY VERSION
