@@ -11,7 +11,7 @@ class Domain < ApplicationRecord
    client.zones.create_zone_record(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], name: host, type: "NS", content: "ns2.dnsimple.com")
    client.zones.create_zone_record(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], name: host, type: "NS", content: "ns3.dnsimple.com")
    client.zones.create_zone_record(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], name: host, type: "NS", content: "ns4.dnsimple-edge.org")
-   client.domains.create_email_forward(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], from: host, to: User.find_by(id: users_id).email)
+   client.domains.create_email_forward(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], from: host, to: User::User.find_by(id: users_id).email)
   end
 
   before_destroy do

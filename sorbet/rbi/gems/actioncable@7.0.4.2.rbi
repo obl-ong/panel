@@ -911,7 +911,7 @@ module ActionCable::Channel::TestCase::Behavior
   #
   #   def test_assert_started_stream_for
   #     subscribe id: 42
-  #     assert_has_stream_for User.find(42)
+  #     assert_has_stream_for User::User.find(42)
   #   end
   #
   # source://actioncable//lib/action_cable/channel/test_case.rb#306
@@ -1049,7 +1049,7 @@ class ActionCable::Connection::Authorization::UnauthorizedError < ::StandardErro
 #
 #       private
 #         def find_verified_user
-#           User.find_by_identity(cookies.encrypted[:identity_id]) ||
+#           User::User.find_by_identity(cookies.encrypted[:identity_id]) ||
 #             reject_unauthorized_connection
 #         end
 #     end
@@ -1963,10 +1963,10 @@ ActionCable::INTERNAL = T.let(T.unsafe(nil), Hash)
 #     end
 #   end
 #
-#   ActionCable.server.remote_connections.where(current_user: User.find(1)).disconnect
+#   ActionCable.server.remote_connections.where(current_user: User::User.find(1)).disconnect
 #
 # This will disconnect all the connections established for
-# <tt>User.find(1)</tt>, across all servers running on all machines, because
+# <tt>User::User.find(1)</tt>, across all servers running on all machines, because
 # it uses the internal channel that all of these servers are subscribed to.
 #
 # source://actioncable//lib/action_cable/remote_connections.rb#22

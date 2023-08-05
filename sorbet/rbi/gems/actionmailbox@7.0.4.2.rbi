@@ -135,7 +135,7 @@ end
 #
 #     private
 #       def ensure_sender_is_a_user
-#         unless User.exist?(email_address: mail.from)
+#         unless User::User.exist?(email_address: mail.from)
 #           bounce_with UserRequiredMailer.missing(inbound_email)
 #         end
 #       end

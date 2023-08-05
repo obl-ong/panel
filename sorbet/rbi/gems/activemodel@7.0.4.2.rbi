@@ -2768,7 +2768,7 @@ end
 #     has_many :pets
 #   end
 #
-#   user = User.first
+#   user = User::User.first
 #   user.pets.select(:id).first.user_id
 #   # => ActiveModel::MissingAttributeError: missing attribute: user_id
 #
@@ -3265,7 +3265,7 @@ module ActiveModel::SecurePassword::ClassMethods
   #     has_secure_password :recovery_password, validations: false
   #   end
   #
-  #   user = User.new(name: 'david', password: '', password_confirmation: 'nomatch')
+  #   user = User::User.new(name: 'david', password: '', password_confirmation: 'nomatch')
   #   user.save                                                  # => false, password required
   #   user.password = 'mUc3m00RsqyRe'
   #   user.save                                                  # => false, confirmation doesn't match
@@ -3277,8 +3277,8 @@ module ActiveModel::SecurePassword::ClassMethods
   #   user.authenticate('notright')                              # => false
   #   user.authenticate('mUc3m00RsqyRe')                         # => user
   #   user.authenticate_recovery_password('42password')          # => user
-  #   User.find_by(name: 'david')&.authenticate('notright')      # => false
-  #   User.find_by(name: 'david')&.authenticate('mUc3m00RsqyRe') # => user
+  #   User::User.find_by(name: 'david')&.authenticate('notright')      # => false
+  #   User::User.find_by(name: 'david')&.authenticate('mUc3m00RsqyRe') # => user
   #
   # ===== Conditionally requiring a password
   #
@@ -3450,7 +3450,7 @@ module ActiveModel::Serialization
   #   note.title = 'Battle of Austerlitz'
   #   note.text = 'Some text here'
   #
-  #   user = User.new
+  #   user = User::User.new
   #   user.name = 'Napoleon'
   #   user.notes = [note]
   #
@@ -3505,7 +3505,7 @@ module ActiveModel::Serializers::JSON
   # after the object's type. The default value for <tt>include_root_in_json</tt>
   # option is +false+.
   #
-  #   user = User.find(1)
+  #   user = User::User.find(1)
   #   user.as_json
   #   # => { "id" => 1, "name" => "Konata Izumi", "age" => 16,
   #   #     "created_at" => "2006-08-01T17:27:133.000Z", "awesome" => true}
@@ -3519,14 +3519,14 @@ module ActiveModel::Serializers::JSON
   # This behavior can also be achieved by setting the <tt>:root</tt> option
   # to +true+ as in:
   #
-  #   user = User.find(1)
+  #   user = User::User.find(1)
   #   user.as_json(root: true)
   #   # => { "user" => { "id" => 1, "name" => "Konata Izumi", "age" => 16,
   #   #                  "created_at" => "2006-08-01T17:27:13.000Z", "awesome" => true } }
   #
   # If you prefer, <tt>:root</tt> may also be set to a custom string key instead as in:
   #
-  #   user = User.find(1)
+  #   user = User::User.find(1)
   #   user.as_json(root: "author")
   #   # => { "author" => { "id" => 1, "name" => "Konata Izumi", "age" => 16,
   #   #                  "created_at" => "2006-08-01T17:27:13.000Z", "awesome" => true } }
@@ -3534,7 +3534,7 @@ module ActiveModel::Serializers::JSON
   # Without any +options+, the returned Hash will include all the model's
   # attributes.
   #
-  #   user = User.find(1)
+  #   user = User::User.find(1)
   #   user.as_json
   #   # => { "id" => 1, "name" => "Konata Izumi", "age" => 16,
   #   #      "created_at" => "2006-08-01T17:27:13.000Z", "awesome" => true}
@@ -4818,8 +4818,8 @@ module ActiveModel::Validations::ClassMethods
   #    attr_accessor :name
   #  end
   #
-  #  User.attribute_method?(:name) # => true
-  #  User.attribute_method?(:age)  # => false
+  #  User::User.attribute_method?(:name) # => true
+  #  User::User.attribute_method?(:age)  # => false
   #
   # @return [Boolean]
   #

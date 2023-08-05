@@ -21,10 +21,20 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'users/auth'
-  get 'users/login'
+  get 'users/register'
+  post 'users/create'
+  get 'users/email_verification'
+  post 'users/verify_email'
   get 'users/logout'
-  get 'users/new'
+
+  get 'auth/create_key'
+  patch 'auth/add_key'
+  
+  get 'auth/login'
+  # need to send request body, made it POST
+  post 'auth/verify_key'
+  
+  get 'auth/unsupported'
 
   # Defines the root path route ("/")
   root "domains#index"

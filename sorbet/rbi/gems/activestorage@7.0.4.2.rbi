@@ -2761,7 +2761,7 @@ module ActiveStorage::Reflection::ActiveRecordExtensions::ClassMethods
 
   # Returns the reflection object for the named +attachment+.
   #
-  #    User.reflect_on_attachment(:avatar)
+  #    User::User.reflect_on_attachment(:avatar)
   #    # => the avatar reflection
   #
   # source://activestorage//lib/active_storage/reflection.rb#68

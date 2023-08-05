@@ -159,20 +159,20 @@ end
 # Once a mailer action and template are defined, you can deliver your message or defer its creation and
 # delivery for later:
 #
-#   NotifierMailer.welcome(User.first).deliver_now # sends the email
-#   mail = NotifierMailer.welcome(User.first)      # => an ActionMailer::MessageDelivery object
+#   NotifierMailer.welcome(User::User.first).deliver_now # sends the email
+#   mail = NotifierMailer.welcome(User::User.first)      # => an ActionMailer::MessageDelivery object
 #   mail.deliver_now                               # generates and sends the email now
 #
 # The ActionMailer::MessageDelivery class is a wrapper around a delegate that will call
 # your method to generate the mail. If you want direct access to the delegator, or <tt>Mail::Message</tt>,
 # you can call the <tt>message</tt> method on the ActionMailer::MessageDelivery object.
 #
-#   NotifierMailer.welcome(User.first).message     # => a Mail::Message object
+#   NotifierMailer.welcome(User::User.first).message     # => a Mail::Message object
 #
 # Action Mailer is nicely integrated with Active Job so you can generate and send emails in the background
 # (example: outside of the request-response cycle, so the user doesn't have to wait on it):
 #
-#   NotifierMailer.welcome(User.first).deliver_later # enqueue the email sending to Active Job
+#   NotifierMailer.welcome(User::User.first).deliver_later # enqueue the email sending to Active Job
 #
 # Note that <tt>deliver_later</tt> will execute your method from the background job.
 #
@@ -387,7 +387,7 @@ end
 #
 #   class NotifierMailerPreview < ActionMailer::Preview
 #     def welcome
-#       NotifierMailer.welcome(User.first)
+#       NotifierMailer.welcome(User::User.first)
 #     end
 #   end
 #
@@ -1671,10 +1671,10 @@ end
 # <tt>Mail::Message</tt>, deliver the email or schedule the email to be sent
 # through Active Job.
 #
-#   Notifier.welcome(User.first)               # an ActionMailer::MessageDelivery object
-#   Notifier.welcome(User.first).deliver_now   # sends the email
-#   Notifier.welcome(User.first).deliver_later # enqueue email delivery as a job through Active Job
-#   Notifier.welcome(User.first).message       # a Mail::Message object
+#   Notifier.welcome(User::User.first)               # an ActionMailer::MessageDelivery object
+#   Notifier.welcome(User::User.first).deliver_now   # sends the email
+#   Notifier.welcome(User::User.first).deliver_later # enqueue email delivery as a job through Active Job
+#   Notifier.welcome(User::User.first).message       # a Mail::Message object
 #
 # source://actionmailer//lib/action_mailer/message_delivery.rb#17
 class ActionMailer::MessageDelivery
@@ -1696,10 +1696,10 @@ class ActionMailer::MessageDelivery
   # Enqueues the email to be delivered through Active Job. When the
   # job runs it will send the email using +deliver_now+.
   #
-  #   Notifier.welcome(User.first).deliver_later
-  #   Notifier.welcome(User.first).deliver_later(wait: 1.hour)
-  #   Notifier.welcome(User.first).deliver_later(wait_until: 10.hours.from_now)
-  #   Notifier.welcome(User.first).deliver_later(priority: 10)
+  #   Notifier.welcome(User::User.first).deliver_later
+  #   Notifier.welcome(User::User.first).deliver_later(wait: 1.hour)
+  #   Notifier.welcome(User::User.first).deliver_later(wait_until: 10.hours.from_now)
+  #   Notifier.welcome(User::User.first).deliver_later(priority: 10)
   #
   # Options:
   #
@@ -1724,10 +1724,10 @@ class ActionMailer::MessageDelivery
   # that the message will be sent bypassing checking +perform_deliveries+
   # and +raise_delivery_errors+, so use with caution.
   #
-  #   Notifier.welcome(User.first).deliver_later!
-  #   Notifier.welcome(User.first).deliver_later!(wait: 1.hour)
-  #   Notifier.welcome(User.first).deliver_later!(wait_until: 10.hours.from_now)
-  #   Notifier.welcome(User.first).deliver_later!(priority: 10)
+  #   Notifier.welcome(User::User.first).deliver_later!
+  #   Notifier.welcome(User::User.first).deliver_later!(wait: 1.hour)
+  #   Notifier.welcome(User::User.first).deliver_later!(wait_until: 10.hours.from_now)
+  #   Notifier.welcome(User::User.first).deliver_later!(priority: 10)
   #
   # Options:
   #
@@ -1749,7 +1749,7 @@ class ActionMailer::MessageDelivery
 
   # Delivers an email:
   #
-  #   Notifier.welcome(User.first).deliver_now
+  #   Notifier.welcome(User::User.first).deliver_now
   #
   # source://actionmailer//lib/action_mailer/message_delivery.rb#117
   def deliver_now; end
@@ -1757,7 +1757,7 @@ class ActionMailer::MessageDelivery
   # Delivers an email without checking +perform_deliveries+ and +raise_delivery_errors+,
   # so use with caution.
   #
-  #   Notifier.welcome(User.first).deliver_now!
+  #   Notifier.welcome(User::User.first).deliver_now!
   #
   # source://actionmailer//lib/action_mailer/message_delivery.rb#107
   def deliver_now!; end

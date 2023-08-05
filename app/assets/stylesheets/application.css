@@ -12,4 +12,37 @@
  *
  *= require_tree .
  *= require_self
- */
+*/
+
+:root {
+	--winter-sky: #FF206E;
+	--cultured: #F5F5F5;
+	--bg: #343434;
+	--lemon-glacier: #FBFF12;
+}
+h1 {
+	font-size: larger;
+	font-weight: 800;
+}
+
+button, input[type=submit] {
+	background-color: var(--winter-sky);
+	border-radius: 999999px;
+	display: inline-flex;
+	padding: 0.625rem 0.90625rem;
+	justify-content: center;
+	align-items: center;
+	gap: 0.625rem;
+	color: var(--cultured, #F5F5F5);
+	font-size: 1.25rem;
+	font-family: PP Telegraf;
+	line-height: 100%;
+	min-width: min-content;
+}
+
+input[type=text], input[type=email] {
+	background-color: var(--bg) !important;
+	border: 1.5px solid var(--cultured)!important;
+	border-radius: 5px !important;
+	min-width: 350px;
+}

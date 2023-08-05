@@ -4,11 +4,7 @@ class DomainsController < ApplicationController
   nested_layouts 'layouts/admin', 'layouts/application', only: [:index, :request_domain]
 
   def index
-    if !current_user
-      redirect_to controller: 'users', action: 'auth'
-    else
-      @domains = Domain.where(users_id: current_user)
-    end
+    @domains = Domain.where(users_id: current_user)
   end
 
   def dns
