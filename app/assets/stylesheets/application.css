@@ -35,14 +35,45 @@ button, input[type=submit] {
 	gap: 0.625rem;
 	color: var(--cultured, #F5F5F5);
 	font-size: 1.25rem;
-	font-family: PP Telegraf;
+	font-family: "Telegraf";
 	line-height: 100%;
 	min-width: min-content;
 }
 
-input[type=text], input[type=email] {
-	background-color: var(--bg) !important;
+input[type=text], input[type=email], input[type=number] {
+	background-color: rgba(245, 245, 245, 0.1) !important;
 	border: 1.5px solid var(--cultured)!important;
 	border-radius: 5px !important;
 	min-width: 350px;
+	color: white;
+}
+
+input[type=number]  {
+	min-width: 100px !important;
+	width: 100px !important;
+}
+
+.admin {
+	border: 2px dashed skyblue;
+}
+
+.flash {
+	padding: 0.625rem 0.90625rem;
+	border-radius: 10000000px;
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2rem;
+}
+.flash-notice {
+	background-color: cornflowerblue;
+}
+
+.hidden {
+	display: none;
+}
+
+.record-edit {
+	min-width: unset !important;
+	width: 150px;
 }

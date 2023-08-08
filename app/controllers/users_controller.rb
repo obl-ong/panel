@@ -1,13 +1,5 @@
 class UsersController < ApplicationController
 
-
-  def logout
-    session.delete(:current_user_id)
-    @_current_user = nil
-    reset_session
-    redirect_to root_url
-  end
-  
   def register
   end
   
@@ -20,7 +12,8 @@ class UsersController < ApplicationController
         
         redirect_to action: 'email_verification'
       else
-        redirect_to controller: 'auth', action: 'login', params: { from_register: true }
+        flash[:notice] =  "Looks like you already have an Obl.ong account"
+        redirect_to controller: 'auth', action: 'login'
       end
     else
       @user = User::User.new(email: params[:email], name: params[:name], verified: false, webauthn_id: WebAuthn.generate_user_id, otp_counter: 0, hotp_token: ROTP::Base32.random)
@@ -42,13 +35,17 @@ class UsersController < ApplicationController
   end
 
   def verify_email
-    user = User::User.find_by(id: session[:current_user_id])
+    user = self.current_user
     if user.use_otp(params[:otp].to_s) == true
       session[:email_verified] = true
       redirect_to controller: 'auth', action: 'create_key'
     else
       render inline: "<%= turbo_stream.replace \"error\" do %><p class=\"error\">Invalid OTP</p><% end %>", status: :unprocessable_entity, format: :turbo_stream
     end
+  end
+
+  def settings
+    user = self.current_user
   end
 
 end
