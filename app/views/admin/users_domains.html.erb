@@ -1,0 +1,21 @@
+<main class="admin p-4">
+    <h1 style="font-size: xx-large;" >Users / Domains</h1>
+    <br>
+    <table class="table table-auto">
+        <thead>
+            <tr>
+                <th>Host</th>
+                <th>Dash</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <% @domains.each do |d| %>
+                <tr>
+                    <td><%= d.host %></td>
+                    <td><%= link_to "View", domain_path(d), :style => "color: var(--lemon-glacier)" %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</main>

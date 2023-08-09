@@ -27,14 +27,16 @@ export default class extends Controller {
 	async create() {
 		try {
 			const key = await this.createKey()
+			let obj = key.toJSON();
+			obj.name = prompt("What would you like to name your passkey?");
 			const req = await fetch("/auth/add_key", {
 				method: "PATCH",
-				body: JSON.stringify(key), 
-  			credentials: 'include',
+				body: JSON.stringify(obj), 
+  				credentials: 'include',
 				headers: {
 					"X-CSRF-Token": this.csrfValue,
 					"Content-Type": "application/json",
-      		"Accept": "application/json"
+      				"Accept": "application/json"
 				}
 			})
 			const res = await req.json()
@@ -43,7 +45,11 @@ export default class extends Controller {
 				throw new Error(res.error);
 			}
 			
-			window.location.pathname = "/"
+			if(new URLSearchParams(window.location.search).get("from_settings") == 'true') {
+				window.location.pathname = "/settings"
+			} else {
+				window.location.pathname = "/"
+			}
 		} catch(e) {
 			console.error(e);
 		}

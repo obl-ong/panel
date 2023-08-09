@@ -1,0 +1,27 @@
+<%= turbo_frame_tag @domain do %>
+<a href="<%= domain_path(@domain) %>" class="flex flex-col p-4 items-start gap-[1.375rem] bg-text text-black shadow-md rounded-2xl h-full">
+    <h2 class="leading-none text-3 font-body">
+    <%= @domain.host + "." + ENV["DOMAIN"] %>
+    </h2>
+    <div class="flex flex-col items-start gap-2">
+    <% if @records.length > 0 %>
+        <% @records.each do |r| %>
+            <div class="flex flex-row items-center gap-2">
+                <span class="chip-blue"><%= r.type%></span>
+                <span class="leading-none text-1 max-w-[220px] whitespace-nowrap overflow-hidden text-ellipsis"><%= r.name %> → <%= r.content %></span>
+            </div>
+        <% end %>
+    <% else %>
+        <h2> No Records</h2>
+    <% end %>
+
+    </div>
+    <div style="flex-grow: 1;width: 100%;display: flex;">
+        <div class="flex flex-row content-between gap-2 justify-between w-full h-min self-end">
+            <span class="px-2 py-0.5 bg-pink rounded uppercase">Live</span>
+            <span class="rounded-full px-2 py-0.5 bg-blue uppercase">Manage →</span>
+        </div>
+    </div>
+</a>
+
+<% end %>

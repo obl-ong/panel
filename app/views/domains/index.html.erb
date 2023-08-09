@@ -4,32 +4,20 @@
 
 <div class="grid grid-cols-1 gap-8 lg:grid-cols-3 xl:grid-cols-3">
   <% @domains.each do |domain| %>
-    <a href="<%= domain_path(domain) %>" class="flex flex-col p-4 items-start gap-[1.375rem] bg-text text-black shadow-md rounded-2xl">
-      <h2 class="leading-none text-3 font-body">
-        <%= domain.host + "." + ENV["DOMAIN"] %>
-      </h2>
-      <div class="flex flex-col items-start gap-2">
-        <!-- TODO: records - this is just placeholder for now -->
-        <div class="flex flex-row items-center gap-2">
-          <span class="chip-blue">CNAME</span>
-          <span class="leading-none text-1">@ → fizzbuzz.github.io</span>
-        </div>
-        <div class="flex flex-row items-center gap-2">
-          <span class="chip-blue">MX</span>
-          <span class="leading-none text-1">@ → aspmx.l.google.com</span>
-        </div>
-        <div class="flex flex-row items-center gap-2">
-          <span class="chip-blue">A</span>
-          <span class="leading-none text-1">foo. → 69.42.0.231</span>
-        </div>
-      </div>
-      <div class="flex flex-row content-between gap-2">
-        <span class="px-2 py-0.5 bg-pink rounded uppercase">Live</span>
-      </div>
-    </a>
+    <%= turbo_frame_tag domain, src: show_domain_path(domain), loading: "lazy" %>
   <% end %>
+
+  <a href="/domains/request" class="flex flex-col p-4 gap-[1.375rem] bg-text text-black shadow-md rounded-2xl justify-center items-center h-full" style="justify-content: center">
+      <div style="background-color: rgb(65 234 212); border-radius: 99999px; padding: 0.5rem;">
+        <svg width="40" height="40" style="fill: var(--bg);" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="plus" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48" title="plus"><path d="M16,6c5.1,0 7.247,0.575 8.336,1.664c1.089,1.089 1.664,3.236 1.664,8.336c0,5.1 -0.575,7.247 -1.664,8.336c-1.089,1.089 -3.236,1.664 -8.336,1.664c-5.1,0 -7.247,-0.575 -8.336,-1.664c-1.089,-1.089 -1.664,-3.236 -1.664,-8.336c0,-5.1 0.575,-7.247 1.664,-8.336c1.089,-1.089 3.236,-1.664 8.336,-1.664Zm0,-2c10,0 12,2 12,12c0,10 -2,12 -12,12c-10,0 -12,-2 -12,-12c0,-10 2,-12 12,-12Zm-1,8c0,-0.552 0.448,-1 1,-1c0.552,0 1,0.448 1,1l0,3l3,0c0.552,0 1,0.448 1,1c0,0.552 -0.448,1 -1,1l-3,0l0,3c0,0.552 -0.448,1 -1,1c-0.552,0 -1,-0.448 -1,-1l0,-3l-3,0c-0.552,0 -1,-0.448 -1,-1c0,-0.552 0.448,-1 1,-1l3,0l0,-3Z"></path></svg>  
+      </div>
+      <h2 class="leading-none text-2" style="font-weight: 600">
+        Request Domain
+      </h2>
+  </a>
+  
   <% if @user.admin? %>
-      <%= form_with url: new_domain_path, method: :post do |form| %>
+      <%= form_with url: domains_path, method: :post do |form| %>
         <div class="flex flex-col gap-2 p-4 shadow-md rounded-2xl admin">
           <%= form.label :host, "Host:" %>
           <%= form.text_field :host %>
@@ -38,18 +26,6 @@
       <% end %>
   <% end %>
 </div>
-
-
-<!--
-
-<form action="/users/logout" method="GET">
-  <input type="submit" value="Logout">
-</form>
-<h1>All Domains</h1>
-
-<br>
-
--->
 
 </div>
 

@@ -1,0 +1,27 @@
+<main class="admin p-4">
+    <h1 style="font-size: xx-large;" >Users</h1>
+    <br>
+    <table class="table table-auto">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Verified?</th>
+                <th>Admin?</th>
+                <th>Domains</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <% @users.each do |u| %>
+                <tr>
+                    <td><%= u.name %></td>
+                    <td><%= u.email %></td>
+                    <td><%= u.verified? %></td>
+                    <td><%= u.admin? %></td>
+                    <td><%= link_to "View", admin_users_domains_path(u), :style => "color: var(--lemon-glacier)" %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</main>

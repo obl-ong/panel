@@ -3,6 +3,8 @@ require 'json'
 class AuthController < ApplicationController
   
   before_action :headers
+
+  skip_before_action :check_auth, :check_verified
   
   
   def login
@@ -46,7 +48,8 @@ class AuthController < ApplicationController
         webauthn_id: webauthn_credential.id,
         public_key: webauthn_credential.public_key,
         sign_count: webauthn_credential.sign_count,
-        user_users_id: session[:current_user_id]
+        user_users_id: session[:current_user_id],
+        name: params[:name]
       )
 
       credential.save
@@ -94,6 +97,22 @@ class AuthController < ApplicationController
     
     rescue WebAuthn::Error => e
       render json: { error: true, message: "An error occurred;" }
+    end
+  end
+
+  def destroy_key
+    cred = User::Credential.find_by(id: params[:credential_id])
+    if !(cred.user_users_id == current_user.id)
+      render status: 403, plain: "403 Forbidden"
+    end
+
+    if User::Credential.where(user_users_id: current_user.id).length == 1
+      flash[:notice] = "You can't remove your last credential without adding a new one"
+      redirect_to(controller: "users", action: "settings")
+    else
+      cred.destroy
+      redirect_to(controller: "users", action: "settings")
+
     end
   end
   

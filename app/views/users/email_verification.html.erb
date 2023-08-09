@@ -7,6 +7,7 @@
             <div>
                 <%= form.text_field :code, placeholder: "One-time code" %>
             </div>
+			<%= form.hidden_field :skip_passkey, value: params[:skip_passkey] %>
             <%= form.submit "Verify" %>
         <% end %>
         <%= link_to "Resend Code" %>
