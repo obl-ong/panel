@@ -1,28 +1,20 @@
-# README
+# Obl.ong
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the backbone for Obl.ong, a nonprofit service providing free, quality domains for all. You can run this on your infrastructure if you're looking to manage subdomains or an internal TLD.
 
-Things you may want to cover:
+## Building
 
-* Ruby version
+- Install Ruby **3.1.2**
+- Install Ruby on Rails with Bundler
+- Pull submodules
+- Run `rails credentials:edit` and add these keys:
+  ```
+  dnsimple:
+    access_token: DNSIMPLE_ACCESS_TOKEN
+    account_id: ACCOUNT_ID
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-## Development
-
-For hot reload functionality, make sure to have Redis installed.
+  postmark_api_token: "POSTMARK_API_TOKEN"
+  ```
+- Run `rails tailwindcss:build`
+- Edit `config/application.rb` to reflect your environment
+- Start the server with `bin/rails server`
