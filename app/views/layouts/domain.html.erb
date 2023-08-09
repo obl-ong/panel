@@ -29,7 +29,7 @@
     </div>
     <div class="flex-1 flex flex-col gap-8">
         <h2 class="font-heading text-4 md:text-5 lg:text-6 text-blue">
-            <%= @domain.host %><wbr><span class="opacity-50">.<%= ENV["DOMAIN"] %></span>
+            <%= @domain.host %><wbr><span class="opacity-50">.<%= Rails.application.config.domain %></span>
         </h2>
         <div>
             <%= yield_nested %>

@@ -106,7 +106,8 @@ class Record
 
 
     def self.all
-        dnsimple_records = client.zones.all_zone_records(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"]).data.select { |record| !record.system_record }
+        dnsimple_records = client.zones.all_zone_records(Rails.application.credentials.dnsimple.account_id, Rails.application.config.domain).data.select { |record| !record.system_record }
+        
         records = []
         for r in dnsimple_records
             if !r.name.blank?
@@ -185,7 +186,8 @@ class Record
     
     def persist
         if @name == "@" || @name == "" || @name == nil
-            record = client.zones.create_zone_record(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], name: Domain.find(domain_id).host , type: type, content: content, ttl:  ttl, priority: priority)
+
+            record = client.zones.create_zone_record(Rails.application.credentials.dnsimple.account_id, Rails.application.config.domain, name: Domain.find(domain_id).host , type: type, content: content, ttl:  ttl, priority: priority)
             @_id = record.data.id
 
             ttl = record.data.ttl
@@ -197,7 +199,8 @@ class Record
       
             name.gsub!("@", Domain.find(domain_id).host)
       
-            record = client.zones.create_zone_record(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], name: name + "." + Domain.find(domain_id).host, type: type, content: content, ttl: ttl, priority: priority)
+            record = client.zones.create_zone_record(Rails.application.credentials.dnsimple.account_id, Rails.application.config.domain, name: name + "." + Domain.find(domain_id).host, type: type, content: content, ttl: ttl, priority: priority)
+
             @_id = record.data.id
 
             ttl = record.data.ttl
@@ -209,7 +212,7 @@ class Record
 
     def update_record
         if name == "@" || name == "" || name == nil
-            record = client.zones.update_zone_record(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], id, name: Domain.find(domain_id).host , type: type, content: content, ttl:  ttl, priority: priority)
+            record = client.zones.update_zone_record(Rails.application.credentials.dnsimple.account_id, Rails.application.config.domain, id, name: Domain.find(domain_id).host , type: type, content: content, ttl:  ttl, priority: priority)
             @_id = record.data.id
 
             ttl = record.data.ttl
@@ -221,7 +224,7 @@ class Record
       
             name.gsub!("@", Domain.find(domain_id).host)
       
-            record = client.zones.update_zone_record(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], id, name: name + "." + Domain.find(domain_id).host , type: type, content: content, ttl:  ttl, priority: priority)
+            record = client.zones.update_zone_record(Rails.application.credentials.dnsimple.account_id, Rails.application.config.domain, id, name: name + "." + Domain.find(domain_id).host , type: type, content: content, ttl:  ttl, priority: priority)
             @_id = record.data.id
 
             ttl = record.data.ttl
@@ -231,7 +234,7 @@ class Record
     end
 
     def destroy_record
-        client.zones.delete_zone_record(Rails.application.credentials.dnsimple.account_id, ENV["DOMAIN"], id)
+        client.zones.delete_zone_record(Rails.application.credentials.dnsimple.account_id, Rails.application.config.domain, id)
         @_persisted = false
         true
     end

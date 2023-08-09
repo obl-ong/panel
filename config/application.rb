@@ -25,5 +25,10 @@ module AdminOblOng
       api_token: Rails.application.credentials.postmark_api_token
     }
     
+    # Change to where you're hosting Obl.ong in production
+    config.webauthn_origin = "https://admin.obl.ong"
+
+    # Change to the domain where you're registering subdomains
+    config.domain = "obl.ong"
   end
 end

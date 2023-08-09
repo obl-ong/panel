@@ -67,4 +67,7 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # Origin for the WebAuthn RP
+  config.webauthn_origin = "http://localhost:3000"
 end
