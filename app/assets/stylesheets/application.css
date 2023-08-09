@@ -63,7 +63,12 @@ input[type=number]  {
 	width: fit-content;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 2rem;
+	margin-bottom: 2rem;
+	position: absolute;
+	left: calc(50vw - 50cqw);
+	right: calc(50vw - 50cqw);
+	container-type: normal;
+	bottom: 0;
 }
 .flash-notice {
 	background-color: cornflowerblue;

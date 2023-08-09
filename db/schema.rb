@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_26_065053) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_09_044448) do
   create_table "domains", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_26_065053) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_users_id"
+    t.string "name"
     t.index ["user_users_id"], name: "index_user_credentials_on_user_users_id"
   end
 

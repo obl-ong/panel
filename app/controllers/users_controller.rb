@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
 
+  skip_before_action :check_auth, :check_verified, only: [:create, :register, :email_verification, :verify_email]
+  
+  nested_layouts 'layouts/admin', only: [:settings]
+
   def register
   end
   
@@ -38,14 +42,38 @@ class UsersController < ApplicationController
     user = self.current_user
     if user.use_otp(params[:otp].to_s) == true
       session[:email_verified] = true
-      redirect_to controller: 'auth', action: 'create_key'
+      if params[:skip_passkey] == 'true'
+        user.verified = true
+        user.save
+        redirect_to controller: 'domains', action: 'index'
+      else
+        redirect_to controller: 'auth', action: 'create_key'
+      end
     else
       render inline: "<%= turbo_stream.replace \"error\" do %><p class=\"error\">Invalid OTP</p><% end %>", status: :unprocessable_entity, format: :turbo_stream
     end
   end
 
   def settings
-    user = self.current_user
+    @user = self.current_user
+
+    @credentials = User::Credential.where(user_users_id: @user.id)
+  end
+
+  def update
+    @user = self.current_user
+
+    @user.name = params[:name]
+    @user.email = params[:email]
+
+    if @user.email_changed?
+      @user.verified = false
+    end
+
+    @user.save
+
+    redirect_to(controller: "users", action: "settings")
+
   end
 
 end

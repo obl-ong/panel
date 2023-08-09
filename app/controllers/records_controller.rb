@@ -1,6 +1,8 @@
 class RecordsController < ApplicationController
     # TODO: AUTHORIZE PEOPLE TO MAKE SURE THEY HAVE RECORD RIGHTS
     nested_layouts 'layouts/admin', 'layouts/domain', 'layouts/record', 'layouts/application'
+    
+    include DomainAuthorization
 
     def index
         @records = Record.where_host(params[:host])
