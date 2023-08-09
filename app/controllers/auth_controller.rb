@@ -42,14 +42,14 @@ class AuthController < ApplicationController
     begin
       webauthn_credential.verify(session[:creation_challenge])
 
-      credo = User::Credential.create(
+      credential = User::Credential.create(
         webauthn_id: webauthn_credential.id,
         public_key: webauthn_credential.public_key,
         sign_count: webauthn_credential.sign_count,
         user_users_id: session[:current_user_id]
       )
 
-      credo.save
+      credential.save
 
       if session[:email_verified] && user.verified != true
         user.verified = true
@@ -98,6 +98,13 @@ class AuthController < ApplicationController
   end
   
   def unsupported
+  end
+
+  def logout
+    session.delete(:current_user_id)
+    @_current_user = nil
+    reset_session
+    redirect_to root_url
   end
   
   private

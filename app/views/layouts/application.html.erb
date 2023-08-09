@@ -14,6 +14,12 @@
   </head>
 
   <body>
+    <% flash.each do |type, msg| %>
+      <div class="flash flash-<%= type %>">
+        <%= msg %>
+      </div>
+    <% end %>
+
     <%= render '/rails_hotreload/stream' if Rails.env.development? %>
     <main>
       <%= yield_nested %>

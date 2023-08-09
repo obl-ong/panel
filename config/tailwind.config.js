@@ -119,15 +119,15 @@ module.exports = {
       };
       
       const chip = extend(componentBase, ({ text, bg }) => ({
-        padding: "0.5rem 0.6875rem",
+        padding: "0.5rem 0.4rem",
         borderRadius: "100px",
         backgroundColor: bg,
         color: text,
-        fontSize: "1.25rem",
-        lineHeight: "100%",
+        fontSize: "0.75rem",
+        lineHeight: "70%",
         fontWeight: 500,
         fontFamily: theme("fontFamily.body"),
-        textTransform: "uppercase"
+        textTransform: "uppercase",
       }));
 
       const input = extend(componentBase({ bg: theme("colors.blue") }), {

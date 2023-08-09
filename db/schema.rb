@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_23_062239) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_26_065053) do
   create_table "domains", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_23_062239) do
     t.string "hotp_token"
     t.integer "otp_counter"
     t.integer "otp_last_minted"
+    t.boolean "admin"
   end
 
   add_foreign_key "domains", "user_users", column: "user_users_id"
