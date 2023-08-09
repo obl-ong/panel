@@ -8,6 +8,7 @@ This is the backbone for Obl.ong, a nonprofit service providing free, quality do
 - Install Ruby on Rails with Bundler
 - Pull submodules
 - Run `rails credentials:edit` and add these keys:
+  
   ```
   dnsimple:
     access_token: DNSIMPLE_ACCESS_TOKEN
@@ -15,6 +16,7 @@ This is the backbone for Obl.ong, a nonprofit service providing free, quality do
 
   postmark_api_token: "POSTMARK_API_TOKEN"
   ```
+  
 - Run `rails tailwindcss:build`
 - Edit `config/application.rb` to reflect your environment
 - Start the server with `bin/rails server`
