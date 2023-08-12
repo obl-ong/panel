@@ -8,7 +8,9 @@ class AuthController < ApplicationController
   
   
   def login
-    options = WebAuthn::Credential.options_for_get(allow: User::Credential.all.map { |c| c.webauthn_id })
+
+    # allow: User::Credential.all.map { |c| c.webauthn_id }
+    options = WebAuthn::Credential.options_for_get( rp_id: WebAuthn.configuration.rp_id)
     
     session[:authentication_challenge] = options.challenge
     

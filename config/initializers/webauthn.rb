@@ -20,7 +20,7 @@ WebAuthn.configure do |config|
   # In this case the default would be "auth.example.com", but you can set it to
   # the suffix "example.com"
   #
-  # config.rp_id = "example.com"
+  config.rp_id = "admin.obl.ong"
 
   # Configure preferred binary-to-text encoding scheme. This should match the encoding scheme
   # used in your client-side (user agent) code before sending the credential to the server.

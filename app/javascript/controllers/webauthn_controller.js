@@ -58,7 +58,7 @@ export default class extends Controller {
 	}
 	
 	async askForKey() {
-		const options = Auth.parseRequestOptionsFromJSON({ publicKey: JSON.parse(this.optionsValue)});
+		const options = Auth.parseRequestOptionsFromJSON({ publicKey: {...JSON.parse(this.optionsValue), userVerification: "preferred"}});
 		const response = await Auth.get(options);
 		return response.toJSON();
 	}
