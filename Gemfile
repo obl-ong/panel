@@ -97,3 +97,6 @@ gem 'webauthn'
 gem 'rotp'
 
 gem 'postmark-rails'
+
+
+gem 'pg'
