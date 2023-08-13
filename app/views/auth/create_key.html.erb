@@ -6,7 +6,9 @@
 			<h1>Create Passkey</h1>
 			<p>You'll use this instead of a password to log in</p>
 			<button data-action="click->webauthn#create">Create Passkey</button>
-			<%= link_to "Skip without adding passkey", url_for( :skip_passkey => 'true' ) %>
+			<% if !params[:from_settings] %>
+				<%= link_to "Skip without adding passkey", url_for( :skip_passkey => 'true' ) %>
+			<% end %>
 			<p data-webauthn-target="error" class="error"></p>
 		</section>
     <% end %>

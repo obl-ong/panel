@@ -68,6 +68,8 @@ class AuthController < ApplicationController
     begin
 
     user = User::User.find_by(id: session[:current_user_id])
+
+    puts user
         
     if session[:email_verified] != true && user.verified != true
       redirect_to controller: "users", action: "email_verification" and return
@@ -96,11 +98,11 @@ class AuthController < ApplicationController
       session[:authenticated] = true
     
       if params[:from_settings]
-        redirect_to "/settings", notice: "Disable insecure email code authentication"
+        flash[:notice] = "Disable insecure email code authentication"
+      else
+        flash[:notice] = "To disable insecure email code authentication, head to Account Settings."
       end
-
-      redirect_to "/", notice: "To disable insecure email code authentication, head to Account Settings."
-
+      render json: { authenticated: true }
     rescue WebAuthn::Error => e
       render json: { error: true, message: "An error occurred." }
     end
