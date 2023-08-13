@@ -82,3 +82,14 @@ input[type=number]  {
 	min-width: unset !important;
 	width: 150px;
 }
+
+.outline-pink-border {
+	background-color: transparent !important; 
+	background: transparent !important;
+	border: 2px solid var(--winter-sky);
+	transition: ease-in-out 0.1s;
+}
+
+.outline-pink-border:hover {
+	background-color: var(--winter-sky)  !important;
+}

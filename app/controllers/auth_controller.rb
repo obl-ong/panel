@@ -16,13 +16,43 @@ class AuthController < ApplicationController
     
     @options = options.as_json
   end
+
+  def email
+    u = User::User.find_by(email: params[:email])
+
+    if(u.blank?)
+      redirect_to(controller: "users", action: "register")
+    end
+
+    User::Mailer.with(user: u).verification_email.deliver_later
+  end
   
+  def verify_code
+    u = User::User.find_by(email: params[:email])
+    if u.use_otp(params[:otp].to_s) == true
+      session[:authenticated] = true
+      session[:current_user_id] = u.id
+        
+      redirect_to(root_path, notice: if User::Credential.where(user_users_id: u.id).length == 0 then "Passkeys are more secure & convienient way to login. Head to Account Settings to add one." else "To disable insecure email code authentication, head to Account Settings." end)
+    else
+      render inline: "<%= turbo_stream.replace \"error\" do %><p class=\"error\">Invalid OTP</p><% end %>", status: :unprocessable_entity, format: :turbo_stream
+    end
+  end
+
+
   def create_key
 
     user = User::User.find_by(id: session[:current_user_id])
 
     if session[:email_verified] != true && user.verified != true
       redirect_to controller: "users", action: "email_verification" and return
+    end
+
+    if params[:skip_passkey] == 'true'
+      user.verified = true
+      user.save
+      session[:authenticated] = true
+      redirect_to(root_path, notice: "To add a passkey in the future, head to Account Settings")
     end
     
 
@@ -35,6 +65,8 @@ class AuthController < ApplicationController
   
   def add_key
 
+    begin
+
     user = User::User.find_by(id: session[:current_user_id])
         
     if session[:email_verified] != true && user.verified != true
@@ -43,7 +75,7 @@ class AuthController < ApplicationController
 
     webauthn_credential = WebAuthn::Credential.from_create(params)
 
-    begin
+    
       webauthn_credential.verify(session[:creation_challenge])
 
       credential = User::Credential.create(
@@ -63,7 +95,12 @@ class AuthController < ApplicationController
         
       session[:authenticated] = true
     
-      render json: { authenticated: true }
+      if params[:from_settings]
+        redirect_to "/settings", notice: "Disable insecure email code authentication"
+      end
+
+      redirect_to "/", notice: "To disable insecure email code authentication, head to Account Settings."
+
     rescue WebAuthn::Error => e
       render json: { error: true, message: "An error occurred." }
     end
@@ -89,6 +126,8 @@ class AuthController < ApplicationController
       
       session[:authenticated] = true
       session[:current_user_id] = stored_credential.user_users_id 
+
+      flash[:notice] = "To disable insecure email code authentication, head to Account Settings."
         
       render json: { authenticated: true }
       

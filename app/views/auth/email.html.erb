@@ -1,15 +1,15 @@
 <section>
     <%= image_tag "oval.svg", size: "200" %>
-	
-    <%= turbo_frame_tag "registration" do %>
-		<section data-controller="webauthn" data-webauthn-options-value="<%= @options.to_json %>" data-webauthn-csrf-value="<%= session[:_csrf_token]%>">
-			<h1>Create Passkey</h1>
-			<p>You'll use this instead of a password to log in</p>
-			<button data-action="click->webauthn#create">Create Passkey</button>
-			<%= link_to "Skip without adding passkey", url_for( :skip_passkey => 'true' ) %>
-			<p data-webauthn-target="error" class="error"></p>
-		</section>
+    <h1>Enter the login code</h1>
+    <p>A one-time code was sent to your email</p>
+    <%= form_with url: "/auth/verify_code", method: :post do |form| %>
+        <div>
+            <%= form.text_field :code, placeholder: "One-time code" %>
+        </div>
+        <%= form.hidden_field :email, value: params[:email] %>
+        <%= form.submit "Verify" %>
     <% end %>
+    <%= link_to "Resend Code" %>
     <div>
         <p>Having trouble? <a href="mailto:support@obl.ong">support@obl.ong</a></p>
         <p><a href="https://obl.ong">What's Obl.ong?</a></p>
@@ -60,14 +60,22 @@
 	form {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: 1.5rem;
 	}
 
-	section, turbo-frame {
+	input[type=submit] {
+		align-self: center;
+	}
+
+	section {
 		display: flex;
 		flex-direction: column;
 		gap: 1.25rem;
 		align-items: center;
 		text-align: center;
+	}
+
+	label {
+		text-align: left;
 	}
 </style>

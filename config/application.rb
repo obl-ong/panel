@@ -27,6 +27,7 @@ module AdminOblOng
     
     # Change to where you're hosting Obl.ong in production
     config.webauthn_origin = "https://admin.obl.ong"
+    config.webauthn_rp_id = "admin.obl.ong"
 
     # Change to the domain where you're registering subdomains
     config.domain = "obl.ong"

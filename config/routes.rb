@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   
   get 'auth/login'
   get 'auth/logout'
+  get 'auth/email', as: "auth_email"
+  post 'auth/verify_code', as: "verify_code"
   # need to send request body, made it POST
   post 'auth/verify_key'
   

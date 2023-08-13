@@ -1,7 +1,7 @@
 WebAuthn.configure do |config|
   # This value needs to match `window.location.origin` evaluated by
   # the User Agent during registration and authentication ceremonies.
-  config.origin = Rails.application.config.webauthn_origin
+  config.origin =  Rails.env.production? ? Rails.application.config.webauthn_origin : "https://localhost:3000"
 
   # Relying Party name for display purposes
   config.rp_name = "Obl.ong"
@@ -20,7 +20,7 @@ WebAuthn.configure do |config|
   # In this case the default would be "auth.example.com", but you can set it to
   # the suffix "example.com"
   #
-  config.rp_id = "admin.obl.ong"
+  config.rp_id = Rails.env.production? ? Rails.application.config.webauthn_rp_id : "localhost"
 
   # Configure preferred binary-to-text encoding scheme. This should match the encoding scheme
   # used in your client-side (user agent) code before sending the credential to the server.

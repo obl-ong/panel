@@ -45,6 +45,7 @@ class UsersController < ApplicationController
       if params[:skip_passkey] == 'true'
         user.verified = true
         user.save
+        session[:authenticated] = true
         redirect_to controller: 'domains', action: 'index'
       else
         redirect_to controller: 'auth', action: 'create_key'
