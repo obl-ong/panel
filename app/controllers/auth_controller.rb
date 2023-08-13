@@ -22,6 +22,9 @@ class AuthController < ApplicationController
 
     if(u.blank?)
       redirect_to(controller: "users", action: "register")
+    elsif(u.disable_email_auth?)
+      flash[:notice] = "Email login codes are disabled"
+      redirect_to(controller: "auth", action: "login")
     end
 
     User::Mailer.with(user: u).verification_email.deliver_later
@@ -67,20 +70,18 @@ class AuthController < ApplicationController
 
     begin
 
-    user = User::User.find_by(id: session[:current_user_id])
+      user = User::User.find_by(id: session[:current_user_id])
+          
+      if session[:email_verified] != true && user.verified != true
+        redirect_to controller: "users", action: "email_verification" and return
+      end
 
-    puts user
-        
-    if session[:email_verified] != true && user.verified != true
-      redirect_to controller: "users", action: "email_verification" and return
-    end
+      webauthn_credential = WebAuthn::Credential.from_create(params)
 
-    webauthn_credential = WebAuthn::Credential.from_create(params)
-
-    
+      
       webauthn_credential.verify(session[:creation_challenge])
 
-      credential = User::Credential.create(
+      credential = User::Credential.new(
         webauthn_id: webauthn_credential.id,
         public_key: webauthn_credential.public_key,
         sign_count: webauthn_credential.sign_count,
@@ -88,13 +89,15 @@ class AuthController < ApplicationController
         name: params[:name]
       )
 
+      puts credential
+
       credential.save
 
       if session[:email_verified] && user.verified != true
         user.verified = true
         user.save
       end
-        
+          
       session[:authenticated] = true
     
       if params[:from_settings]
@@ -102,9 +105,11 @@ class AuthController < ApplicationController
       else
         flash[:notice] = "To disable insecure email code authentication, head to Account Settings."
       end
+
       render json: { authenticated: true }
+    
     rescue WebAuthn::Error => e
-      render json: { error: true, message: "An error occurred." }
+      render json: { error: true, message: e }
     end
   end
   
@@ -167,6 +172,14 @@ class AuthController < ApplicationController
     @_current_user = nil
     reset_session
     redirect_to root_url
+  end
+
+  def update_email_auth
+    u = current_user
+
+    u.disable_email_auth = !(ActiveModel::Type::Boolean.new.cast(params[:checked]))
+
+    u.save
   end
   
   private

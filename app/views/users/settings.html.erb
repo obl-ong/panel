@@ -19,6 +19,15 @@
     <br>
     <section>
         <h2 class="admin-h2">Passkeys</h2>
+        <%= form_with url: "/auth/update_email_auth", method: :patch do |form| %>
+            <%= form.label "Allow insecure email login codes", for: :checked %>
+            <br>
+            <%= form.check_box :checked, checked: !@user.disable_email_auth %>
+            <br>
+            <br>
+            <%= form.submit "Save" %>
+        <% end %>
+        <br>
         <div class="flex flex-row flex-wrap max-w-sm gap-4">
             <% @credentials.each do |c| %>
                 <div class="flex flex-row bg-black p-4 rounded w-60 justify-between">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_09_044448) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_13_182334) do
   create_table "domains", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -41,6 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_044448) do
     t.integer "otp_counter"
     t.integer "otp_last_minted"
     t.boolean "admin"
+    t.boolean "disable_email_auth"
   end
 
   add_foreign_key "domains", "user_users", column: "user_users_id"

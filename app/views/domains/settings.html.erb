@@ -5,10 +5,11 @@
 </form>
 
 <% if @_current_user.admin? %>
+
   <div class="admin" style="margin-top: 1rem; padding: 0.5rem">
   
     <h2 class="admin-h2">Transfer</h2>
-    <p>Current user: <%= @_current_user.id %>, <%= @_current_user.email %></p>
+    <p>Current user: <%= @domain.user_users_id %>, <%=  User::User.find_by(id: @domain.user_users_id).email %></p>
     <br>
     <br>
     <%= form_with url: transfer_domain_path(@domain), method: :patch do |form| %>

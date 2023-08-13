@@ -42,7 +42,7 @@ export default class extends Controller {
 			const res = await req.json()
 			
 			if(res.error) {
-				throw new Error(res.error);
+				throw new Error(res.message);
 			}
 			
 			if(new URLSearchParams(window.location.search).get("from_settings") == 'true') {

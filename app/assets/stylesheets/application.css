@@ -64,7 +64,7 @@ input[type=number]  {
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 2rem;
-	position: absolute;
+	position: fixed;
 	left: calc(50vw - 50cqw);
 	right: calc(50vw - 50cqw);
 	container-type: normal;
