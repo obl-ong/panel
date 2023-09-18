@@ -46,6 +46,8 @@ class DomainsController < ApplicationController
     else
       render json: @domain.errors, status: 418
     end
+    DomainMailer.with(email: User::User.find_by(id: @domain.user_users_id).email, domain: @domain).domain_created_email.deliver_later
+
   end
 
   def transfer
