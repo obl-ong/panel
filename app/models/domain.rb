@@ -7,6 +7,7 @@ class Domain < ApplicationRecord
   
   after_create do
     Record.create(domain_id: id, name: nil, type: "URL", content: "https://parking.obl.ong", ttl: 300, priority: 0)
+    DomainMailer.with(user: User.find_by(id: user_users_id), domain: self).domain_created_email.deliver_later
   end
 
   before_destroy do
