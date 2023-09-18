@@ -52,6 +52,7 @@ class DomainsController < ApplicationController
     @domain = Domain.find_by(host: params['host'])
     @domain.user_users_id = params['new_user_id']
     @domain.save
+    DomainMailer.with(user: User::User.find_by(id: @domain.user_users_id), domain: @domain).domain_created_email.deliver_later
   end
 
   def show
