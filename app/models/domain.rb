@@ -14,6 +14,11 @@ class Domain < ApplicationRecord
     Record.destroy_all_host!(host)
   end
 
+  after_update, :if => :user_users_changed? do 
+    DomainMailer.with(user: User.find_by(id: user_users_id), domain: self).domain_created_email.deliver_later
+     
+  end
+
   def to_param
     host
   end
