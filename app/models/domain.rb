@@ -4,7 +4,7 @@ class Domain < ApplicationRecord
   validates :host, uniqueness: true
   validates :user_users_id, presence: { message: "User ID is not present" }
 
-  after_update :send_creation_email, if: :user_users_changed?
+  after_update :send_creation_email, if: :user_users_id_changed?
 
   after_create do
     Record.create(domain_id: id, name: nil, type: "URL", content: "https://parking.obl.ong", ttl: 300, priority: 0)
