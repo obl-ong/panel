@@ -18,21 +18,27 @@ class AuthController < ApplicationController
   end
 
   def email
-    u = User::User.find_by(email: params[:email])
+    user = User::User.find_by(email: params[:email])
 
-    if(u.blank?)
+    if(user.blank?)
       redirect_to(controller: "users", action: "register")
-    elsif(u.disable_email_auth?)
+    elsif(user.disable_email_auth?)
       flash[:notice] = "Email login codes are disabled"
       redirect_to(controller: "auth", action: "login")
     end
 
-    User::Mailer.with(user: u).verification_email.deliver_later
+
+    if !(Time.now.to_i <= user.otp_last_minted + 600) || params[:resend] == "true" then
+      User::Mailer.with(user: user).verification_email.deliver_later
+    end
+
   end
   
   def verify_code
+
     u = User::User.find_by(email: params[:email])
-    if u.use_otp(params[:otp].to_s) == true
+
+    if u.use_otp(params[:code]) == true
       session[:authenticated] = true
       session[:current_user_id] = u.id
         

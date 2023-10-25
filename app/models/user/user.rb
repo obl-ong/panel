@@ -3,13 +3,12 @@ class User::User < ApplicationRecord
   has_many :user_credentials
 
 
+  after_initialize do
+    @hotp = ROTP::HOTP.new(self.hotp_token)
+  end
+
   def mint_otp
-    self.otp_last_minted = nil
-    self.otp_counter = self.otp_counter.to_i + 1
-    self.save
-    
-    hotp = ROTP::HOTP.new(self.hotp_token)
-    otp = hotp.at(self.otp_counter)
+    otp = @hotp.at(self.otp_counter)
     self.otp_last_minted = Time.now.to_i
     self.save
     
@@ -17,15 +16,16 @@ class User::User < ApplicationRecord
   end 
 
   def use_otp(token)
-    hotp = ROTP::HOTP.new(self.hotp_token)
-    hotp.verify(token, self.otp_counter)
+    if @hotp.verify(token.to_s, self.otp_counter.to_i) != nil && 
+      Time.now.to_i <= self.otp_last_minted + 600 then
 
-    now = Time.now.to_i
-
-    if self.otp_last_minted != nil && now <= self.otp_last_minted + 600
       self.otp_last_minted = nil
-      self.save
+      self.otp_counter += 1
       true
+
+    else
+
+      false
     end
   end 
   

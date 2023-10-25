@@ -9,7 +9,9 @@
         <%= form.hidden_field :email, value: params[:email] %>
         <%= form.submit "Verify" %>
     <% end %>
-    <%= link_to "Resend Code" %>
+	<p id="error" class="error"></p>
+
+    <%= link_to "Resend Code", params: { resend: true, email: params[:email] } %>
     <div>
         <p>Having trouble? <a href="mailto:support@obl.ong">support@obl.ong</a></p>
         <p><a href="https://obl.ong">What's Obl.ong?</a></p>
