@@ -39,3 +39,5 @@
 
 # different for diff development machines
 config/credentials.yml.enc
+
+dump.rdb
