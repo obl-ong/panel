@@ -28,7 +28,7 @@ class AuthController < ApplicationController
     end
 
 
-    if !(Time.now.to_i <= user.otp_last_minted + 600) || params[:resend] == "true" then
+    if Time.now.to_i > (user.otp_last_minted.nil? ? 0 : user.otp_last_minted) + 600 || params[:resend] == "true" then
       User::Mailer.with(user: user).verification_email.deliver_later
     end
 

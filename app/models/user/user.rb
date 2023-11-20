@@ -8,6 +8,7 @@ class User::User < ApplicationRecord
   end
 
   def mint_otp
+    self.otp_counter += 1
     otp = @hotp.at(self.otp_counter)
     self.otp_last_minted = Time.now.to_i
     self.save
