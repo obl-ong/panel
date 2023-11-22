@@ -20,16 +20,20 @@ class AuthController < ApplicationController
   def email
     user = User::User.find_by(email: params[:email])
 
-    if(user.blank?)
+    if(!user)
       redirect_to(controller: "users", action: "register")
+      return
     elsif(user.disable_email_auth?)
       flash[:notice] = "Email login codes are disabled"
       redirect_to(controller: "auth", action: "login")
+      return
     end
 
 
-    if Time.now.to_i > (user.otp_last_minted.nil? ? 0 : user.otp_last_minted) + 600 || params[:resend] == "true" then
+    if Time.now.to_i > (user.try(:otp_last_minted).nil? ? 0 : user.otp_last_minted) + 600 || params[:resend] == "true" then
       User::Mailer.with(user: user).verification_email.deliver_later
+      if params[:resend] == "true" then flash[:notice] = "Sent email code" end
+
     end
 
   end
