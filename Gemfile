@@ -100,3 +100,7 @@ gem 'postmark-rails'
 
 
 gem 'pg'
+
+gem "sentry", "~> 0.5.3"
+
+gem "sentry-rails", "~> 5.13"
