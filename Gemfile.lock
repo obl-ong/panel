@@ -264,6 +264,12 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sentry (0.5.3)
+    sentry-rails (5.13.0)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.13.0)
+    sentry-ruby (5.13.0)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     solargraph (0.48.0)
       backport (~> 1.2)
       benchmark
@@ -391,6 +397,8 @@ DEPENDENCIES
   rotp
   rubocop
   selenium-webdriver
+  sentry (~> 0.5.3)
+  sentry-rails (~> 5.13)
   solargraph
   sorbet
   sorbet-runtime

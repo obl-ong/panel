@@ -20,7 +20,22 @@ module AdminOblOng
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.action_mailer.delivery_method = :postmark
+    #config.action_mailer.smtp_settings = {
+      #address:         'mail.obl.ong',
+      #port:            587,
+      #domain:          'obl.ong',
+      #user_name:       Rails.application.credentials.smtp.user_name,
+      #password:        Rails.application.credentials.smtp.password,
+      #authentication:  'plain',
+      #enable_starttls: true,
+     # open_timeout:    5,
+    #  read_timeout:    5 
+   # }
+    
 
+    config.sentry = true
+
+    
     config.action_mailer.postmark_settings = {
       api_token: Rails.application.credentials.postmark_api_token
     }
