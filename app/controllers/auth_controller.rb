@@ -10,7 +10,7 @@ class AuthController < ApplicationController
   def login
 
     # allow: User::Credential.all.map { |c| c.webauthn_id }
-    options = WebAuthn::Credential.options_for_get( rp_id: WebAuthn.configuration.rp_id)
+    options = WebAuthn::Credential.options_for_get(rp_id: WebAuthn.configuration.rp_id)
     
     session[:authentication_challenge] = options.challenge
     
@@ -70,8 +70,14 @@ class AuthController < ApplicationController
     
 
     @options = WebAuthn::Credential.options_for_create(
-      user: { id: user.webauthn_id, name: user.email }
-    )
+      user: { id: user.webauthn_id, name: user.email, display_name: user.name },
+      authenticator_selection: {
+        residentKey: "required",
+        userVerification: "preferred"
+      },
+      extensions: {
+        "credProps": true
+      })
     
     session[:creation_challenge] = @options.challenge
   end

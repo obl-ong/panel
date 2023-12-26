@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import * as Auth from "@github/webauthn-json/browser-ponyfill";
 import { encode } from 'url-safe-base64'
 
+
 function utf8_to_b64(str) {
   return window.btoa(unescape(encodeURIComponent(str)));
 }
@@ -16,11 +17,13 @@ export default class extends Controller {
 	  if (typeof(PublicKeyCredential) == "undefined") {
 	    window.location.pathname = "/auth/unsupported"
 	  }
+
+	  window.Auth = Auth
 	}
 	
 	async createKey() {
 		const options = Auth.parseCreationOptionsFromJSON({ publicKey: JSON.parse(this.optionsValue)});
-		const response = await Auth.create(options);
+		const response = await Auth.create(options);		
 		return response;
 	}
 	
