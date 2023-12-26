@@ -34,10 +34,14 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-/app/assets/builds/*
-!/app/assets/builds/.keep
+#/app/assets/builds/*
 
 # different for diff development machines
 config/credentials.yml.enc
 
 dump.rdb
+
+/node_modules
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
