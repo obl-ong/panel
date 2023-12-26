@@ -37,17 +37,22 @@ class Record
         obj
     end
 
-
-    def self.where_host(host)
-        domain = Domain.find_by(host: host)
-        records = []
-        for r in self.all
+    def self.filter_dnsimple_host(host, domains)
+      domain = Domain.find_by(host: host)
+        Rails.cache.fetch([domain, "records"], expires_in: 1.week) do
+          records = []
+          for r in domains
             if r.domain_id == domain.id  
                 records.push(r)
             end
-        end
+          end
 
-        records
+          records
+      end
+    end
+
+    def self.where_host(host)
+      self.filter_dnsimple_host(host, self.all)
     end
 
     def self.dnsimple_to_record(obj)
@@ -81,6 +86,8 @@ class Record
         changes_applied
 
         broadcast_replace_to('records:main', partial: "records/record")
+        Rails.cache.delete("records")
+        domain.update(updated_at: Time.now)
     end
 
     def persisted?
@@ -106,10 +113,11 @@ class Record
 
 
     def self.all
-        dnsimple_records = client.zones.all_zone_records(Rails.application.credentials.dnsimple.account_id, Rails.application.config.domain).data.select { |record| !record.system_record }
+      Rails.cache.fetch "records", expires_in: 2.minutes do
+          dnsimple_records = client.zones.all_zone_records(Rails.application.credentials.dnsimple.account_id, Rails.application.config.domain).data.select { |record| !record.system_record }
         
-        records = []
-        for r in dnsimple_records
+          records = []
+          for r in dnsimple_records
             if !r.name.blank?
                 record = self.dnsimple_to_record(r)
 
@@ -120,6 +128,7 @@ class Record
         end
 
         records
+      end
     end
 
     def self.find(id) 
@@ -208,6 +217,8 @@ class Record
         end
 
         @_persisted = true
+
+        Rails.cache.delete("records")
     end
 
     def update_record
@@ -231,9 +242,14 @@ class Record
             priority = record.data.priority
         end
 
+        domain.update(updated_at: Time.now)
+        Rails.cache.delete("records")
+
     end
 
     def destroy_record
+        domain.update(updated_at: Time.now)
+        Rails.cache.delete("records")
         client.zones.delete_zone_record(Rails.application.credentials.dnsimple.account_id, Rails.application.config.domain, id)
         @_persisted = false
         true

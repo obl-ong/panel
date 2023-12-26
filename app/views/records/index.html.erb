@@ -1,10 +1,6 @@
 <h2 class="admin-h2">Records</h2>
 
-<form
-  class="flex flex-wrap flex-row gap-4 gap-y-2 items-end"
-  method="POST"
-  action="<%= records_path(@domain) %>"
->
+<%= form_with url: records_path(@domain), method: :post, class: "flex flex-wrap flex-row gap-4 gap-y-4 items-end" do |form| %>
   <div>
     <label class="label" for="type">Type
     </label>
@@ -32,7 +28,7 @@
     <input class="input w-24" type="number" name="priority">
   </div>
   <input class="btn-sm-pink" type="submit" value="Add Record">
-</form>
+<% end %>
 <br>
 
 <div id="records_wrapper" data-controller="empty">

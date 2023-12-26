@@ -10,13 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_13_182334) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_22_053923) do
   create_table "domains", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "host"
     t.integer "user_users_id"
     t.index ["user_users_id"], name: "index_domains_on_user_users_id"
+  end
+
+  create_table "solid_cache_entries", force: :cascade do |t|
+    t.binary "key", limit: 1024, null: false
+    t.binary "value", limit: 536870912, null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_solid_cache_entries_on_key", unique: true
   end
 
   create_table "user_credentials", force: :cascade do |t|

@@ -4,9 +4,8 @@
 
 <div class="grid grid-cols-1 gap-8 lg:grid-cols-3 xl:grid-cols-3">
   <% @domains.each do |domain| %>
-    <%= turbo_frame_tag dom_id(domain), src: show_domain_path(domain), loading: "lazy", "data-turbo-permanent": "true" do %>
-      <a class="flex flex-col p-4 items-start gap-[1.375rem] bg-bg border-solid border-2 border-text rounded-2xl h-full">
-      </a>
+    <% cache domain do %>
+      <%= render domain %>
     <% end %>
   <% end %>
 
