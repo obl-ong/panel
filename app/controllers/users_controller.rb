@@ -35,16 +35,20 @@ class UsersController < ApplicationController
   end
 
   def email_verification
-    User::Mailer.with(user: self.current_user).verification_email.deliver_later
+    user = current_user
+    @user = user
+    if Time.now.to_i > (user.try(:otp_last_minted).nil? ? 0 : user.otp_last_minted) + 600 || params[:resend] == "true" then
+      User::Mailer.with(user: user).verification_email.deliver_later
+      if params[:resend] == "true" then flash[:notice] = "Sent email code" end
+    end
   end
 
   def verify_email
-    user = self.current_user
-    if user.use_otp(params[:otp].to_s) == true
+    u = current_user
+    if u.use_otp(params[:code]) == true then
       session[:email_verified] = true
       if params[:skip_passkey] == 'true'
-        user.verified = true
-        user.save
+        u.update(verified: true)
         session[:authenticated] = true
         redirect_to controller: 'domains', action: 'index'
       else
