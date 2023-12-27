@@ -70,4 +70,12 @@ Rails.application.configure do
 
   # Origin for the WebAuthn RP
   config.webauthn_origin = "http://localhost:3000"
+
+
+  config.action_controller.raise_on_missing_callback_actions = true
+
+  # Highlight code that enqueued background job in logs.
+   config.active_job.verbose_enqueue_logs = true
+
+  config.enable_reloading = true
 end

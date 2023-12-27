@@ -15,4 +15,20 @@ class Domain < ApplicationRecord
   def to_param
     host
   end
+
+
+  def top_records
+    records = []
+    all_records = Record.where_host(host)
+
+    if all_records.length > 3
+      records[0] = all_records[0]
+      records[1] = all_records[1]
+      records[2] = all_records[2]
+    else
+      records = all_records
+    end
+
+    records
+  end
 end

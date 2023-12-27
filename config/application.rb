@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module AdminOblOng
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -46,5 +46,7 @@ module AdminOblOng
 
     # Change to the domain where you're registering subdomains
     config.domain = "obl.ong"
+
+    config.assets.paths << Rails.root.join('app', 'javascript')
   end
 end

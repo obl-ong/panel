@@ -12,6 +12,7 @@ export default class extends Controller {
     });
 
     this.update();
+    console.log("empty controller")
   }
 
   watchedTargetConnected() {
