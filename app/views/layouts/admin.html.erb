@@ -15,3 +15,16 @@
 <div class="px-8 md:px-16 lg:px-24 py-4">
     <%= yield_nested %>
 </div>
+
+<script>
+      window.ReboundSettings = {
+        publicToken: "kjvsdcjhut7bw8ny8t63nh",
+        email: "<%= @_current_user.email %>",
+        title: "Please update your email immediately.",
+        description: "An email recently sent to [[email]] has bounced. Here’s why: [[reason]] We need an up-to-date email and your domains are at risk of deletion without one. ",
+        fallbackDescription: "An email recently sent to [[email]] has bounced. We need an up-to-date email as a point of contact and your domains are at risk of deletion without one. ",
+        actionLabel: "Update email",
+        actionUrl: "https://admin.obl.ong/settings",
+      }
+</script>
+<script>(function(r,e,b,o,u,n,d){if(r.Rebound)return;d=function(){o="script";u=e.createElement(o);u.type="text/javascript";u.src=b;u.async=true;n=e.getElementsByTagName(o)[0];n.parentNode.insertBefore(u,n)};if(r.attachEvent){r.attachEvent("onload",d)}else{r.addEventListener("load",d,false)}})(window,document,"https://rebound.postmarkapp.com/widget/1.0");</script>
