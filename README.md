@@ -23,3 +23,5 @@ This is the backbone for Obl.ong, a nonprofit service providing free, quality do
 - Copy `app/javascript/application.js` to `public/assets/application-{hash}.js` (must be done every time assets is recompiled)
 - Edit `config/application.rb` to reflect your environment
 - Start the server with `bin/rails server`
+
+test
