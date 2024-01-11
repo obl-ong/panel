@@ -28,4 +28,8 @@ jobs:
 
             | <h1>😁</h1> <a href="https://github.com/sponsors/${{ github.actor }}?frequency=one-time&amount=${{ env.ONE }}"><i>$1.00/line</i>: $${{ env.ONE }}</a> | <h1>😄</h1> <a href="https://github.com/sponsors/sampoder?frequency=one-time&amount=${{ env.TWO }}"><i>$0.75/line</i>: $${{ env.TWO }}</a> | <h1>😃</h1> <a href="https://github.com/sponsors/${{ github.actor }}?frequency=one-time&amount=${{ env.THREE }}"><i>$0.50/line</i>: $${{ env.THREE }}</a> |
             | ----------- | ----------- |----------- |
+            <br>
+
+            [Or donate to the Obl.ong project](https://github.com/sponsors/obl-ong?frequency=one-time)
+          
           comment_tag: tip
