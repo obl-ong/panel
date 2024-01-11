@@ -1,0 +1,31 @@
+name: Suggest A Tip
+run-name: How much do you want to tip ${{ github.actor }}?
+on: [pull_request]
+jobs:
+  suggest_tips:
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Calculate the lines changed & the tip options.
+        id: count-lines
+        run: |
+          changed_lines=$(git diff --shortstat origin/main origin/${GITHUB_HEAD_REF} | awk '{s+=$4} {s+=$6} END {print s}')
+          opt_one=$(printf "%.2f" "$changed_lines")
+          opt_two=$(printf "%.2f" "$(echo "$changed_lines * 0.75" | bc)")
+          opt_three=$(printf "%.2f" "$(echo "$changed_lines * 0.50" | bc)")
+          echo "ONE=$opt_one" >> $GITHUB_ENV
+          echo "TWO=$opt_two" >> $GITHUB_ENV
+          echo "THREE=$opt_three" >> $GITHUB_ENV
+      - name: Comment the tip options on the PR.
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Please choose an option to tip:
+
+            | <h1>😁</h1> <a href="https://github.com/sponsors/${{ github.actor }}?frequency=one-time&amount=${{ env.ONE }}"><i>$1.00/line</i>: $${{ env.ONE }}</a> | <h1>😄</h1> <a href="https://github.com/sponsors/sampoder?frequency=one-time&amount=${{ env.TWO }}"><i>$0.75/line</i>: $${{ env.TWO }}</a> | <h1>😃</h1> <a href="https://github.com/sponsors/${{ github.actor }}?frequency=one-time&amount=${{ env.THREE }}"><i>$0.50/line</i>: $${{ env.THREE }}</a> |
+            | ----------- | ----------- |----------- |
+          comment_tag: tip
