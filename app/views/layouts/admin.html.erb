@@ -19,7 +19,7 @@
                     <script xmlns=""/>
                 </svg> 
                 Adminland 
-                <% if (count = Domain.where(provisional: true).count) > 0 %>
+                <% if (count = Rails.cache.fetch("provisional_domains_count", expires_in: 12.hours) do Domain.where(provisional: true).count end) > 0 %>
                     <span style="margin-left: 0.2rem; background: #dae9ff;color: #3988fe;border-radius: 100px;width: 1.5rem;height: 1.5rem;display: inline-flex;align-items: center;justify-content: center; outline: 2px dashed #3988fe; ">
                         <%= count %>
                     </span>

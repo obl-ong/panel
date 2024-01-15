@@ -4,15 +4,15 @@ class Domain < ApplicationRecord
   validates :host, uniqueness: true
   validates :user_users_id, presence: { message: "User ID is not present" }
 
-  after_create -> (d) { Domain::InitializeJob.perform_later(d.id) }, unless: Proc.new { |d| d.provisional }
+  after_create -> (d) { Domain::InitializeJob.perform_later(d.id); Rails.cache.delete("provisional_domains_count") }, unless: Proc.new { |d| d.provisional }
 
-  before_update -> (d) { Domain::InitializeJob.perform_later(d.id) }, if: Proc.new { |d| d.provisional_changed?(from: true, to: false) }
+  before_update -> (d) { Domain::InitializeJob.perform_later(d.id); Rails.cache.delete("provisional_domains_count")  }, if: Proc.new { |d| d.provisional_changed?(from: true, to: false) }
 
-  before_update -> (d) { Domain::DestroyJob.perform_later(d.host); provisional_notify }, if: Proc.new { |d| d.provisional_changed?(from: false, to: true) }
+  before_update -> (d) { Domain::DestroyJob.perform_later(d.host); provisional_notify; Rails.cache.delete("provisional_domains_count")  }, if: Proc.new { |d| d.provisional_changed?(from: false, to: true) }
 
-  before_destroy -> (d) { Domain::DestroyJob.perform_later(d.host) }, unless: Proc.new { |d| d.provisional }
+  before_destroy -> (d) { Domain::DestroyJob.perform_later(d.host); Rails.cache.delete("provisional_domains_count")  }, unless: Proc.new { |d| d.provisional }
 
-  after_create -> (d) { provisional_notify }, if: Proc.new { |d| d.provisional }
+  after_create -> (d) { provisional_notify; Rails.cache.delete("provisional_domains_count")  }, if: Proc.new { |d| d.provisional }
   
 
   def to_param
