@@ -4,10 +4,14 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get "up" => "rails/health#show", as: :rails_health_check
-  
-  get 'domains/request', to: 'domains#request_domain'
-  
+    
   resources :domains, param: :host, :except => [:new] do
+    
+    collection do
+      get "request", to: "domains#request_domain"
+      post "provision", to: "domains#provision"
+    end
+
     member do
       get '/', to: 'records#index'
       get 'email'
@@ -23,6 +27,8 @@ Rails.application.routes.draw do
   get 'admin/users', to: "admin#users"
   get 'admin/domains', to: "admin#domains"
   get 'admin/users/:id/domains', to: "admin#users_domains", as: 'admin_users_domains'
+  get 'admin/domains/review', to: "admin#review"
+  post 'admin/domains/review', to: "admin#review_decision"
 
   get 'users/register'
   post 'users/create'

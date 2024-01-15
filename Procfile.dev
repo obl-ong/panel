@@ -1,4 +1,6 @@
 web: rdbg -n --open=vscode -c -- bin/rails server -p 3000
 css: bin/rails tailwindcss:watch
-rails_hotreload: bin/rails rails_hotreload:start app/views,app/assets,app/javascriptjs: yarn build --watch
+rails_hotreload: bin/rails rails_hotreload:start app/views,app/assets,app/javascript
+js: yarn build --watch
 css: bun run build:css --watch
+
