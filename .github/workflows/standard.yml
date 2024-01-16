@@ -8,6 +8,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: StandardRB Linter
-      uses: andrewmcodes/standardrb-action@v1.0.0
+      uses: obl-ong/standardrb-action
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
