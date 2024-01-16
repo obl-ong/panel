@@ -111,3 +111,7 @@ gem "cssbundling-rails", "~> 1.3"
 
 
 gem "propshaft"
+
+gem "solid_queue", "~> 0.1.2"
+
+gem "activejob-status", "~> 1.0"

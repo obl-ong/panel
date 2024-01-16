@@ -24,7 +24,7 @@
   
   <% if @user.admin? %>
       <%= form_with url: domains_path, method: :post do |form| %>
-        <div class="flex flex-col gap-2 p-4 shadow-md rounded-2xl admin">
+        <div class="flex flex-col gap-2 p-4 shadow-md rounded-2xl admin" style="color: var(--bg);>
           <%= form.label :host, "Host:" %>
           <%= form.text_field :host %>
           <%= form.submit "Create domain" %>
@@ -38,5 +38,7 @@
 <style>
   input[type=text] {
     min-width: unset;
+    color: var(--bg) !important;
+    border-color: var(--bg) !important;
   }
 </style>

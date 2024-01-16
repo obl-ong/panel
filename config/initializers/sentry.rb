@@ -13,3 +13,4 @@ if Rails.application.config.sentry == true then
     end
   end
 end
+

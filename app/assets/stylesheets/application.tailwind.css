@@ -283,7 +283,11 @@ input[type=number]  {
 }
 
 .admin {
-	border: 2px dashed skyblue;
+	outline: 6px dashed #3988FE;
+    border-radius: 8px;
+    padding: 1rem;
+    background: #DAE9FF;
+    color: var(--bg);
 }
 
 .flash {

@@ -20,6 +20,20 @@ class AdminController < ApplicationController
         @domains = Domain.all
     end
 
+    def review
+        @domains = Domain.where(provisional: true).map { |d| {domain_id: d.id, host: d.host, plan: d.plan} }
+    end
+
+    def review_decision
+        domain = Domain.find_by(id: params[:domain_id])
+
+        if params[:provisional_action] == "accept" 
+            domain.update(provisional: false)
+        elsif params[:provisional_action] == "reject"
+            domain.destroy
+        end
+    end
+
     private
 
     def require_admin

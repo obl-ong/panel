@@ -13,7 +13,13 @@ class Record
     define_attribute_methods :name, :domain_id, :type, :ttl, :priority, :content
 
     attr_writer :_persisted, :_id
+    
     validates :name, :type, :content, :domain_id, presence: true
+
+    validates_each :domain_id, strict: true do |record, attr, value|
+        record.errors.add(attr, "Cannot create record for a provisional domain") if Domain.find_by(id: value).provisional == true 
+    end
+
     # TODO: more validation
 
     def initialize(attributes = {})
@@ -31,6 +37,7 @@ class Record
 
     def self.create(attributes={})
         obj = self.new(attributes)
+        obj.validate!
         obj.save  
         obj.broadcast_append_to('records:main', partial: "records/record")
 
@@ -77,6 +84,9 @@ class Record
     end
 
     def save
+
+        validate!
+        
         if persisted?
             update_record
         else

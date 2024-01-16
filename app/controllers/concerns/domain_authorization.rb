@@ -9,6 +9,10 @@ module DomainAuthorization
         if !(current_domain.user_users_id == current_user.id) && !(current_user.admin?)
             render status: 403, plain: "403 Forbidden"
         end
+
+        if current_domain.provisional && !(current_user.admin?)
+            render status: 425, plain: "425 Too Early - Provisional Domain"
+        end
     end
 
     def current_domain

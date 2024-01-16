@@ -4,13 +4,20 @@ class Domain < ApplicationRecord
   validates :host, uniqueness: true
   validates :user_users_id, presence: { message: "User ID is not present" }
 
-  after_create do
-    Record.create(domain_id: id, name: nil, type: "URL", content: "https://parking.obl.ong", ttl: 300, priority: 0)
-  end
+  after_create -> (d) { Domain::InitializeJob.perform_later(d.id) }, unless: Proc.new { |d| d.provisional }
 
-  before_destroy do
-    Record.destroy_all_host!(host)
-  end
+  before_update -> (d) { Domain::InitializeJob.perform_later(d.id) }, if: Proc.new { |d| d.provisional_changed?(from: true, to: false) }
+
+  before_update -> (d) { Domain::DestroyJob.perform_later(d.host); provisional_notify }, if: Proc.new { |d| d.provisional_changed?(from: false, to: true) }
+
+  before_destroy -> (d) { Domain::DestroyJob.perform_later(d.host) }, unless: Proc.new { |d| d.provisional }
+
+  after_create -> (d) { provisional_notify }, if: Proc.new { |d| d.provisional }
+
+  after_commit -> (d) {
+    Domain::UpdateProvisionalCountJob.perform_later
+  }
+  
 
   def to_param
     host
@@ -30,5 +37,46 @@ class Domain < ApplicationRecord
     end
 
     records
+  end
+
+  def user
+    User::User.find_by(id: user_users_id)
+  end
+
+
+  def provisional_notify
+    Admin::NotifyJob.perform_later("
+    {
+      \"blocks\": [
+        {
+          \"type\": \"section\",
+          \"text\": {
+            \"type\": \"mrkdwn\",
+            \"text\": \"*Domain request: #{host}*\"
+          }
+        },
+        {
+          \"type\": \"divider\"
+        },
+        {
+          \"type\": \"section\",
+          \"text\": {
+            \"type\": \"mrkdwn\",
+            \"text\": \"*User*: #{user.name} (id: #{user.id})\n\n*Plan*: #{plan}\"
+          },
+          \"accessory\": {
+            \"type\": \"button\",
+            \"text\": {
+              \"type\": \"plain_text\",
+              \"text\": \"Review Domains\",
+              \"emoji\": true
+            },
+            \"value\": \"click_me_123\",
+            \"url\": \"https://admin.obl.ong/admin/domains/review\",
+            \"action_id\": \"button-action\"
+          }
+        }
+      ]
+    }")
   end
 end

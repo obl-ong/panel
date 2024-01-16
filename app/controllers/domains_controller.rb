@@ -4,7 +4,7 @@ class DomainsController < ApplicationController
   include DomainAuthorization
 
 
-  skip_before_action :authorize_domain, only: [:create, :index, :request_domain]
+  skip_before_action :authorize_domain, only: [:create, :index, :request_domain, :provision]
 
   before_action :require_admin
   skip_before_action :require_admin, except: [:create, :transfer]
@@ -41,13 +41,21 @@ class DomainsController < ApplicationController
 
   def create
     @domain = Domain.new(host: params[:host], user_users_id: current_user.id)
+     
     if @domain.save
       redirect_to domain_path(@domain)
     else
       render json: @domain.errors, status: 418
     end
-    DomainMailer.with(email: User::User.find_by(id: @domain.user_users_id).email, domain: @domain.host).domain_created_email.deliver_later
+  end
 
+  def provision
+    @domain = Domain.new(host: params[:host], plan: params[:plan], provisional: true, user_users_id: current_user.id)
+    if @domain.save
+      redirect_to root_path
+    else
+      render json: @domain.errors, status: 418
+    end
   end
 
   def transfer
