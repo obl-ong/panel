@@ -1,5 +1,6 @@
+include DnsimpleHelper #standard:disable all
+
 class Record
-  include DnsimpleHelper
   include ActiveModel::Model
   include ActiveModel::Dirty
   include ActiveModel::API
