@@ -7,8 +7,8 @@ class UsersController < ApplicationController
   end
 
   def create
-    if !User::User.find_by(email: params[:email])
-      if User::User.find_by(email: params[:email]).verified == false
+    if User::User.find_by(email: params[:email])
+      if !User::User.find_by(email: params[:email]).verified
         user = User::User.find_by(email: params[:email])
         session[:current_user_id] = user.id
         session[:new_user] = true
