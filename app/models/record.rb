@@ -66,7 +66,6 @@ class Record
     domain = cap[3]
     domain_obj = Domain.find_by(host: domain)
 
-    puts domain_obj
     Record.new(
       _id: obj.id,
       _persisted: true,
@@ -92,7 +91,7 @@ class Record
 
     broadcast_replace_to("records:main", partial: "records/record")
     Rails.cache.delete("records")
-    domain.update(updated_at: Time.now)
+    domain.update!(updated_at: Time.now) # standard:disable all
   end
 
   def persisted?
@@ -109,7 +108,7 @@ class Record
   end
 
   def self.destroy_all_host!(host)
-    for r in where_host(host)
+    where_host(host).each do |r|
       r.destroy!
     end
   end
