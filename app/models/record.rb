@@ -35,7 +35,7 @@ class Record
   def self.create(attributes = {})
     obj = new(attributes)
     obj.validate!
-    obj.save
+    obj.save # standard:disable all
     obj.broadcast_append_to("records:main", partial: "records/record")
 
     obj
@@ -45,7 +45,7 @@ class Record
     domain = Domain.find_by(host: host)
     Rails.cache.fetch([domain, "records"], expires_in: 1.week) do
       records = []
-      for r in domains
+      domains.each |r|
         if r.domain_id == domain.id
           records.push(r)
         end
@@ -114,8 +114,9 @@ class Record
     end
   end
 
-  # TODO: cache, so not on each page load we hit DNSimple unless they don't care :P
+# TODO: cache, so not on each page load we hit DNSimple unless they don't care :P
 
+# standard:disable all
   def self.all
     Rails.cache.fetch "records", expires_in: 2.minutes do
       dnsimple_records = client.zones.all_zone_records(Rails.application.credentials.dnsimple.account_id, Rails.application.config.domain).data.select { |record| !record.system_record }
@@ -190,6 +191,7 @@ class Record
       @content = value
     end
   end
+  # standard:disable all
 
   private
 

@@ -1,6 +1,5 @@
-include DnsimpleHelper
-
 class Domain < ApplicationRecord
+  include DnsimpleHelper
   validates :host, uniqueness: true
   validates :user_users_id, presence: {message: "User ID is not present"}
 

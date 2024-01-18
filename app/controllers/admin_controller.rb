@@ -26,9 +26,9 @@ class AdminController < ApplicationController
     domain = Domain.find_by(id: params[:domain_id])
 
     if params[:provisional_action] == "accept"
-      domain.update(provisional: false)
+      domain.update!(provisional: false)
     elsif params[:provisional_action] == "reject"
-      domain.destroy
+      domain.destroy!
     end
   end
 

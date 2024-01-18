@@ -55,7 +55,7 @@ class AuthController < ApplicationController
 
     if params[:skip_passkey] == "true"
       user.verified = true
-      user.save
+      user.save!
       session[:authenticated] = true
       redirect_to(root_path, notice: "To add a passkey in the future, head to Account Settings")
     end
@@ -93,13 +93,11 @@ class AuthController < ApplicationController
       name: params[:name]
     )
 
-    puts credential
-
-    credential.save
+    credential.save!
 
     if session[:email_verified] && user.verified != true
       user.verified = true
-      user.save
+      user.save!
     end
 
     session[:authenticated] = true
@@ -139,11 +137,11 @@ class AuthController < ApplicationController
       flash[:notice] = "To disable insecure email code authentication, head to Account Settings."
 
       render json: {authenticated: true}
-    rescue WebAuthn::SignCountVerificationError => e
+    rescue WebAuthn::SignCountVerificationError
       session[:authenticated] = true
 
       render json: {authenticated: true}
-    rescue WebAuthn::Error => e
+    rescue WebAuthn::Error
       render json: {error: true, message: "An error occurred;"}
     end
   end
@@ -156,12 +154,10 @@ class AuthController < ApplicationController
 
     if User::Credential.where(user_users_id: current_user.id).length == 1
       flash[:notice] = "You can't remove your last credential without adding a new one"
-      redirect_to(controller: "users", action: "settings")
     else
-      cred.destroy
-      redirect_to(controller: "users", action: "settings")
-
+      cred.destroy!
     end
+    redirect_to(controller: "users", action: "settings")
   end
 
   def unsupported
@@ -179,7 +175,7 @@ class AuthController < ApplicationController
 
     u.disable_email_auth = !ActiveModel::Type::Boolean.new.cast(params[:checked])
 
-    u.save
+    u.save!
   end
 
   private
