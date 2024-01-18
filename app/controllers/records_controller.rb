@@ -11,7 +11,7 @@ class RecordsController < ApplicationController
 
   def create
     @domain = Domain.find_by(host: params[:host])
-    @record = Record.create(domain_id: @domain.id, name: params["name"], type: params["type"], content: params["content"], ttl: params["ttl"], priority: params["priority"])
+    @record = Record.create(domain_id: @domain.id, name: params["name"], type: params["type"], content: params["content"], ttl: params["ttl"], priority: params["priority"]) # standard:disable all
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.append("records", @record)
@@ -67,7 +67,7 @@ class RecordsController < ApplicationController
     @record.ttl = params[:ttl]
     @record.priority = params[:priority]
 
-    @record.save
+    @record.save # standard:disable all
 
     respond_to do |format|
       format.turbo_stream do

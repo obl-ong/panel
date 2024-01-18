@@ -60,7 +60,7 @@ class DomainsController < ApplicationController
   def transfer
     @domain = Domain.find_by(host: params["host"])
     @domain.user_users_id = params["new_user_id"]
-    @domain.save
+    @domain.save!
     DomainMailer.with(email: User::User.find_by(id: @domain.user_users_id).email, domain: @domain.host).domain_created_email.deliver_later
   end
 
