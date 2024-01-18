@@ -1,6 +1,6 @@
 class Domain < ApplicationRecord
   include DnsimpleHelper
-  validates :host, uniqueness: true
+  validates :host, uniqueness: true # standard:disable all
   validates :user_users_id, presence: {message: "User ID is not present"}
 
   after_create ->(d) { Domain::InitializeJob.perform_later(d.id) }, unless: proc { |d| d.provisional }

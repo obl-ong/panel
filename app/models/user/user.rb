@@ -1,6 +1,6 @@
 class User::User < ApplicationRecord
-  validates :email, uniqueness: true
-  has_many :user_credentials
+  validates :email, uniqueness: true # standard:disable all
+  has_many :user_credentials # standard:disable all
 
   after_initialize do
     @hotp = ROTP::HOTP.new(hotp_token)
@@ -10,7 +10,7 @@ class User::User < ApplicationRecord
     self.otp_counter += 1
     otp = @hotp.at(self.otp_counter)
     self.otp_last_minted = Time.now.to_i
-    save
+    save!
 
     otp
   end

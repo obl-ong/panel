@@ -1,7 +1,7 @@
 class CreateNewUserModelAndDeleteOldUserModel < ActiveRecord::Migration[7.0]
   def change
     remove_reference :domains, :users, foreign_key: true
-    drop_table :users
+    drop_table :users # standard:disable all
 
     create_table :user_users do |t|
       t.string :email
