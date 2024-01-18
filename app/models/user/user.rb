@@ -16,11 +16,11 @@ class User::User < ApplicationRecord
   end
 
   def use_otp(token)
-    if begin
+    if !begin
       @hotp.verify(token.to_s, self.otp_counter.to_i)
     rescue
       nil
-    end != nil &&
+    end.nil? &&
         Time.now.to_i <= otp_last_minted + 600
 
       self.otp_last_minted = nil

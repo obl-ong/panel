@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    if User::User.find_by(email: params[:email]) != nil
+    if !User::User.find_by(email: params[:email])
       if User::User.find_by(email: params[:email]).verified == false
         user = User::User.find_by(email: params[:email])
         session[:current_user_id] = user.id
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     if u.use_otp(params[:code]) == true
       session[:email_verified] = true
       if params[:skip_passkey] == "true"
-        u.update(verified: true)
+        u.update!(verified: true)
         session[:authenticated] = true
         redirect_to controller: "domains", action: "index"
       else
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
       @user.verified = false
     end
 
-    @user.save
+    @user.save!
 
     redirect_to(controller: "users", action: "settings")
   end

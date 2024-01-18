@@ -52,7 +52,7 @@ Rails.application.configure do
   config.force_ssl = true
 
   # Log to STDOUT by default
-  config.logger = ActiveSupport::Logger.new("#{Rails.root.join("log/production.log")}")
+  config.logger = ActiveSupport::Logger.new(Rails.root.join("log/production.log"))
     .tap { |logger| logger.formatter = ::Logger::Formatter.new }
     .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
