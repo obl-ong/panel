@@ -1,6 +1,7 @@
 # typed: true
 
 Rails.application.routes.draw do
+  use_doorkeeper
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get "up" => "rails/health#show", :as => :rails_health_check
