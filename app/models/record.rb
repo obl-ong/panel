@@ -45,7 +45,7 @@ class Record
     domain = Domain.find_by(host: host)
     Rails.cache.fetch([domain, "records"], expires_in: 1.week) do
       records = []
-      domains.each |r|
+      domains.each do |r|
         if r.domain_id == domain.id
           records.push(r)
         end
@@ -130,9 +130,10 @@ class Record
             records.push(record)
           end
         end
-    end
+      end
 
       records
+
     end
   end
 
@@ -259,4 +260,5 @@ class Record
     @_persisted = false
     true
   end
+  
 end

@@ -116,3 +116,5 @@ gem "activejob-status", "~> 1.0"
 gem "standard", "~> 1.33"
 
 gem "standard-rails", "~> 1.0"
+
+gem "syntax_suggest", "~> 2.0"
