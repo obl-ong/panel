@@ -3,15 +3,14 @@ class DomainsController < ApplicationController
 
   include DomainAuthorization
 
-
   skip_before_action :authorize_domain, only: [:create, :index, :request_domain, :provision]
 
   before_action :require_admin
   skip_before_action :require_admin, except: [:create, :transfer]
-  
+
   helper DnsimpleHelper
-  nested_layouts 'layouts/admin', 'layouts/domain', 'layouts/application', except: [:index, :request_domain, :show]
-  nested_layouts 'layouts/admin', 'layouts/application', only: [:index, :request_domain]
+  nested_layouts "layouts/admin", "layouts/domain", "layouts/application", except: [:index, :request_domain, :show]
+  nested_layouts "layouts/admin", "layouts/application", only: [:index, :request_domain]
 
   def index
     @domains = Domain.where(user_users_id: current_user.id)
@@ -19,7 +18,7 @@ class DomainsController < ApplicationController
   end
 
   def destroy
-    @domain = Domain.find_by(host: params['host'])
+    @domain = Domain.find_by(host: params["host"])
     if @domain.destroy
       redirect_to root_url
     else
@@ -28,20 +27,20 @@ class DomainsController < ApplicationController
   end
 
   def email
-    @domain = Domain.find_by(host: params['host'])
+    @domain = Domain.find_by(host: params["host"])
   end
 
   def links
-    @domain = Domain.find_by(host: params['host'])
+    @domain = Domain.find_by(host: params["host"])
   end
 
   def settings
-    @domain = Domain.find_by(host: params['host'])
+    @domain = Domain.find_by(host: params["host"])
   end
 
   def create
     @domain = Domain.new(host: params[:host], user_users_id: current_user.id)
-     
+
     if @domain.save
       redirect_to domain_path(@domain)
     else
@@ -59,9 +58,9 @@ class DomainsController < ApplicationController
   end
 
   def transfer
-    @domain = Domain.find_by(host: params['host'])
-    @domain.user_users_id = params['new_user_id']
-    @domain.save
+    @domain = Domain.find_by(host: params["host"])
+    @domain.user_users_id = params["new_user_id"]
+    @domain.save!
     DomainMailer.with(email: User::User.find_by(id: @domain.user_users_id).email, domain: @domain.host).domain_created_email.deliver_later
   end
 
@@ -85,7 +84,7 @@ class DomainsController < ApplicationController
   private
 
   def current_domain
-    Domain.find_by(host: params['host'])
+    Domain.find_by(host: params["host"])
   end
 
   def require_admin
@@ -93,5 +92,4 @@ class DomainsController < ApplicationController
       render status: 403, plain: "403 Forbidden"
     end
   end
-
 end

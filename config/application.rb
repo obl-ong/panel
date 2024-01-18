@@ -20,15 +20,13 @@ module AdminOblOng
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.action_mailer.delivery_method = :postmark
-    
 
     config.sentry = true
 
-    
     config.action_mailer.postmark_settings = {
       api_token: Rails.application.credentials.postmark_api_token
     }
-    
+
     # Change to where you're hosting Obl.ong in production
     config.webauthn_origin = "https://admin.obl.ong"
     config.webauthn_rp_id = "admin.obl.ong"
@@ -36,7 +34,7 @@ module AdminOblOng
     # Change to the domain where you're registering subdomains
     config.domain = "obl.ong"
 
-    config.assets.paths << Rails.root.join('app', 'javascript')
+    config.assets.paths << Rails.root.join("app/javascript")
 
     config.slack_notify = true
   end

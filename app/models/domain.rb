@@ -1,28 +1,27 @@
-include DnsimpleHelper
-
 class Domain < ApplicationRecord
-  validates :host, uniqueness: true
-  validates :user_users_id, presence: { message: "User ID is not present" }
+  include DnsimpleHelper
+  validates :host, uniqueness: true # standard:disable all
+  validates :user_users_id, presence: {message: "User ID is not present"}
 
-  after_create -> (d) { Domain::InitializeJob.perform_later(d.id) }, unless: Proc.new { |d| d.provisional }
+  after_create ->(d) { Domain::InitializeJob.perform_later(d.id) }, unless: proc { |d| d.provisional }
 
-  before_update -> (d) { Domain::InitializeJob.perform_later(d.id) }, if: Proc.new { |d| d.provisional_changed?(from: true, to: false) }
+  after_create ->(d) { provisional_notify }, if: proc { |d| d.provisional }
+  before_update ->(d) { Domain::InitializeJob.perform_later(d.id) }, if: proc { |d| d.provisional_changed?(from: true, to: false) }
 
-  before_update -> (d) { Domain::DestroyJob.perform_later(d.host); provisional_notify }, if: Proc.new { |d| d.provisional_changed?(from: false, to: true) }
+  before_update ->(d) {
+                  Domain::DestroyJob.perform_later(d.host)
+                  provisional_notify
+                }, if: proc { |d| d.provisional_changed?(from: false, to: true) }
 
-  before_destroy -> (d) { Domain::DestroyJob.perform_later(d.host) }, unless: Proc.new { |d| d.provisional }
+  before_destroy ->(d) { Domain::DestroyJob.perform_later(d.host) }, unless: proc { |d| d.provisional }
 
-  after_create -> (d) { provisional_notify }, if: Proc.new { |d| d.provisional }
-
-  after_commit -> (d) {
+  after_commit ->(d) {
     Domain::UpdateProvisionalCountJob.perform_later
   }
-  
 
   def to_param
     host
   end
-
 
   def top_records
     records = []
@@ -42,7 +41,6 @@ class Domain < ApplicationRecord
   def user
     User::User.find_by(id: user_users_id)
   end
-
 
   def provisional_notify
     Admin::NotifyJob.perform_later("

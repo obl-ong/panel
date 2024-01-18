@@ -1,0 +1,5 @@
+fix: true
+ignore:
+  - 'gems/rails_nestable_layouts/**/*'
+plugins:
+  - standard-rails

@@ -7,7 +7,7 @@ ruby "3.1.2"
 gem "rails", "~> 7.1.2"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-#gem "sprockets-rails"
+# gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 1.4"
@@ -36,7 +36,7 @@ gem "redis", "~> 4.0"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -49,14 +49,14 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  gem 'rubocop'
-  gem 'sorbet'
-  gem 'tapioca', require: false
-  gem 'solargraph'
+  gem "debug", platforms: %i[mri mingw x64_mingw]
+  gem "rubocop"
+  gem "sorbet"
+  gem "tapioca", require: false
+  gem "solargraph"
 end
 
-gem 'sorbet-runtime'
+gem "sorbet-runtime"
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
@@ -79,23 +79,21 @@ group :test do
   gem "webdrivers"
 end
 
-
 gem "dnsimple", "~> 8.1"
 
 gem "dalli", "~> 3.2"
 
 gem "rails_nestable_layouts", path: "gems/rails_nestable_layouts"
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem "dotenv-rails", groups: [:development, :test]
 
-gem 'webauthn'
+gem "webauthn"
 
-gem 'rotp'
+gem "rotp"
 
-gem 'postmark-rails'
+gem "postmark-rails"
 
-
-gem 'pg'
+gem "pg"
 
 gem "sentry", "~> 0.5.3"
 
@@ -109,9 +107,12 @@ gem "tailwindcss-rails", "~> 2.1"
 
 gem "cssbundling-rails", "~> 1.3"
 
-
 gem "propshaft"
 
 gem "solid_queue", "~> 0.1.2"
 
 gem "activejob-status", "~> 1.0"
+
+gem "standard", "~> 1.33"
+
+gem "standard-rails", "~> 1.0"
