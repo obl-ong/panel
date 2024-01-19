@@ -1,6 +1,7 @@
 # typed: true
 
 Rails.application.routes.draw do
+  use_doorkeeper_openid_connect
   use_doorkeeper
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -54,4 +55,16 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "domains#index"
+
+  namespace :api do
+    namespace :v1 do
+      resources :domains, param: :host do
+        member do
+          resources :records, module: "domains"
+        end
+      end
+      get "user", to: "user#show"
+      patch "user", to: "user#update"
+    end
+  end
 end

@@ -7,10 +7,12 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
     # Put your resource owner authentication logic here.
     # Example implementation:
     #   User.find_by(id: session[:user_id]) || redirect_to(new_user_session_url)
+    session[:return_path] = request.fullpath
+    User::User.find_by(id: session[:current_user_id]) || redirect_to("/auth/login")
+
   end
 
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb
@@ -18,16 +20,18 @@ Doorkeeper.configure do
   # adding oauth authorized applications. In other case it will return 403 Forbidden response
   # every time somebody will try to access the admin web interface.
   #
-  # admin_authenticator do
-  #   # Put your admin authentication logic here.
-  #   # Example implementation:
-  #
-  #   if current_user
-  #     head :forbidden unless current_user.admin?
-  #   else
-  #     redirect_to sign_in_url
-  #   end
-  # end
+  admin_authenticator do
+    # Put your admin authentication logic here.
+    # Example implementation:
+    current_user = User::User.find_by(id: session[:current_user_id])
+
+    if current_user
+      head :forbidden unless current_user.admin?
+    else
+      session[:return_path] = request.fullpath
+      redirect_to("/auth/login")
+    end
+  end
 
   # You can use your own model classes if you need to extend (or even override) default
   # Doorkeeper models such as `Application`, `AccessToken` and `AccessGrant.
@@ -233,6 +237,10 @@ Doorkeeper.configure do
   # default_scopes  :public
   # optional_scopes :write, :update
 
+  default_scopes :user
+
+  optional_scopes :openid, :domains, :domains_write, :domains_records, :domains_records_write, :email, :email_write, :name, :name_write, :admin
+
   # Allows to restrict only certain scopes for grant_type.
   # By default, all the scopes will be available for all the grant types.
   #
@@ -246,7 +254,7 @@ Doorkeeper.configure do
   # not in configuration, i.e. +default_scopes+ or +optional_scopes+.
   # (disabled by default)
   #
-  # enforce_configured_scopes
+  enforce_configured_scopes
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then

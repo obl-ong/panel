@@ -40,7 +40,7 @@ class AuthController < ApplicationController
       session[:authenticated] = true
       session[:current_user_id] = u.id
 
-      redirect_to(root_path, notice: (User::Credential.where(user_users_id: u.id).length == 0) ? "Passkeys are more secure & convienient way to login. Head to Account Settings to add one." : "To disable insecure email code authentication, head to Account Settings.")
+      redirect_to(session[:return_path] || root_path, notice: (User::Credential.where(user_users_id: u.id).length == 0) ? "Passkeys are more secure & convienient way to login. Head to Account Settings to add one." : "To disable insecure email code authentication, head to Account Settings.")
     else
       render inline: "<%= turbo_stream.replace \"error\" do %><p class=\"error\">Invalid OTP</p><% end %>", status: :unprocessable_entity, format: :turbo_stream
     end
@@ -57,7 +57,7 @@ class AuthController < ApplicationController
       user.verified = true
       user.save!
       session[:authenticated] = true
-      redirect_to(root_path, notice: "To add a passkey in the future, head to Account Settings")
+      redirect_to(session[:return_path] || root_path, notice: "To add a passkey in the future, head to Account Settings")
     end
 
     @options = WebAuthn::Credential.options_for_create(

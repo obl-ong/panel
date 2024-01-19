@@ -31,3 +31,16 @@
 
 en:
   hello: "Hello world"
+  doorkeeper:
+    scopes:
+      openid: 'Read identity data for authentication to a 3rd party service'
+      domains: 'Read your domains'
+      domains_write: 'Request and destroy your domains'
+      domains_records: 'Read your domains’ records'
+      domains_records_write: 'Create, change, and destroy your domains’ records'
+      email: 'Read your email address'
+      email_write: 'Change your email address'
+      name: 'Read your full name'
+      name_write: 'Change your full name'
+      admin: 'Read your administrator status'
+      user: 'Read your user ID, verification status, and when your account was created & last updated'
