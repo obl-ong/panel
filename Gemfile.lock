@@ -126,6 +126,11 @@ GEM
     diff-lcs (1.5.0)
     dnsimple (8.7.1)
       httparty
+    doorkeeper (5.6.8)
+      railties (>= 5)
+    doorkeeper-openid_connect (1.8.7)
+      doorkeeper (>= 5.5, < 5.7)
+      jwt (>= 2.5)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -445,6 +450,8 @@ DEPENDENCIES
   dalli (~> 3.2)
   debug
   dnsimple (~> 8.1)
+  doorkeeper (~> 5.6)
+  doorkeeper-openid_connect (~> 1.8)
   dotenv-rails
   erb-formatter
   importmap-rails (~> 1.2)
