@@ -67,8 +67,8 @@ en:
       error:
         title: 'An error has occurred'
       new:
-        title: 'Authorization required'
-        prompt: 'Authorize %{client_name} to use your account?'
+        title: 'Authorize %{client_name}'
+        prompt: '%{client_name} would like access to your Obl.ong account.'
         able_to: 'This application will be able to'
       show:
         title: 'Authorization code'

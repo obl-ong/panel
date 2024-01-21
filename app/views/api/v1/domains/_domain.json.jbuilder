@@ -6,5 +6,5 @@ json.user_id d.user_users_id
 json.provisional d.provisional
 json.plan d.plan
 if records
-  json.records d.records, partial: "records/record", as: :r
+  json.records d.records, partial: "/api/v1/domains/records/record", as: :r
 end

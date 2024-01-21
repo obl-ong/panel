@@ -67,4 +67,9 @@ Rails.application.routes.draw do
       patch "user", to: "user#update"
     end
   end
+
+  namespace :developers do
+    get "/", to: redirect("developers/applications")
+    resources :applications
+  end
 end

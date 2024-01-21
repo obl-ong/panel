@@ -2,16 +2,18 @@ class User::User < ApplicationRecord
   validates :email, uniqueness: true # standard:disable all
   has_many :user_credentials # standard:disable all
 
-  has_many :access_grants,
-            class_name: 'Doorkeeper::AccessGrant',
-            foreign_key: :resource_owner_id,
-            dependent: :delete_all
+  has_many :access_grants, #standard:disable all
+    class_name: "Doorkeeper::AccessGrant",
+    foreign_key: :resource_owner_id,
+    dependent: :delete_all
 
-  has_many :access_tokens,
-            class_name: 'Doorkeeper::AccessToken',
-            foreign_key: :resource_owner_id,
-            dependent: :delete_all
-            
+  has_many :access_tokens, #standard:disable all
+    class_name: "Doorkeeper::AccessToken",
+    foreign_key: :resource_owner_id,
+    dependent: :delete_all
+
+  has_many :oauth_applications, class_name: "Doorkeeper::Application", as: :owner #standard:disable all
+
   after_initialize do
     @hotp = ROTP::HOTP.new(hotp_token)
   end

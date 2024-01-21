@@ -26,7 +26,11 @@ Doorkeeper::OpenidConnect.configure do
     # Example implementation:
     # store_location_for resource_owner, return_to
     # sign_out resource_owner
-    # redirect_to new_user_session_url
+    session[:authenticated] = false
+    session[:current_user_id] = nil
+    @_current_user = nil
+    session[:return_path] = return_to
+    redirect_to "/auth/login"
   end
 
   # Depending on your configuration, a DoubleRenderError could be raised
@@ -43,7 +47,7 @@ Doorkeeper::OpenidConnect.configure do
 
   subject do |resource_owner, application|
     # Example implementation:
-    # resource_owner.id
+    resource_owner.id
 
     # or if you need pairwise subject identifier, implement like below:
     # Digest::SHA256.hexdigest("#{resource_owner.id}#{URI.parse(application.redirect_uri).host}#{'your_secret_salt'}")
@@ -67,5 +71,31 @@ Doorkeeper::OpenidConnect.configure do
   #   normal_claim :_bar_ do |resource_owner|
   #     resource_owner.bar
   #   end
-  # end
+  #
+
+  claims do
+    claim :name, scope: :name do |resource_owner|
+      resource_owner.name
+    end
+
+    claim :email, scope: :email do |resource_owner|
+      resource_owner.email
+    end
+
+    claim :email_verified, scope: :email do |resource_owner|
+      resource_owner.verified
+    end
+
+    claim :verified, scope: :user do |resource_owner|
+      resource_owner.verified
+    end
+
+    claim :created_at, scope: :user do |resource_owner|
+      resource_owner.created_at
+    end
+
+    claim :updated_at, scope: :user do |resource_owner|
+      resource_owner.updated_at
+    end
+  end
 end

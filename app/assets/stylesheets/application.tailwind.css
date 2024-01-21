@@ -194,6 +194,10 @@
     .side-menu > * > span {
         @apply font-heading text-3;
     }
+
+    .side-menu > a {
+        @apply font-heading text-3;
+    }
     .side-menu > * > svg {
         @apply fill-pink w-10 h-10 xl:w-12 xl:h-12;
     }
@@ -208,7 +212,7 @@
         @apply text-yellow font-heading text-1 md:text-2 xl:text-3 text-left;
     }
     .table > tbody {
-        @apply bg-[#444343];
+        @apply bg-[#262626];
     }
     .table td {
         @apply border-collapse border-y text-1 md:text-2 px-6 py-3 md:py-4;
@@ -269,12 +273,16 @@ button, input[type=submit] {
 	min-width: min-content;
 }
 
-input[type=text], input[type=email], input[type=number] {
-	background-color: rgba(245, 245, 245, 0.1) !important;
+input[type=text], input[type=email], input[type=number], .input2 {
+	background-color: #262626 !important;
 	border: 1.5px solid var(--cultured)!important;
 	border-radius: 5px !important;
 	min-width: 350px;
 	color: white;
+}
+
+.admin > input[type=text], input[type=email], input[type=number], .input2 {
+    background-color: rgba(245, 245, 245, 0.1) !important;
 }
 
 input[type=number]  {
@@ -325,4 +333,12 @@ input[type=number]  {
 
 .outline-pink-border:hover {
 	background-color: var(--winter-sky)  !important;
+}
+
+.card {
+    transition: ease-in-out 0.25s;
+}
+
+.card:hover {
+    transform: translateY(-1rem);
 }
