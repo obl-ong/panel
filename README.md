@@ -7,7 +7,7 @@ This is the backbone for Obl.ong, a nonprofit service providing free, quality do
 
 ## Building
 
-- Install Ruby **3.1.2**
+- Install Ruby **3.3.0**
 - Install Ruby on Rails with Bundler
 - Install Bun for compiling tailwind
 - Pull submodules
