@@ -13,27 +13,74 @@
         </h2>
         <section id="credentials">
           <h2>Credentials</h2>
-          <div class="field">
+          <div class="field" data-controller="clipboard">
             <label for="clientid" id="clientid-label">Client ID</label>
-            <span class="input2" id="clientid" aria-labelledby="clientid-label">
+            <span class="input2" id="clientid" aria-labelledby="clientid-label" data-clipboard-target="source" value="<%= @application.uid %>">
               <%= @application.uid %>
-              <button class="clipbutton">Copy to clipboard</button>
+              <button class="clipbutton" data-action="clipboard#copy" data-clipboard-target="button">Copy to clipboard</button>
             </span>
           </div>
 
-          <div class="field">
+          <div class="field" data-controller="clipboard">
             <label for="clientsecret" id="clientsecret-label">Client Secret</label>
-            <span class="input2" id="clientsecret" aria-labelledby="clientsecret-label">
+            <span class="input2" id="clientsecret" aria-labelledby="clientsecret-label" data-clipboard-target="source" value="<%= @application.secret %>">
               <%= @application.secret %>
-              <button class="clipbutton">Copy to clipboard</button>
+              <button class="clipbutton" data-action="clipboard#copy" data-clipboard-target="button">Copy to clipboard</button>
             </span>
           </div>
-
-          <button>Authorize</button>
         </section>
 
         <section id="scopes">
           <h2>Scopes</h2>
+
+          <div style="display: flex">
+            <%= form_with method: :patch, url: add_scope_developers_application_path(@application.id), id: "add_scope" do |form| %>
+              <label>Add scope:
+              <selectlist name="scope" id="scope" class="combobox" placeholder="Scope">
+                <button  part="button" behavior="button" aria-haspopup="listbox" slot="button" class="input2">
+                  <slot name="selected-value">
+                    <div part="selected-value" behavior="selected-value"></div>
+                    
+                  </slot>
+                  <slot name="marker">
+                    <svg part="marker" width="20" height="14" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 6 L10 12 L 16 6" stroke="currentColor" stroke-width="3" stroke-linejoin="round"></path>
+                    </svg>
+                  </slot>
+                </button>
+                
+                <% Doorkeeper.configuration.scopes.each do |s| %>
+                  <option value="<%= s %>" label="<%= s %>">
+                    <p>
+                      <b style="font-size: larger"><%= s %></b>
+                      <br>
+                      <span class="description" style="font-weight: normal"><%= raw t("doorkeeper.scopes.#{s}") %></span>
+                    </p>
+                  </option>
+                <% end %>
+
+              </selectlist>
+              </label>
+
+            <% end %>
+          </div>
+
+          <table class="table table-auto">
+            <thead>
+              <tr>
+                <th>Scope</th>
+                <th>Description<th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @application.scopes.each do |s| %>
+                <tr>
+                  <td><%= s %></td>
+                  <td><%= raw t("doorkeeper.scopes.#{s}") %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </section>
 
         <section id="redirect_urls">
@@ -49,6 +96,8 @@
         </section>
     </div>
 </div>
+
+<script type="module" src="https://esm.sh/selectlist-polyfill@0.3.0/"></script>
 
 <style>
   html {
@@ -81,14 +130,7 @@
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
-  }
-
-  .clipbutton {
-    border-radius: 4px;
-    font-size: 1rem;
-    padding: 0.5rem;
-    background-color: var(--lemon-glacier);
-    color: #262626;
+    color: var(--cultured) !important;
   }
 
   .field {
@@ -105,5 +147,86 @@
   label {
     font-weight: 400;
     font-size: 1.2rem;
+  }
+
+  .table td {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    font-size: 1.2rem;
+  }
+
+  .table th {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  td > strong {
+    font-weight: normal;
+  }
+  
+
+  .combobox button {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #f6f4f7;
+    padding: 5px;
+    text-align: start;
+    color: black;
+  }
+
+  .combobox[open] button {
+    border-radius: 4px 4px 0 0;
+    border-bottom-color: #f6f4f7;
+  }
+
+  .combobox[open].above button {
+    border-radius: 0 0 4px 4px;
+    border-bottom-color: #ccc;
+    border-top-color: #f6f4f7;
+  }
+
+  .combobox [popover] {
+    box-shadow: none;
+    padding: 5px;
+    margin: -1px 0 0 0;
+    border-radius: 0 0 4px 4px;
+    border: 1px solid #ccc;
+    border-width: 0 1px 1px;
+    background: #f6f4f7;
+    color: black;
+    box-sizing: border-box;
+  }
+
+  .combobox.above [popover] {
+    border-radius: 4px 4px 0 0;
+    border-width: 1px 1px 0;
+  }
+
+  .combobox :is(option, x-option) {
+    padding: 5px;
+  }
+
+  .combobox :is(option, x-option):hover,
+  .combobox :is(option, x-option):focus,
+  .combobox :is(option, x-option).selected {
+    background: #097ff5;
+    color: white;
+    outline: 0;
+  }
+
+  .combobox input[type="search"] {
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+  }
+
+  .combobox .options {
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 </style>

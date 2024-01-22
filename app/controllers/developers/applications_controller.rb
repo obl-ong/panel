@@ -13,4 +13,9 @@ class Developers::ApplicationsController < ApplicationController
   def show
     @application = Doorkeeper::Application.find_by(id: params[:id])
   end
+
+  def add_scope
+    @application = Doorkeeper::Application.find_by(id: params[:id])
+    @application.update!(scopes: Doorkeeper::OAuth::Scopes.from_array([@application.scopes, params[:scope]]))
+  end
 end

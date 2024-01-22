@@ -70,6 +70,10 @@ Rails.application.routes.draw do
 
   namespace :developers do
     get "/", to: redirect("developers/applications")
-    resources :applications
+    resources :applications do
+      member do
+        patch "add_scope"
+      end
+    end
   end
 end

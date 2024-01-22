@@ -273,7 +273,7 @@ button, input[type=submit] {
 	min-width: min-content;
 }
 
-input[type=text], input[type=email], input[type=number], .input2 {
+input[type=text], input[type=email], input[type=number], .input2, x-selectmenu::part(button) {
 	background-color: #262626 !important;
 	border: 1.5px solid var(--cultured)!important;
 	border-radius: 5px !important;
@@ -281,7 +281,7 @@ input[type=text], input[type=email], input[type=number], .input2 {
 	color: white;
 }
 
-.admin > input[type=text], input[type=email], input[type=number], .input2 {
+.admin > input[type=text], input[type=email], input[type=number], .input2, x-selectmenu::part(button) {
     background-color: rgba(245, 245, 245, 0.1) !important;
 }
 
@@ -341,4 +341,48 @@ input[type=number]  {
 
 .card:hover {
     transform: translateY(-1rem);
+}
+
+
+.clipbutton {
+    border-radius: 4px;
+    font-size: 1rem;
+    padding: 0.5rem;
+    background-color: var(--lemon-glacier);
+    color: #262626;
+    transition: ease-in-out 0.25s;
+}
+
+.clipbutton:hover {
+    transform: translateX(-4px);
+}
+
+.clipbutton.shaking {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    animation-fill-mode: forwards;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+[behavior="selected-value"] > .description {
+    display: none;
 }
