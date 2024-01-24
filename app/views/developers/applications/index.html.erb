@@ -2,7 +2,7 @@
   <meta name="turbo-visit-control" content="reload">
 <% end %>
 
-<div class="flex flex-col items-center gap-8">
+<div class="flex flex-col items-center gap-8" style="scroll-behavior: smooth;">
 
   <a href="/"><h2 class="text-yellow p-none m-none">← Back to Obl.ong</h2></a>
   <h1 class="text-center text-yellow text-4 lg:text-5 xl:text-6 font-heading">Manage your applications</h1>
@@ -26,9 +26,13 @@
     <% if @user.admin? %>
         <%= form_with url: developers_applications_path, method: :post do |form| %>
           <div class="flex flex-col gap-2 p-4 shadow-md rounded-2xl admin" style="color: var(--bg);">
-            <%= form.label :host, "Host:" %>
-            <%= form.text_field :host %>
-            <%= form.submit "Create domain" %>
+            <%= form.label :name, "Name:" %>
+            <%= form.text_field :name %>
+            <br>
+            <%= form.label :redirect_uri, "Redirect URI" %>
+            <%= form.text_field :redirect_uri %>
+
+            <%= form.submit "Create app" %>
           </div>
         <% end %>
     <% end %>

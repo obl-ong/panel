@@ -1,16 +1,17 @@
-<a href="<%= developers_application_path(application) %>" class="flex flex-col p-4 items-start gap-[1rem] bg-text text-black shadow-md rounded-2xl h-full text-ellipsis overflow-clip card">
+<a href="<%= developers_application_path(application) if !application.provisional? %>" class="flex flex-col p-4 items-start gap-[1rem] bg-text text-black shadow-md rounded-2xl h-full text-ellipsis overflow-clip card">
     <div style="display: flex; align-items: center; gap: 1rem;">
-        <div style="border-radius: 99999px; overflow: hidden;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Copyleft.svg/440px-Copyleft.svg.png" width="50" height="50"/>
-        </div>
         <h2 class="leading-none text-3 font-body text-ellipsis">
         <%= application.name %>
         </h2>
     </div>
     <div style="flex-grow: 1;width: 100%;display: flex;">
         <div class="flex flex-row content-between gap-2 justify-between w-full h-min self-end text-ellipsis">
+            <% if application.provisional? then %>
+                <span class="px-2 py-0.5 bg-yellow rounded uppercase" style="border: 1px solid;">Provisional</span>
+            <% else %>
                 <span class="px-2 py-0.5 bg-pink rounded uppercase">Live</span>
                 <span class="rounded-full px-2 py-0.5 bg-blue uppercase">Manage →</span>
+            <% end %>
         </div>
     </div>
 </a>

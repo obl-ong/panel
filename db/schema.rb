@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_19_180309) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_23_203245) do
   create_table "domains", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -62,6 +62,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_19_180309) do
     t.datetime "updated_at", null: false
     t.bigint "owner_id"
     t.string "owner_type"
+    t.boolean "provisional", default: false
+    t.text "plan"
     t.index ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end

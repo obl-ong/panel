@@ -1,15 +1,17 @@
-<main ng-app="starter" no-scroll class="admin" domains="<%= @domains.to_json %>">
-  <h1>Review Domains</h1>
+<main ng-app="starter" no-scroll class="admin" domains="<%= @apps.to_json %>">
+  <h1>Review Apps</h1>
     <ion-pane ng-controller="CardsCtrl" >
         <td-cards>
             <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}">
               <%= form_with method: :post, class: "image", "ng-controller": "CardCtrl", id: "form-{{card.resource_id}}" do |form| %>
-                  <h2>{{card.name}}.obl.ong</h2>
+                  <h2>{{card.name}}</h2>
                   <p><b>PLAN</b></p>   
                   <p>{{card.plan}}</p>
+                  <p><b>REDIRECT</b></p>   
+                  <p>{{card.uri}}</p>
                   <div class="no-text">⛔</div>
                   <div class="yes-text">✅</div>
-                  <input type="hidden" name="domain_id" value="{{card.resource_id}}"/>
+                  <input type="hidden" name="application_id" value="{{card.resource_id}}"/>
                   <input type="hidden" name="provisional_action" value="" class="action-field" />
               <% end %>
             </td-card>

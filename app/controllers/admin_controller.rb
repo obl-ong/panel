@@ -19,7 +19,11 @@ class AdminController < ApplicationController
   end
 
   def review
-    @domains = Domain.where(provisional: true).map { |d| {domain_id: d.id, host: d.host, plan: d.plan} }
+    @domains = Domain.where(provisional: true).map { |d| {resource_id: d.id, name: d.host, plan: d.plan} }
+  end
+
+  def developers_review
+    @apps = Doorkeeper::Application.where(provisional: true).map { |d| {resource_id: d.id, name: d.name, plan: d.plan, uri: d.redirect_uri} }
   end
 
   def review_decision
@@ -29,6 +33,17 @@ class AdminController < ApplicationController
       domain.update!(provisional: false)
     elsif params[:provisional_action] == "reject"
       domain.destroy!
+    end
+  end
+
+  def developers_review_decision
+    app = Doorkeeper::Application.find_by(id: params[:application_id])
+
+    if params[:provisional_action] == "accept"
+      app.update!(provisional: false)
+      Developers::ApplicationMailer.with(email: User::User.find_by(id: app.owner_id).email, app: app.name).domain_created_email.deliver_later
+    elsif params[:provisional_action] == "reject"
+      app.destroy!
     end
   end
 

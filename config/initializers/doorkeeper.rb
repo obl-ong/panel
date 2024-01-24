@@ -12,7 +12,6 @@ Doorkeeper.configure do
     #   User.find_by(id: session[:user_id]) || redirect_to(new_user_session_url)
     session[:return_path] = request.fullpath
     User::User.find_by(id: session[:current_user_id]) || redirect_to("/auth/login")
-
   end
 
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb
@@ -280,7 +279,7 @@ Doorkeeper.configure do
   # #call can be used in order to allow conditional checks (to allow non-SSL
   # redirects to localhost for example).
   #
-  # force_ssl_in_redirect_uri !Rails.env.development?
+  force_ssl_in_redirect_uri !Rails.env.development?
   #
   # force_ssl_in_redirect_uri { |uri| uri.host != 'localhost' }
 
@@ -401,9 +400,9 @@ Doorkeeper.configure do
   #
   # By default all Resource Owners are authorized to any Client (application).
   #
-  # authorize_resource_owner_for_client do |client, resource_owner|
-  #   resource_owner.admin? || client.owners_allowlist.include?(resource_owner)
-  # end
+  authorize_resource_owner_for_client do |client, resource_owner|
+    !client.provisional?
+  end
 
   # Allows additional data fields to be sent while granting access to an application,
   # and for this additional data to be included in subsequently generated access tokens.
@@ -420,13 +419,13 @@ Doorkeeper.configure do
   # tokens, you can check that the requested data belongs to the specified tenant.
   #
   # Default value is an empty Array: []
-  # custom_access_token_attributes [:tenant_id]
+  # custom_access_token_attributes [:provisional]
 
   # Hook into the strategies' request & response life-cycle in case your
   # application needs advanced customization or logging:
   #
   # before_successful_strategy_response do |request|
-  #   puts "BEFORE HOOK FIRED! #{request}"
+  #  puts "BEFORE HOOK FIRED! #{request}"
   # end
   #
   # after_successful_strategy_response do |request, response|
