@@ -1,3 +1,4 @@
+# standard:disable all
 class CreateDoorkeeperOpenidConnectTables < ActiveRecord::Migration[7.1]
   def change
     create_table :oauth_openid_requests do |t|
