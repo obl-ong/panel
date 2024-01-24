@@ -1,16 +1,9 @@
+json.ignore_nil!
+
 json.id @id
-
-if @name
-  json.name @name
-end
-
-if @email
-  json.email @email
-end
-
-if @admin
-  json.admin @admin
-end
+json.name @name
+json.email @email
+json.admin @admin
 
 json.verified @verified
 json.created_at @created_at
