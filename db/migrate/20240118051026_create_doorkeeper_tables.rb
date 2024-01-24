@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+# standard:disable all
 class CreateDoorkeeperTables < ActiveRecord::Migration[7.1]
   def change
     create_table :oauth_applications do |t|

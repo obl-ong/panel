@@ -1,4 +1,4 @@
-class Api::V1::ApiController < ActionController::Base
+class Api::V1::ApiController < ActionController::Base #standard:disable all
   skip_before_action :verify_authenticity_token
 
   before_action :not_provisional

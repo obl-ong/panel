@@ -78,7 +78,6 @@ Rails.application.configure do
 
   config.enable_reloading = true
 
-
   config.hosts << "oblong.test"
   config.hosts << "oblong.underpass.clb.li"
 

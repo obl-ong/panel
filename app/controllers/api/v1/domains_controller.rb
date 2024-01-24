@@ -7,7 +7,7 @@ class Api::V1::DomainsController < Api::V1::ApiController
   before_action only: [:create, :destroy] do
     doorkeeper_authorize! :domains_write
   end
-  
+
   skip_before_action :authorize_domain, only: [:index, :create]
 
   def index
