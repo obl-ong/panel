@@ -473,7 +473,6 @@ DEPENDENCIES
   solargraph
   solid_cache (~> 0.2.0)
   solid_queue (~> 0.1.2)
-  sorbet
   sorbet-runtime
   sqlite3 (~> 1.4)
   standard (~> 1.33)
