@@ -41,7 +41,7 @@ class AdminController < ApplicationController
 
     if params[:provisional_action] == "accept"
       app.update!(provisional: false)
-      Developers::ApplicationMailer.with(email: User::User.find_by(id: app.owner_id).email, app: app.name).domain_created_email.deliver_later
+      Developers::ApplicationMailer.with(email: User::User.find_by(id: app.owner_id).email, app: app.name).app_created_email.deliver_later
     elsif params[:provisional_action] == "reject"
       app.destroy!
     end
