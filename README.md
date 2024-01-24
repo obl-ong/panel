@@ -7,7 +7,7 @@ This is the backbone for Obl.ong, a nonprofit service providing free, quality do
 
 ## Building
 
-- Install Ruby **3.1.2**
+- Install Ruby **3.3.0**
 - Install Ruby on Rails with Bundler
 - Install Bun for compiling tailwind
 - Pull submodules
@@ -22,7 +22,7 @@ This is the backbone for Obl.ong, a nonprofit service providing free, quality do
   sentry: SENTRY_URI
   ```
   
-- Run `rails assets:precompile`
+- Run `rails assets:precompile` (if building for prod - DO NOT DO IN DEVELOPMENT)
 - Copy `app/javascript/application.js` to `public/assets/application-{hash}.js` (must be done every time assets is recompiled)
 - Edit `config/application.rb` to reflect your environment
 - Start the server with `bin/rails server`

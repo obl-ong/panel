@@ -118,6 +118,7 @@ gem "standard", "~> 1.33"
 gem "standard-rails", "~> 1.0"
 
 gem "syntax_suggest", "~> 2.0"
+
 gem "doorkeeper", "~> 5.6"
 
 gem "doorkeeper-openid_connect", "~> 1.8"
