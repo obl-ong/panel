@@ -1,4 +1,4 @@
-<a href="<%= developers_application_path(application) if !application.provisional? %>" class="flex flex-col p-4 items-start gap-[1rem] bg-text text-black shadow-md rounded-2xl h-full text-ellipsis overflow-clip card">
+<a <% if !application.provisional? %> href="<%= developers_application_path(application) %>" <% end %> class="flex flex-col p-4 items-start gap-[1rem] bg-text text-black shadow-md rounded-2xl h-full text-ellipsis overflow-clip card">
     <div style="display: flex; align-items: center; gap: 1rem;">
         <h2 class="leading-none text-3 font-body text-ellipsis">
         <%= application.name %>
