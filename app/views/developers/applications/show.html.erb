@@ -114,6 +114,11 @@
                 <tr>
                   <td><%= r %></td>
                   <td>
+                    <%= link_to oauth_authorization_path(client_id: @application.uid, redirect_uri: r, response_type: 'code', scope: @application.scopes), target: "_blank" do %>
+                      <button class="clipbutton">Authorize</button>
+                    <% end %>
+                  </td>
+                  <td>
                     <%= form_with method: :delete, url: redirect_uris_developers_application_path(id: @application.id), id: "destroy_redirect_url" do |form| %>
                       <%= form.hidden_field :redirect_uri, value: r %>
                       <button style="padding: 0;" aria-label="delete" type="submit">

@@ -28,8 +28,15 @@ class Developers::ApplicationsController < ApplicationController
 
   def add_scope
     @application = current_application
-    @application.update!(scopes: Doorkeeper::OAuth::Scopes.from_array([@application.scopes, params[:scope]]))
-    redirect_back(fallback_location: developers_applications_path(id: params[:id]))
+    begin
+      @application.update!(scopes: Doorkeeper::OAuth::Scopes.from_array([@application.scopes, params[:scope]]))
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique => e
+      flash.notice = e.message
+    else
+      flash.notice = "Added Scope #{params[:scope]}"
+    ensure
+      redirect_back(fallback_location: developers_applications_path(id: params[:id]))
+    end
   end
 
   def destroy_scope
@@ -37,15 +44,22 @@ class Developers::ApplicationsController < ApplicationController
     scopes = @application.scopes.to_a
     scopes.delete(params[:scope])
     @application.update!(scopes: Doorkeeper::OAuth::Scopes.from_array(scopes))
-    redirect_back(fallback_location: developers_applications_path(id: params[:id]))
+    redirect_back(fallback_location: developers_applications_path(id: params[:id]), notice: "Destroyed scope #{params[:scope]}")
   end
 
   def add_redirect_uri
     @application = current_application
     uris = @application.redirect_uri.split("\r\n")
     uris.push(params[:redirect_uri])
-    @application.update!(redirect_uri: uris.join("\r\n"))
-    redirect_back(fallback_location: developers_applications_path(id: params[:id]))
+    begin
+      @application.update!(redirect_uri: uris.join("\r\n"))
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique => e
+      flash.notice = e.message
+    else
+      flash.notice = "Added Redirect URI"
+    ensure
+      redirect_back(fallback_location: developers_applications_path(id: params[:id]))
+    end
   end
 
   def destroy_redirect_uri
@@ -53,14 +67,14 @@ class Developers::ApplicationsController < ApplicationController
     uris = @application.redirect_uri.split("\r\n")
     uris.delete(params[:redirect_uri])
     @application.update!(redirect_uri: uris.join("\r\n"))
-    redirect_back(fallback_location: developers_applications_path(id: params[:id]))
+    redirect_back(fallback_location: developers_applications_path(id: params[:id]), notice: "Destroyed Redirect URI")
   end
 
   def update
     @application = current_application
     @application.update!(name: params[:name]) if params[:name]
     @application.update!(confidential: params[:confidential].to_i.zero?) if params[:confidential]
-    redirect_back(fallback_location: developers_applications_path(id: params[:id]))
+    redirect_back(fallback_location: developers_applications_path(id: params[:id]), notice: "Updated application")
   end
 
   def destroy
