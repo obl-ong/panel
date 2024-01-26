@@ -2,7 +2,9 @@
 
 Rails.application.routes.draw do
   use_doorkeeper_openid_connect
-  use_doorkeeper
+  use_doorkeeper do
+    skip_controllers :applications, :authorized_applications
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get "up" => "rails/health#show", :as => :rails_health_check
