@@ -1,7 +1,7 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins '*'
-    resource '/api/*', headers: :any, methods: [:get, :post, :patch, :put]
-    resource '/.well-known/*', headers: :any, methods: [:get, :post, :patch, :put]
+    origins "*"
+    resource "/api/*", headers: :any, methods: [:get, :post, :patch, :put]
+    resource "/.well-known/*", headers: :any, methods: [:get, :post, :patch, :put]
   end
 end
