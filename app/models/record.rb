@@ -1,4 +1,4 @@
-include DnsimpleHelper #standard:disable all
+include DnsimpleHelper #standard:disable all  
 
 class Record
   include ActiveModel::Model
@@ -138,6 +138,7 @@ class Record
   end
 
   def self.find(id)
+    id = id.to_i
     found = nil
     for r in all
       if r.id == id

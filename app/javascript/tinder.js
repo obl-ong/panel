@@ -34,11 +34,11 @@ angular.module('starter', ['ionic', 'ionic.contrib.ui.tinderCards'])
       $scope.cards.push(angular.extend({}, currentCard));
       currentCard = null;
     } else if (currentCard.action == "accept") {
-      document.querySelector(`form#form-${currentCard.domain_id} .action-field`).value = "accept";
-      document.querySelector(`form#form-${currentCard.domain_id}`).submit()
+      document.querySelector(`form#form-${currentCard.resource_id} .action-field`).value = "accept";
+      document.querySelector(`form#form-${currentCard.resource_id}`).submit()
 
       Toastify({
-        text: `${currentCard.host} was accepted`,
+        text: `${currentCard.name} was accepted`,
         duration: 3000,
         newWindow: true,
         close: true,
@@ -50,11 +50,11 @@ angular.module('starter', ['ionic', 'ionic.contrib.ui.tinderCards'])
       }).showToast();
       currentCard = null;
     } else if(currentCard.action == "reject") {
-      document.querySelector(`form#form-${currentCard.domain_id} .action-field`).value = "reject";
-      document.querySelector(`form#form-${currentCard.domain_id}`).submit()
+      document.querySelector(`form#form-${currentCard.resource_id} .action-field`).value = "reject";
+      document.querySelector(`form#form-${currentCard.resource_id}`).submit()
 
       Toastify({
-        text: `${currentCard.host} was rejected`,
+        text: `${currentCard.name} was rejected`,
         duration: 3000,
         newWindow: true,
         close: true,
@@ -78,7 +78,7 @@ angular.module('starter', ['ionic', 'ionic.contrib.ui.tinderCards'])
     
     currentCard = structuredClone($scope.cards[index]);
 
-    if(window.confirm(`Are you sure you want to reject ${$scope.cards[index].host}?`)) {
+    if(window.confirm(`Are you sure you want to reject ${$scope.cards[index].name}?`)) {
       currentCard.action = "reject"
     } else {
       currentCard.action = "dontDestroy"

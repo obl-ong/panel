@@ -1,0 +1,138 @@
+<main ng-app="starter" no-scroll class="admin" domains="<%= @apps.to_json %>">
+  <h1>Review Apps</h1>
+    <ion-pane ng-controller="CardsCtrl" >
+        <td-cards>
+            <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}">
+              <%= form_with method: :post, class: "image", "ng-controller": "CardCtrl", id: "form-{{card.resource_id}}" do |form| %>
+                  <h2>{{card.name}}</h2>
+                  <p><b>PLAN</b></p>   
+                  <p>{{card.plan}}</p>
+                  <p><b>REDIRECT</b></p>   
+                  <p>{{card.uri}}</p>
+                  <div class="no-text">⛔</div>
+                  <div class="yes-text">✅</div>
+                  <input type="hidden" name="application_id" value="{{card.resource_id}}"/>
+                  <input type="hidden" name="provisional_action" value="" class="action-field" />
+              <% end %>
+            </td-card>
+            <div class="none-left">
+              <h2>No more apps to review</h2>
+            </div>
+        </td-cards>
+        <div class="no-text">REJECT</div>
+        <div class="yes-text">APPROVE</div>
+    </ion-pane>
+</main>
+
+<% content_for :head do %>
+
+<script src="https://code.ionicframework.com/collide/0.0.4/collide.js"></script>
+<script src="https://code.ionicframework.com/1.0.0-beta.14/js/ionic.bundle.js"></script>
+<script src="https://code.ionicframework.com/contrib/ionic-contrib-tinder-cards/ionic.tdcards.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<%= javascript_include_tag "tinder", "data-turbo-track": "reload" %>
+<% end %>
+
+<style>
+@import url("https://code.ionicframework.com/contrib/ionic-contrib-tinder-cards/ionic.tdcards.css");
+@import url("https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css");
+
+.pane {
+  background: #343434 !important;
+}
+
+td-cards {
+  display: block;
+}
+
+main {
+  width: 100%;
+  height: 85%;
+  position: relative;
+  color: #343434;
+}
+
+td-card {
+  position: absolute;
+  left: 50%;
+  margin-top: 80px;
+  margin-bottom: 40px;
+  margin-left: -150px;
+  width: 300px;
+  height: 300px;
+
+  border: 1px solid #999;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+  border-radius: 6px;
+  background: #F5F5F5;
+  color: #343434;
+  z-index: 1;
+}
+
+.none-left {
+  position: absolute;
+  left: 50%;
+  margin-top: 80px;
+  margin-bottom: 40px;
+  margin-left: -150px;
+  width: 300px;
+  height: 300px;
+  z-index: 0;
+}
+
+.none-left > h2 {
+  color: #F5F5F5;
+  text-align: center;
+}
+
+td-card .image {
+  position: relative;
+  padding: 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+}
+
+.yes-text {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 30px;
+  color: #41EAD4;
+  text-stroke: 0.5px black;
+  -webkit-text-stroke: 0.5px black;
+  opacity: 1 !important;
+}
+.no-text {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 30px;
+  color: var(--winter-sky);
+  opacity: 1 !important;
+}
+
+.fade {
+  -webkit-transition: 0.2s opacity linear;
+  transition: 0.2s opacity linear;
+  opacity: 0;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+.none-left > h2 {
+  color: var(--winter-sky);
+}
+
+form {
+  position: relative;
+  height: 100%;
+}
+</style>

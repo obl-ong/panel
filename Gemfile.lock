@@ -126,6 +126,11 @@ GEM
     diff-lcs (1.5.0)
     dnsimple (8.7.1)
       httparty
+    doorkeeper (5.6.8)
+      railties (>= 5)
+    doorkeeper-openid_connect (1.8.7)
+      doorkeeper (>= 5.5, < 5.7)
+      jwt (>= 2.5)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -224,6 +229,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.7.3)
     rack (3.0.8)
+    rack-cors (2.0.1)
+      rack (>= 2.0.0)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -445,6 +452,8 @@ DEPENDENCIES
   dalli (~> 3.2)
   debug
   dnsimple (~> 8.1)
+  doorkeeper (~> 5.6)
+  doorkeeper-openid_connect (~> 1.8)
   dotenv-rails
   erb-formatter
   importmap-rails (~> 1.2)
@@ -453,6 +462,7 @@ DEPENDENCIES
   postmark-rails
   propshaft
   puma (~> 6.0)
+  rack-cors (~> 2.0)
   rails (~> 7.1.2)
   rails_hotreload
   rails_nestable_layouts!

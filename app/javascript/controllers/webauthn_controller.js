@@ -14,11 +14,15 @@ export default class extends Controller {
 	
 	connect() {
 		console.log("hai")
-	  if (typeof(PublicKeyCredential) == "undefined") {
-	    window.location.pathname = "/auth/unsupported"
-	  }
+	  	if (typeof(PublicKeyCredential) == "undefined" && window.location.search != "?force=true") {
+			const url = new URL(window.location);
+			url.searchParams.append("returnpath", window.location.pathname)
+	    	url.pathname = "/auth/unsupported"
 
-	  window.Auth = Auth
+			window.location.href = url.href
+	  	}
+
+	  	window.Auth = Auth
 	}
 	
 	async createKey() {

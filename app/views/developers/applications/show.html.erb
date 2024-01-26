@@ -1,0 +1,301 @@
+<%# https://icons.hackclub.com/ %>
+<div class="flex flex-col lg:flex-row gap-12">
+    <div class="flex flex-row flex-wrap lg:flex-col gap-6 side-menu">
+        <%= link_to "Credentials", anchor: "credentials" %>
+        <%= link_to "Scopes", anchor: "scopes" %>
+        <%= link_to "Redirect URIs", anchor: "redirect_uris" %>
+        <%= link_to "App Info", anchor: "info" %>
+        <%= link_to "Danger Zone", anchor: "danger_zone" %>
+    </div>
+    <div class="flex-1 flex flex-col gap-8">
+        <h2 class="font-heading text-4 md:text-5 lg:text-6 text-blue">
+            <%= @application.name %>
+        </h2>
+        <section id="credentials">
+          <h2>Credentials</h2>
+          <div class="field" data-controller="clipboard">
+            <label for="clientid" id="clientid-label">Client ID</label>
+            <span class="input2" id="clientid" aria-labelledby="clientid-label" data-clipboard-target="source" value="<%= @application.uid %>">
+              <%= @application.uid %>
+              <button class="clipbutton" data-action="clipboard#copy" data-clipboard-target="button">Copy to clipboard</button>
+            </span>
+          </div>
+
+          <div class="field" data-controller="clipboard">
+            <label for="clientsecret" id="clientsecret-label">Client Secret</label>
+            <span class="input2" id="clientsecret" aria-labelledby="clientsecret-label" data-clipboard-target="source" value="<%= @application.secret %>">
+              <%= @application.secret %>
+              <button class="clipbutton" data-action="clipboard#copy" data-clipboard-target="button">Copy to clipboard</button>
+            </span>
+          </div>
+        </section>
+
+        <section id="scopes">
+          <h2>Scopes</h2>
+
+          <%= form_with method: :post, url: scopes_developers_application_path(id: @application.id), id: "add_scope", data: {controller: "formselect", action: "formdata->formselect#add"} do |form| %>
+
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+
+              <label for="scope">Add scope:</label>
+
+              <selectlist name="scope" id="scope" class="combobox" placeholder="Scope" data-formselect-target="select">
+                <button  part="button" type="button" behavior="button" aria-haspopup="listbox" slot="button" class="input2">
+                  <slot name="selected-value">
+                    <div part="selected-value" behavior="selected-value"></div>
+                    
+                  </slot>
+                  <slot name="marker">
+                    <svg part="marker" width="20" height="14" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 6 L10 12 L 16 6" stroke="currentColor" stroke-width="3" stroke-linejoin="round"></path>
+                    </svg>
+                  </slot>
+                </button>
+                
+                <% Doorkeeper.configuration.scopes.each do |s| %>
+                  <option value="<%= s %>" label="<%= s %>">
+                    <p>
+                      <b style="font-size: larger"><%= s %></b>
+                      <br>
+                      <span class="description" style="font-weight: normal"><%= raw t("doorkeeper.scopes.#{s}") %></span>
+                    </p>
+                  </option>
+                <% end %>
+
+              </selectlist>
+
+              <%= form.submit "Add" %>
+            </div>
+          <% end %>
+
+          <table class="table table-auto">
+            <thead>
+              <tr>
+                <th>Scope</th>
+                <th>Description<th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @application.scopes.each do |s| %>
+                <tr>
+                  <td><%= s %></td>
+                  <td><%= raw t("doorkeeper.scopes.#{s}") %></td>
+                  <td>
+                    <%= form_with method: :delete, url: scopes_developers_application_path(id: @application.id), id: "destroy_scope" do |form| %>
+                      <%= form.hidden_field :scope, value: s %>
+                      <button style="padding: 0;" aria-label="delete" type="submit">
+                        <svg class="fill-pink w-8 h-8" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="delete" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48" title="delete"><g><path d="M8.391 12.32c-.636-.131-1.248.368-1.213 1.016.808 14.714 1.271 14.711 7.681 14.669C15.22 28.003 15.6 28 16 28s.78.003 1.141.005c6.41.042 6.873.045 7.681-14.669.035-.648-.577-1.147-1.212-1.016a.975.975 0 0 0-.784.896c-.17 3.094-.323 5.51-.519 7.407-.266 2.584-.588 3.883-.95 4.566-.225.426-.422.586-1.067.701-.716.128-1.615.123-3.019.115h-.002a161.358 161.358 0 0 0-2.538 0h-.001c-1.405.008-2.304.013-3.02-.115-.645-.115-.842-.275-1.067-.701-.362-.683-.684-1.982-.95-4.566-.196-1.897-.349-4.313-.519-7.407a.975.975 0 0 0-.783-.896z"></path><path d="M6 10a1 1 0 0 1 1-1h18a1 1 0 0 1 0 2H7a1 1 0 0 1-1-1z" fill-rule="nonzero"></path><path d="M12.25 7.973C12.112 8.185 12 8.5 12 9h-2c0-.81.186-1.525.576-2.121.366-.536.963-1.006 1.525-1.271C13.24 5.087 14.687 5 16 5c1.313 0 2.76.087 3.899.608.562.265 1.158.735 1.525 1.271C21.814 7.475 22 8.19 22 9h-2c0-.5-.112-.815-.25-1.027-.161-.272-.324-.388-.684-.546C18.36 7.103 17.306 7 16 7c-1.306 0-2.36.103-3.066.427-.36.158-.523.274-.684.546z"></path><path d="M12.044 14.086a1 1 0 1 1 1.998-.087l.349 7.992a1 1 0 0 1-1.998.087l-.349-7.992zM17.956 13.999a1 1 0 0 1 1.998.087l-.348 7.993a1 1 0 0 1-1.999-.088l.349-7.992z" fill-rule="nonzero"></path></g></svg>
+                      </button>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="redirect_uris">
+          <h2>Redirect URIs</h2>
+          <%= form_with method: :post, url: redirect_uris_developers_application_path(id: @application.id), id: "add_scope" do |form| %>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <label for="scope">Add scope:</label>
+              <%= form.text_field :redirect_uri %>
+              <%= form.submit "Add" %>      
+            </div>
+          <% end %>
+          <table class="table table-auto">
+            <thead>
+              <tr>
+                <th>Redirect URI</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @application.redirect_uri.split("\r\n") do |r| %>
+                <tr>
+                  <td><%= r %></td>
+                  <td>
+                    <%= link_to oauth_authorization_path(client_id: @application.uid, redirect_uri: r, response_type: 'code', scope: @application.scopes), target: "_blank" do %>
+                      <button class="clipbutton">Authorize</button>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= form_with method: :delete, url: redirect_uris_developers_application_path(id: @application.id), id: "destroy_redirect_url" do |form| %>
+                      <%= form.hidden_field :redirect_uri, value: r %>
+                      <button style="padding: 0;" aria-label="delete" type="submit">
+                        <svg class="fill-pink w-8 h-8" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="delete" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48" title="delete"><g><path d="M8.391 12.32c-.636-.131-1.248.368-1.213 1.016.808 14.714 1.271 14.711 7.681 14.669C15.22 28.003 15.6 28 16 28s.78.003 1.141.005c6.41.042 6.873.045 7.681-14.669.035-.648-.577-1.147-1.212-1.016a.975.975 0 0 0-.784.896c-.17 3.094-.323 5.51-.519 7.407-.266 2.584-.588 3.883-.95 4.566-.225.426-.422.586-1.067.701-.716.128-1.615.123-3.019.115h-.002a161.358 161.358 0 0 0-2.538 0h-.001c-1.405.008-2.304.013-3.02-.115-.645-.115-.842-.275-1.067-.701-.362-.683-.684-1.982-.95-4.566-.196-1.897-.349-4.313-.519-7.407a.975.975 0 0 0-.783-.896z"></path><path d="M6 10a1 1 0 0 1 1-1h18a1 1 0 0 1 0 2H7a1 1 0 0 1-1-1z" fill-rule="nonzero"></path><path d="M12.25 7.973C12.112 8.185 12 8.5 12 9h-2c0-.81.186-1.525.576-2.121.366-.536.963-1.006 1.525-1.271C13.24 5.087 14.687 5 16 5c1.313 0 2.76.087 3.899.608.562.265 1.158.735 1.525 1.271C21.814 7.475 22 8.19 22 9h-2c0-.5-.112-.815-.25-1.027-.161-.272-.324-.388-.684-.546C18.36 7.103 17.306 7 16 7c-1.306 0-2.36.103-3.066.427-.36.158-.523.274-.684.546z"></path><path d="M12.044 14.086a1 1 0 1 1 1.998-.087l.349 7.992a1 1 0 0 1-1.998.087l-.349-7.992zM17.956 13.999a1 1 0 0 1 1.998.087l-.348 7.993a1 1 0 0 1-1.999-.088l.349-7.992z" fill-rule="nonzero"></path></g></svg>
+                      </button>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="info">
+          <h2>App Info</h2>
+
+          <%= form_with method: :patch, url: developers_application_path(id: @application.id) do |form| %>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <label for="scope">Name:</label>
+              <%= form.text_field :name, value: @application.name %>
+              <%= form.submit "Update" %>      
+            </div>
+          <% end %>
+        </section>
+
+        <section id="danger_zone">
+          <h2>Danger Zone</h2>
+
+          <%= form_with method: :patch, url: developers_application_path(id: @application.id) do |form| %>
+            <label for="scope"><strong>Use PKCE?</strong> <br>Enable if the client secret might be exposed to the client <br>(i.e. mobile apps & single-page-apps)</label>
+            <br><br>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <%= form.check_box :confidential, checked: !@application.confidential %>
+              <%= form.submit "Update" %>      
+            </div>
+          <% end %>
+          <br><br>
+          <%= form_with method: :delete, url: developers_application_path(id: @application.id) do |form| %>
+            <%= form.submit "Destroy Application", data: {"turbo-confirm": "You sure you want to delete #{@application.name}?"} %>
+          <% end %>
+        </section>
+    </div>
+</div>
+
+<style>
+  html {
+    scroll-behavior: smooth !important;
+  }
+
+  .side-menu > a {
+    font-size: 1.5rem;
+  }
+
+  section {
+    padding: 1.25rem;
+    border: 1px solid var(--cultured);
+    background-color: #262626;
+    max-width: 700px;
+    border-radius:6px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .input2 {
+    padding: 0.25rem 0.25rem;
+    padding-left: 0.75rem;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--cultured) !important;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  #credentials > button {
+    width: fit-content;
+  }
+
+  label {
+    font-weight: 400;
+    font-size: 1.2rem;
+  }
+
+  .table td {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    font-size: 1.2rem;
+  }
+
+  .table th {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  td > strong {
+    font-weight: normal;
+  }
+  
+
+  .combobox button {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #f6f4f7;
+    padding: 5px;
+    text-align: start;
+    color: black;
+  }
+
+  .combobox[open] button {
+    border-radius: 4px 4px 0 0;
+    border-bottom-color: #f6f4f7;
+  }
+
+  .combobox[open].above button {
+    border-radius: 0 0 4px 4px;
+    border-bottom-color: #ccc;
+    border-top-color: #f6f4f7;
+  }
+
+  .combobox [popover] {
+    box-shadow: none;
+    padding: 5px;
+    margin: -1px 0 0 0;
+    border-radius: 0 0 4px 4px;
+    border: 1px solid #ccc;
+    border-width: 0 1px 1px;
+    background: #f6f4f7;
+    color: black;
+    box-sizing: border-box;
+  }
+
+  .combobox.above [popover] {
+    border-radius: 4px 4px 0 0;
+    border-width: 1px 1px 0;
+  }
+
+  .combobox :is(option, x-option) {
+    padding: 5px;
+  }
+
+  .combobox :is(option, x-option):hover,
+  .combobox :is(option, x-option):focus,
+  .combobox :is(option, x-option).selected {
+    background: #097ff5;
+    color: white;
+    outline: 0;
+  }
+
+  .combobox input[type="search"] {
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+  }
+
+  .combobox .options {
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #danger_zone {
+    background-color: rgba(255,0,0,0.1);
+    border-color: var(--winter-sky);
+  }
+</style>

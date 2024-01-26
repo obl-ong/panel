@@ -1,0 +1,2 @@
+module Developers::ApplicationsHelper
+end

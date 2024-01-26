@@ -3,13 +3,13 @@
     <ion-pane ng-controller="CardsCtrl" >
         <td-cards>
             <td-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}">
-              <%= form_with method: :post, class: "image", "ng-controller": "CardCtrl", id: "form-{{card.domain_id}}" do |form| %>
-                  <h2>{{card.host}}.obl.ong</h2>
+              <%= form_with method: :post, class: "image", "ng-controller": "CardCtrl", id: "form-{{card.resource_id}}" do |form| %>
+                  <h2>{{card.name}}.obl.ong</h2>
                   <p><b>PLAN</b></p>   
                   <p>{{card.plan}}</p>
                   <div class="no-text">⛔</div>
                   <div class="yes-text">✅</div>
-                  <input type="hidden" name="domain_id" value="{{card.domain_id}}"/>
+                  <input type="hidden" name="domain_id" value="{{card.resource_id}}"/>
                   <input type="hidden" name="provisional_action" value="" class="action-field" />
               <% end %>
             </td-card>

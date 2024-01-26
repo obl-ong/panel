@@ -69,7 +69,7 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # Origin for the WebAuthn RP
-  config.webauthn_origin = "http://localhost:3000"
+  config.webauthn_origin = "https://oblong.underpass.clb.li"
 
   config.action_controller.raise_on_missing_callback_actions = true
 
@@ -77,4 +77,9 @@ Rails.application.configure do
   config.active_job.verbose_enqueue_logs = true
 
   config.enable_reloading = true
+
+  config.hosts << "oblong.test"
+  config.hosts << "oblong.underpass.clb.li"
+
+  config.assets.compile = true
 end

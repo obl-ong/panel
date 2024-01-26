@@ -1,6 +1,10 @@
 # typed: true
 
 Rails.application.routes.draw do
+  use_doorkeeper_openid_connect
+  use_doorkeeper do
+    skip_controllers :applications, :authorized_applications
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get "up" => "rails/health#show", :as => :rails_health_check
@@ -22,12 +26,25 @@ Rails.application.routes.draw do
     end
   end
 
-  get "admin", to: "admin#index"
-  get "admin/users", to: "admin#users"
-  get "admin/domains", to: "admin#domains"
-  get "admin/users/:id/domains", to: "admin#users_domains", as: "admin_users_domains"
-  get "admin/domains/review", to: "admin#review"
-  post "admin/domains/review", to: "admin#review_decision"
+  scope :admin do
+    get "/", to: "admin#index"
+
+    scope :users do
+      get "/", to: "admin#users"
+      get "/:id/domains", to: "admin#users_domains", as: "admin_users_domains"
+    end
+
+    scope :domains do
+      get "/", to: "admin#domains"
+      get "/review", to: "admin#review"
+      post "/review", to: "admin#review_decision"
+    end
+
+    scope :developers do
+      post "/review", to: "admin#developers_review_decision"
+      get "/review", to: "admin#developers_review"
+    end
+  end
 
   get "users/register"
   post "users/create"
@@ -53,4 +70,34 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "domains#index"
+
+  namespace :api do
+    namespace :v1 do
+      resources :domains, param: :host do
+        member do
+          resources :records, module: "domains"
+        end
+      end
+      get "user", to: "user#show"
+      patch "user", to: "user#update"
+    end
+  end
+
+  namespace :developers do
+    get "/", to: redirect("developers/applications")
+    resources :applications do
+      member do
+        post "scopes", to: "applications#add_scope"
+        delete "scopes", to: "applications#destroy_scope"
+
+        post "redirect_uris", to: "applications#add_redirect_uri"
+        delete "redirect_uris", to: "applications#destroy_redirect_uri"
+      end
+
+      collection do
+        get "request", to: "applications#request"
+        post "provision", to: "applications#provision"
+      end
+    end
+  end
 end
