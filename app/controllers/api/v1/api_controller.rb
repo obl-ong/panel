@@ -11,6 +11,9 @@ class Api::V1::ApiController < ActionController::Base #standard:disable all
   end
 
   def not_provisional
+    if doorkeeper_token.nil?
+      return
+    end
     if Doorkeeper::Application.find_by(id: doorkeeper_token.application_id).provisional?
       render plain: "425 Too Early - Provisional Client", status: 425
     end
