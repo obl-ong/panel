@@ -7,8 +7,13 @@ class DeviceAuthorizationsController < Doorkeeper::ApplicationController
   def approve
     session[:device_grant_id] = nil
     device_grant = device_grant_model.lock.find_by(user_code: user_code)
-    authorization_error_response(:invalid_user_code); return if device_grant.nil? # standard:disable Style/Semicolon
-    authorization_error_response(:expired_user_code); return if device_grant.expired? # standard:disable Style/Semicolon
+    if device_grant.nil?
+      authorization_error_response(:invalid_user_code)
+      return
+    end
+    if device_grant.expired?
+      authorization_error_response(:expired_user_code)
+    end
     session[:device_grant_id] = device_grant.id
 
     @client = Doorkeeper::Application.find_by(id: device_grant.application_id)
