@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import "selectlist";
 
 export default class extends Controller {
   static targets = [ "select" ]
