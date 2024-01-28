@@ -5,7 +5,13 @@ Rails.application.routes.draw do
   use_doorkeeper do
     skip_controllers :applications, :authorized_applications
   end
+  use_doorkeeper_device_authorization_grant do
+    controller device_authorizations: "device_authorizations"
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  get "/oauth/device/approve", to: "device_authorizations#approve"
+  delete "/oauth/device/destroy", to: "device_authorizations#destroy"
 
   get "up" => "rails/health#show", :as => :rails_health_check
 

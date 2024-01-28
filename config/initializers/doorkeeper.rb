@@ -299,7 +299,7 @@ Doorkeeper.configure do
   #
   # You can completely disable this feature with:
   #
-  # allow_blank_redirect_uri false
+  allow_blank_redirect_uri true
   #
   # Or you can define your custom check:
   #
@@ -360,7 +360,7 @@ Doorkeeper.configure do
   #   https://datatracker.ietf.org/doc/html/rfc6819#section-4.4.2
   #   https://datatracker.ietf.org/doc/html/rfc6819#section-4.4.3
   #
-  # grant_flows %w[authorization_code client_credentials]
+  grant_flows %w[device_code authorization_code client_credentials]
 
   # Allows to customize OAuth grant flows that +each+ application support.
   # You can configure a custom block (or use a class respond to `#call`) that must

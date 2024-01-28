@@ -11,11 +11,11 @@
 </head>
 <body>
 <div id="container">
-  <%- if flash[:notice].present? %>
-    <div class="alert alert-info">
-      <%= flash[:notice] %>
+  <% flash.each do |type, msg| %>
+    <div class="flash flash-<%= type %>">
+      <%= msg %>
     </div>
-  <% end -%>
+  <% end %>
 
   <%= yield %>
 </div>

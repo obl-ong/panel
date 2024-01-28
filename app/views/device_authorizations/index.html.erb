@@ -1,0 +1,101 @@
+<main>
+  <section role="main">
+    <%= image_tag "oval.svg", size: "200" %>
+    <h1>Connect a device</h1>
+    <h2>
+      Enter the code displayed on your device
+    </h2>
+
+    <div class="actions">
+      <%= form_with url: oauth_device_approve_url, method: :get do |form| %>
+        <%= form.text_field :user_code, class: 'form-control', placeholder: "Code" %>
+        <%= form.submit "Connect", class: "btn btn-success btn-lg btn-block" %>
+      <% end %>
+    </div>
+  </section>
+</main>
+
+<style>
+	main {
+		padding: 5rem;
+		padding-top: 4rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		min-height: 100vh;
+	}
+
+	.error {
+		font-style: italic;
+		color: var(--lemon-glacier);
+	}
+
+	h1 {
+		font-weight: 300;
+		font-size: 2.5rem;
+		padding: 0;
+		margin: 0;
+	}
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+	div {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	a {
+		color: var(--winter-sky);
+	}
+
+	a:hover {
+		font-style: italic;
+	}
+	
+	b {
+		font-weight: 700; 
+	}
+	
+	form {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		align-items: center;
+		text-align: center;
+	}
+
+  strong {
+    font-weight: 700;
+  }
+
+  ul {
+    text-align: left;
+    max-width: 500px;
+  }
+
+  li {
+    padding: 0.5rem 0.25rem;
+    font-size: 1.25rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .btn-danger {
+    background-color: var(--bg) !important;
+    border: 2px solid var(--winter-sky);
+  }
+</style>
