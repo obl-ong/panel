@@ -1,0 +1,2 @@
+module DeviceAuthorizationsHelper
+end
