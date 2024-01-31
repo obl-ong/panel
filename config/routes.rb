@@ -50,7 +50,9 @@ Rails.application.routes.draw do
       post "/review", to: "admin#developers_review_decision"
       get "/review", to: "admin#developers_review"
     end
-  end
+
+    mount MissionControl::Jobs::Engine, at: "/jobs"
+  end 
 
   get "users/register"
   post "users/create"

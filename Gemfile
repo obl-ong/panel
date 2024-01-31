@@ -125,3 +125,5 @@ gem "doorkeeper-openid_connect", "~> 1.8"
 gem "rack-cors", "~> 2.0"
 
 gem "doorkeeper-device_authorization_grant", "~> 1.0"
+
+gem "mission_control-jobs", "~> 0.1.1"

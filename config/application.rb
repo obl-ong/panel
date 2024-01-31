@@ -37,5 +37,7 @@ module AdminOblOng
     config.assets.paths << Rails.root.join("app/javascript")
 
     config.slack_notify = false
+
+    config.mission_control.jobs.base_controller_class = "AdminController" 
   end
 end
