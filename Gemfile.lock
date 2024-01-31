@@ -144,6 +144,7 @@ GEM
       syntax_tree (~> 6.0)
     erubi (1.12.0)
     ffi (1.16.3)
+    foreman (0.87.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     httparty (0.21.0)
@@ -459,6 +460,7 @@ DEPENDENCIES
   doorkeeper-openid_connect (~> 1.8)
   dotenv-rails
   erb-formatter
+  foreman (~> 0.87.2)
   importmap-rails (~> 1.2)
   jbuilder
   pg
