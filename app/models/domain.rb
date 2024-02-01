@@ -1,0 +1,2 @@
+class Domain < ApplicationRecord
+end
