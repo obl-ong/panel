@@ -38,6 +38,6 @@ module AdminOblOng
 
     config.slack_notify = false
 
-    config.mission_control.jobs.base_controller_class = "AdminController" 
+    config.mission_control.jobs.base_controller_class = "AdminController"
   end
 end
