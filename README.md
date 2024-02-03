@@ -3,6 +3,10 @@
 
 # Obl.ong
 
+[![produced by human, not by AI](https://github.com/obl-ong/admin/assets/19589006/ac2ac305-2407-469e-8a3b-355b6df19ae9#gh-dark-mode-only)](https://notbyai.fyi#gh-dark-mode-only)
+
+[![produced by human, not by AI](https://github.com/obl-ong/admin/assets/19589006/b4cf0ff8-bd96-4dee-bfd7-0395dfffbc72#gh-light-mode-only)](https://notbyai.fyi#gh-light-mode-only)
+
 This is the backbone for Obl.ong, a nonprofit service providing free, quality domains for all. You can run this on your infrastructure if you're looking to manage subdomains or an internal TLD.
 
 ## Building
