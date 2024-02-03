@@ -108,7 +108,7 @@ gem "cssbundling-rails", "~> 1.3"
 
 gem "propshaft"
 
-gem "solid_queue", "~> 0.1.2"
+gem "solid_queue", "~> 0.2.1"
 
 gem "activejob-status", "~> 1.0"
 
@@ -125,5 +125,7 @@ gem "doorkeeper-openid_connect", "~> 1.8"
 gem "rack-cors", "~> 2.0"
 
 gem "doorkeeper-device_authorization_grant", "~> 1.0"
+
+gem "mission_control-jobs", "~> 0.1.1"
 
 gem "foreman", "~> 0.87.2"

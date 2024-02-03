@@ -21,7 +21,7 @@ module AdminOblOng
 
     config.action_mailer.delivery_method = :postmark
 
-    config.sentry = false
+    config.sentry = true
 
     config.action_mailer.postmark_settings = {
       api_token: Rails.application.credentials.postmark_api_token
@@ -37,5 +37,7 @@ module AdminOblOng
     config.assets.paths << Rails.root.join("app/javascript")
 
     config.slack_notify = false
+
+    config.mission_control.jobs.base_controller_class = "AdminController"
   end
 end
