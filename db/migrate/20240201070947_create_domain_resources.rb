@@ -6,7 +6,7 @@ class CreateDomainResources < ActiveRecord::Migration[7.1]
       t.string :content
       t.integer :ttl
       t.integer :priority
-      t.belongs_to :domain, foreign_key: true
+      t.belongs_to :domain, foreign_key: {primary_key: :name}
 
       t.timestamps
     end

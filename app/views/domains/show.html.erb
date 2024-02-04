@@ -1,0 +1,7 @@
+<h1><%= @domain.name + "." + Rails.application.config.suffix %></h1>
+<ul>
+  <% @domain.resources.each do |r| %>
+    <li><%= r.type %> <%= r.name %></li>
+  <% end %>
+</ul>
+<%= link_to "New Resource", new_domain_resource_path(@domain.name) %>

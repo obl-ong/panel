@@ -1,0 +1,6 @@
+<%= form_with model: Domain::Resource.new do |form| %>
+  <%= form.label :name, "Name:" %>
+  <%= form.text_field :name %>
+  <%= form.select :type, Domain::Resource.types.sort %>
+  <%= form.submit "New" %>
+<% end %>

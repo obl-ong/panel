@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_01_070947) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_04_152827) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,6 +39,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_070947) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "configuration", force: :cascade do |t|
+    t.string "app_email", default: "fionaho@example.com", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "domain_resources", force: :cascade do |t|
     t.string "type"
     t.string "name"
@@ -51,11 +57,28 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_070947) do
     t.index ["domain_id"], name: "index_domain_resources_on_domain_id"
   end
 
-  create_table "domains", force: :cascade do |t|
-    t.string "name"
-    t.boolean "provisional"
+  create_table "domains", id: false, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_domains_on_name", unique: true
+  end
+
+  create_table "flipper_features", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_flipper_features_on_key", unique: true
+  end
+
+  create_table "flipper_gates", force: :cascade do |t|
+    t.string "feature_key", null: false
+    t.string "key", null: false
+    t.text "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
   end
 
   create_table "solid_cache_entries", force: :cascade do |t|
@@ -164,7 +187,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_070947) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "domain_resources", "domains", column: "domain_id"
+  add_foreign_key "domain_resources", "domains", primary_key: "name"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
