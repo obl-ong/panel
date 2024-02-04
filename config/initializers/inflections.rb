@@ -33,6 +33,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
 
   # General rules
   inflect.uncountable "configuration"
+  inflect.uncountable "flipper"
 
   # rails default rules
   inflect.plural(/$/, "s")

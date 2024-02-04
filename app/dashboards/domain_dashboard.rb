@@ -42,7 +42,6 @@ class DomainDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     name
-    resources
     status
   ].freeze
 

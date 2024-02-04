@@ -78,3 +78,5 @@ gem "administrate", git: "https://github.com/thoughtbot/administrate"
 gem "flipper-active_record", "~> 1.2"
 
 gem "flipper-ui", "~> 1.2"
+
+gem "mission_control-jobs", "~> 0.1.1"

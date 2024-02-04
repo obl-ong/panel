@@ -18,7 +18,13 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :domains
     resources :configuration, only: [:index, :show, :edit, :update]
-    mount Flipper::UI.app(Flipper) => "/flipper"
+    resources :features, only: [:index]
+    resources :jobs, only: [:index]
+
+    scope :engines do
+      mount Flipper::UI.app(Flipper) => "/flipper"
+      mount MissionControl::Jobs::Engine, at: "/mission_control"
+    end
 
     root to: "domains#index"
   end
