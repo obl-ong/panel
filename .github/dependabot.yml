@@ -11,11 +11,6 @@ updates:
       interval: "daily"
     assignees:
       - "reesericci"
-    target-branch: "v2"
-  - package-ecosystem: "bundler" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "daily"
-    assignees:
-      - "reesericci"
-    target-branch: "v2"
+    target-branch: 
+      - "v2"
+      - "main"
