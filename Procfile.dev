@@ -1,2 +1,2 @@
-puma: bin/rails server -p 6000
-underpass: underpass -s oblong -p 6000
+puma: bin/rails server -p 6005 -b 0.0.0.0
+underpass: underpass -s oblong -p 6005

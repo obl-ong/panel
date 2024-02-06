@@ -5,6 +5,8 @@ class Domain < ApplicationRecord
   has_many :resources, class_name: "Domain::Resource"
   enum status: [:active, :disabled, :provisional]
 
+  broadcasts_refreshes
+
   def soa(ns)
     Resolv::DNS::IN::SOA.new(ns, Rails.application.config.public_email, cache_version)
   end

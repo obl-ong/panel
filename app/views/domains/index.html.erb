@@ -1,7 +1,10 @@
 <h1>Domains</h1>
 <ul>
+  <%= turbo_stream_from "domains" %>
   <% @domains.each do |d| %>
+    <%= turbo_stream_from d %>
     <li><%= link_to d.name, domain_path(d.name) %></li>
   <% end %>
+
 </ul>
 <%= link_to "New Domain", new_domain_path %>

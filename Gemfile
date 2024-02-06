@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.3.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.3"
+gem "rails", github: "rails/rails", branch: "main"
 
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
@@ -18,7 +18,7 @@ gem "puma", ">= 5.0"
 gem "importmap-rails"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails"
+gem "turbo-rails", "~> 2.0.0-rc.2"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
@@ -31,9 +31,6 @@ gem "redis", ">= 4.0.1"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
-
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[mswin mswin64 mingw x64_mingw jruby]
@@ -60,7 +57,7 @@ group :development do
   # gem "rack-mini-profiler"
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
+  gem "spring"
 end
 
 group :test do
@@ -69,14 +66,16 @@ group :test do
   gem "selenium-webdriver"
 end
 
+# Use Solid Cache, which uses the database, as the cache store
 gem "solid_cache", "~> 0.4.2"
 
+# Use Solid Queue (database) and Mission Control dashboard as the backend for Active Job
 gem "solid_queue", "~> 0.2.0"
-
-gem "administrate", git: "https://github.com/thoughtbot/administrate"
-
-gem "flipper-active_record", "~> 1.2"
-
-gem "flipper-ui", "~> 1.2"
-
 gem "mission_control-jobs", "~> 0.1.1"
+
+# Use Administrate to power Adminland
+gem "administrate", ">= 1.0.0.beta1"
+
+# Feature flags are powered by Flipper
+gem "flipper-active_record", "~> 1.2"
+gem "flipper-ui", "~> 1.2"
