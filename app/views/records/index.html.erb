@@ -56,7 +56,7 @@
             </thead>
             <tbody id="records" data-empty-target="watched">
 
-            <%= turbo_stream_from 'records:main' %>
+            <%= turbo_stream_from @domain %>
 
             <% @records.each do |record| %>
                 <%= render "record", record: record %>

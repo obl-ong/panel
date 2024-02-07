@@ -37,7 +37,6 @@ class Record
     obj = new(attributes)
     obj.validate!
     obj.save # standard:disable all
-    obj.broadcast_append_to("records:main", partial: "records/record")
 
     obj
   end
@@ -84,13 +83,14 @@ class Record
 
     if persisted?
       update_record
+      broadcast_replace_to(domain, partial: "records/record")
     else
       persist
+      broadcast_append_to(domain, partial: "records/record")
     end
 
     changes_applied
 
-    broadcast_replace_to("records:main", partial: "records/record")
     Rails.cache.delete("records")
     domain.update!(updated_at: Time.now) # standard:disable all
   end
@@ -105,7 +105,7 @@ class Record
 
   def destroy!
     destroy_record
-    broadcast_remove_to("records:main")
+    broadcast_remove_to(domain)
   end
 
   def self.destroy_all_host!(host)
