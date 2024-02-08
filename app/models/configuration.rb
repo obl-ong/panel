@@ -4,6 +4,8 @@ class Configuration < ApplicationRecord
 
   # TODO: remove load function and check in app controller & just redirect to new configuration screen
 
+  broadcasts_refreshes
+
   def self.load
     config = Configuration.first
 

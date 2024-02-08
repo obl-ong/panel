@@ -16,6 +16,8 @@ as well as a link to its edit page.
 [1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Show
 %>
 
+<%= turbo_stream_from page.resource %>
+
 <% content_for(:title) { t("administrate.actions.show_resource", name: page.page_title) } %>
 
 <header class="main-content__header">
