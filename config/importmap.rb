@@ -8,3 +8,4 @@ pin "@github/webauthn-json/browser-ponyfill", to: "https://ga.jspm.io/npm:@githu
 pin "url-safe-base64", to: "https://ga.jspm.io/npm:url-safe-base64@1.3.0/src/index.js"
 pin_all_from "app/javascript"
 pin "selectlist", to: "https://esm.sh/selectlist-polyfill@0.3.0", preload: true
+pin "cursor-chat", to: "https://esm.sh/gh/obl-ong/cursor-chat-actioncable@9befe0089b/dist/cursor-chat.es.js"
