@@ -3,9 +3,10 @@
 
 # Admin by Obl.ong
 
-[![produced by human, not by AI](https://github.com/obl-ong/admin/assets/19589006/ac2ac305-2407-469e-8a3b-355b6df19ae9#gh-dark-mode-only)](https://notbyai.fyi#gh-dark-mode-only)
 
-[![produced by human, not by AI](https://github.com/obl-ong/admin/assets/19589006/b4cf0ff8-bd96-4dee-bfd7-0395dfffbc72#gh-light-mode-only)](https://notbyai.fyi#gh-light-mode-only)
+[![produced by human, not by AI](https://github.com/obl-ong/admin/assets/19589006/470f71c5-7338-43ae-b42b-b386ad69468c#gh-dark-mode-only)](https://notbyai.fyi#gh-dark-mode-only)
+
+[![produced by human, not by AI](https://github.com/obl-ong/admin/assets/19589006/933d3b3d-9f80-47df-9e4b-57b1055b0c10#gh-light-mode-only)](https://notbyai.fyi#gh-light-mode-only)
 
 An application for multi-tenant domain services (registry, registrar, zone management, and more) built with Ruby on Rails, open source and forever free.
 
