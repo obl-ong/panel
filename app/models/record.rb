@@ -95,6 +95,11 @@ class Record
     domain.update!(updated_at: Time.now) # standard:disable all
   end
 
+  def update(attributes = {})
+    assign_attributes(attributes)
+    save
+  end
+
   def persisted?
     @_persisted
   end
