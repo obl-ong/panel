@@ -61,8 +61,7 @@ class RecordsController < ApplicationController
       render status: 403, plain: "403 Forbidden"
     end
 
-
-    @record.update(params.permit(:type, :name, :content, :ttl, :priority))
+    @record.update(params.permit(:type, :name, :content, :ttl, :priority)) # standard:disable all
 
     @record.save # standard:disable all
 

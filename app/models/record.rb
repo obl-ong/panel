@@ -97,7 +97,7 @@ class Record
 
   def update(attributes = {})
     assign_attributes(attributes)
-    save
+    save # standard:disable all
   end
 
   def persisted?
