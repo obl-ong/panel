@@ -1,5 +1,7 @@
+<%= stylesheet_link_tag "https://unpkg.com/cursor-chat/dist/style.css" %>
+
 <%# https://icons.hackclub.com/ %>
-<div class="flex flex-col lg:flex-row gap-12">
+<div class="flex flex-col lg:flex-row gap-12" data-controller="cursorchat">
     <div class="flex flex-row flex-wrap lg:flex-col gap-6 side-menu">
         <%# link to the dns action %>
         <%= link_to records_path(@domain) do %>
@@ -35,4 +37,8 @@
             <%= yield_nested %>
         </div>
     </div>
+</div>
+
+<div id="cursor-chat-layer">
+  <input type="text" id="cursor-chat-box">
 </div>

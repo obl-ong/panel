@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* @layer components {
   .testing {
     @apply bg-red-200;
@@ -276,7 +275,7 @@ button, input[type=submit] {
 input[type=text], input[type=email], input[type=number], .input2, x-selectmenu::part(button) {
 	background-color: #262626 !important;
 	border: 1.5px solid var(--cultured)!important;
-	border-radius: 5px !important;
+	border-radius: 5px;
 	min-width: 350px;
 	color: white;
 }
