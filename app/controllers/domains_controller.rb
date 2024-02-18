@@ -53,7 +53,8 @@ class DomainsController < ApplicationController
     if @domain.save
       redirect_to root_path
     else
-      render json: @domain.errors, status: 418
+      flash.notice = @domain.errors.full_messages[0]
+      redirect_back_or_to request_domains_path
     end
   end
 
