@@ -1,7 +1,7 @@
 <tr data-controller="dns_record" id="<%= dom_id(record) %>">
     
         <td style="padding-right: 0.5rem; padding-left: 0.5rem;  width: 75px;">
-            <%= render partial: "type_dropdown", locals: { selected: record.type } %>
+          <%= select_tag :type, options_for_select(["A","AAAA","CNAME","ALIAS","MX","TXT","URL","SRV","DS","SSHFP","CAA","SOA","PTR","NS","SPF","DNSKEY","HINFO","NAPTR","POOL"], { selected: record.type }), class:"input h-[41.2px] pr-[2em]" %>
         </td>
         <td  style="padding-right: 0.5rem; padding-left: 0.5rem;  width: 75px;"><input type="text" name="name" value="<%= record.name %>" class="record-edit" form="form_<%= dom_id(record) %>"></td>
         <td  style="padding-right: 0.5rem; padding-left: 0.5rem;  width: 75px;"><input type="text" name="content" value="<%= record.content %>" class="record-edit" form="form_<%= dom_id(record) %>"></td>
