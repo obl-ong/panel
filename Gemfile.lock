@@ -185,6 +185,8 @@ GEM
       net-pop
       net-smtp
     marcel (1.0.2)
+    mass_encryption (0.1.1)
+      rails (>= 7.0.0)
     matrix (0.4.2)
     mini_mime (1.1.5)
     minitest (5.21.2)
@@ -476,6 +478,7 @@ DEPENDENCIES
   foreman (~> 0.87.2)
   importmap-rails (~> 1.2)
   jbuilder
+  mass_encryption (~> 0.1.1)
   mission_control-jobs (~> 0.1.1)
   pg
   postmark-rails

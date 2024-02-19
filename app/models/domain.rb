@@ -20,6 +20,9 @@ class Domain < ApplicationRecord
     Domain::UpdateProvisionalCountJob.perform_later
   }
 
+  encrypts :host, deterministic: true
+  encrypts :plan
+
   def to_param
     host
   end
