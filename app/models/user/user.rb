@@ -14,6 +14,8 @@ class User::User < ApplicationRecord
 
   has_many :oauth_applications, class_name: "Doorkeeper::Application", as: :owner #standard:disable all
 
+  has_many :domains, foreign_key: :user_users_id, dependent: :delete_all # standard:disable all
+
   encrypts :email, :admin, :webauthn_id, deterministic: true
   encrypts :name, :hotp_token, :otp_counter, :otp_last_minted
 
