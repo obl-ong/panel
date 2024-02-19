@@ -16,8 +16,8 @@ class User::User < ApplicationRecord
 
   has_many :domains, foreign_key: :user_users_id, dependent: :delete_all # standard:disable all
 
-  encrypts :email, :admin, :webauthn_id, deterministic: true
-  encrypts :name, :hotp_token, :otp_counter, :otp_last_minted
+  encrypts :email, deterministic: true
+  encrypts :name, :hotp_token
 
   def hotp
     ROTP::HOTP.new(hotp_token)
