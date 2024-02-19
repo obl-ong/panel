@@ -14,13 +14,16 @@ class User::User < ApplicationRecord
 
   has_many :oauth_applications, class_name: "Doorkeeper::Application", as: :owner #standard:disable all
 
-  after_initialize do
-    @hotp = ROTP::HOTP.new(hotp_token)
+  encrypts :email, :admin, :webauthn_id, deterministic: true
+  encrypts :name, :hotp_token, :otp_counter, :otp_last_minted
+
+  def hotp
+    ROTP::HOTP.new(hotp_token)
   end
 
   def mint_otp
     self.otp_counter += 1
-    otp = @hotp.at(self.otp_counter)
+    otp = hotp.at(self.otp_counter)
     self.otp_last_minted = Time.now.to_i
     save!
 
@@ -29,7 +32,7 @@ class User::User < ApplicationRecord
 
   def use_otp(token)
     if !begin
-      @hotp.verify(token.to_s, self.otp_counter.to_i)
+      hotp.verify(token.to_s, self.otp_counter.to_i)
     rescue
       nil
     end.nil? &&
