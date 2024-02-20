@@ -1,6 +1,6 @@
 # typed: true
 
-Rails.application.routes.draw do  
+Rails.application.routes.draw do
   use_doorkeeper_openid_connect
   use_doorkeeper do
     skip_controllers :applications, :authorized_applications
