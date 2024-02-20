@@ -41,5 +41,6 @@ module AdminOblOng
     config.mission_control.jobs.base_controller_class = "AdminController"
     config.audits1984.base_controller_class = "AdminController"
     config.audits1984.auditor_class = "::User::User"
+    config.console1984.protected_urls = [ "https://api.dnsimple.com/v2/" ]
   end
 end
