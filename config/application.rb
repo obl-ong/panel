@@ -39,5 +39,7 @@ module AdminOblOng
     config.slack_notify = false
 
     config.mission_control.jobs.base_controller_class = "AdminController"
+    config.audits1984.base_controller_class = "AdminController"
+    config.audits1984.auditor_class = "::User::User"
   end
 end

@@ -1,6 +1,6 @@
 # typed: true
 
-Rails.application.routes.draw do
+Rails.application.routes.draw do  
   use_doorkeeper_openid_connect
   use_doorkeeper do
     skip_controllers :applications, :authorized_applications
@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     end
 
     mount MissionControl::Jobs::Engine, at: "/jobs"
+    mount Audits1984::Engine => "/console"
   end
 
   get "users/register"

@@ -47,6 +47,10 @@ class AdminController < ApplicationController
     end
   end
 
+  def find_current_auditor
+    current_user if current_user.admin?
+  end
+
   private
 
   def require_admin
