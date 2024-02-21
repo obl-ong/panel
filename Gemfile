@@ -131,3 +131,6 @@ gem "mission_control-jobs", "~> 0.1.1"
 gem "foreman", "~> 0.87.2"
 
 gem "mass_encryption", "~> 0.1.1"
+
+gem "console1984"
+gem "audits1984"

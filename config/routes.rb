@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     end
 
     mount MissionControl::Jobs::Engine, at: "/jobs"
+    mount Audits1984::Engine => "/console"
   end
 
   get "users/register"
