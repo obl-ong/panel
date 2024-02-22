@@ -1,0 +1,33 @@
+<dialog open="" class="broadcast" data-controller="broadcast" id="<%= dom_id(broadcast) %>" data-broadcast-target="dialog">
+  <p style="overflow-y: auto;flex-grow: 0.5;scrollbar-color: var(--lemon-glacier) rgba(251, 255, 18,0.1);word-wrap: break-word; font-size: larger;">
+    <%= local_time(broadcast.created_at) %>
+    <br>
+    <%= broadcast.content %>
+  </p>
+  
+  <form method="dialog" style="width: fit-content;height: fit-content;" data-action="broadcast#close">
+    <button style="background: none;font-weight: bold;padding: 0;color: var(--lemon-glacier);">X</button>
+  </form>
+
+</dialog>
+
+<style>
+  .broadcast[open] {
+    position: initial;
+    padding: 1rem;
+    width: 50vw;
+    max-height: 15vh;
+    border-radius: 8px;
+    background: rgba(251, 255, 18,0.1);
+    border: 2px solid var(--lemon-glacier);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    scrollbar-color: var(--lemon-glacier);
+
+    time {
+      font-size: small;
+    }
+  }
+</style>
