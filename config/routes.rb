@@ -51,6 +51,11 @@ Rails.application.routes.draw do
       get "/review", to: "admin#developers_review"
     end
 
+    resources :broadcasts, only: [:index], shallow: true do
+      resources :notices
+      resources :announcements
+    end
+
     mount MissionControl::Jobs::Engine, at: "/jobs"
     mount Audits1984::Engine => "/console"
   end

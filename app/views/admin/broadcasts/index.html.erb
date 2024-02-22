@@ -1,0 +1,6 @@
+<h1>Broadcasts</h1>
+
+<h2>Active:<h2>
+<% @broadcasts.active.each do |b| %>
+  <%= render partial: "applications/broadcast", object: b %>
+<% end %>
