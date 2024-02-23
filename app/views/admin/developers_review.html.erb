@@ -34,7 +34,7 @@
 <%= javascript_include_tag "tinder", "data-turbo-track": "reload" %>
 <% end %>
 
-<style>
+<%= style_tag nonce: true do %>
 @import url("https://code.ionicframework.com/contrib/ionic-contrib-tinder-cards/ionic.tdcards.css");
 @import url("https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css");
 
@@ -135,4 +135,4 @@ form {
   position: relative;
   height: 100%;
 }
-</style>
+<% end %>
