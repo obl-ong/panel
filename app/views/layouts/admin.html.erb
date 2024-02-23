@@ -41,7 +41,7 @@
     <%= yield_nested %>
 </div>
 
-<script>
+<%= javascript_tag nonce: true do %>
       window.ReboundSettings = {
         publicToken: "kjvsdcjhut7bw8ny8t63nh",
         email: "<%= @_current_user.email %>",
@@ -51,13 +51,13 @@
         actionLabel: "Update email",
         actionUrl: "https://admin.obl.ong/settings",
       }
-</script>
-<script>(function(r,e,b,o,u,n,d){if(r.Rebound)return;d=function(){o="script";u=e.createElement(o);u.type="text/javascript";u.src=b;u.async=true;n=e.getElementsByTagName(o)[0];n.parentNode.insertBefore(u,n)};if(r.attachEvent){r.attachEvent("onload",d)}else{r.addEventListener("load",d,false)}})(window,document,"https://rebound.postmarkapp.com/widget/1.0");</script>
+<% end %>
+<%= javascript_tag nonce: true do %>(function(r,e,b,o,u,n,d){if(r.Rebound)return;d=function(){o="script";u=e.createElement(o);u.type="text/javascript";u.src=b;u.async=true;n=e.getElementsByTagName(o)[0];n.parentNode.insertBefore(u,n)};if(r.attachEvent){r.attachEvent("onload",d)}else{r.addEventListener("load",d,false)}})(window,document,"https://rebound.postmarkapp.com/widget/1.0");<% end %>
 
 <% if @developers %>
-    <style>
+    <%= style_tag nonce: true do %>
         body {
             border: 4px dashed var(--lemon-glacier);
         }
-    </style>
+    <% end %>
 <% end %>

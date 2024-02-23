@@ -7,7 +7,7 @@
     </h2>
 </main>
 
-<style>
+<%= style_tag nonce: true do %>
 	main {
 		padding: 5rem;
 		padding-top: 4rem;
@@ -90,4 +90,4 @@
     background-color: var(--bg) !important;
     border: 2px solid var(--winter-sky);
   }
-</style>
+<% end %>

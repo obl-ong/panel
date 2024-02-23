@@ -37,7 +37,7 @@
 
 </div>
 
-<style>
+<%= style_tag nonce: true do %>
   input[type=text] {
     min-width: unset;
     color: var(--bg) !important;
@@ -52,4 +52,4 @@
   .developers:hover {
     transform: translateX(1rem);
   }
-</style>
+<% end %>
