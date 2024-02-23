@@ -14,7 +14,6 @@ This powers the `obl.ong` domain registry, which provides free, quality domains 
 
 Built by Obl.ong, a membership-first nonprofit -- we encourage contributions!
 
----
 
 ## Building
 
@@ -41,3 +40,10 @@ Built by Obl.ong, a membership-first nonprofit -- we encourage contributions!
 ## Translations
 
 We are working to integrate with [Weblate](https://hosted.weblate.org/projects/oblong/) to allow for translation submissions.
+
+## Screenshots
+
+![Domains index showing 3 domains](https://github.com/obl-ong/admin/assets/19589006/227d0a2e-70a2-4227-befc-7d3ce6fdc1bb)
+
+![DNS page for fionaho.obl.ong showing 2 records, an A record to 1.1.1.1, and a CNAME at demo to example.com](https://github.com/obl-ong/admin/assets/19589006/b3cd0329-9380-4758-b5e6-22afc7601333)
+
