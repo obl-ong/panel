@@ -9,8 +9,8 @@ class DomainsController < ApplicationController
   skip_before_action :require_admin, except: [:create, :transfer]
 
   helper DnsimpleHelper
-  nested_layouts "layouts/admin", "layouts/domain", "layouts/application", except: [:index, :request_domain, :show]
-  nested_layouts "layouts/admin", "layouts/application", only: [:index, :request_domain]
+  nested_layouts "layouts/admin", "layouts/domain", except: [:index, :request_domain, :show]
+  nested_layouts "layouts/admin", only: [:index, :request_domain]
 
   def index
     @domains = Domain.where(user_users_id: current_user.id)
