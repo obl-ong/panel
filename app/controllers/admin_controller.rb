@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
-  nested_layouts "layouts/application"
+  layout "application"
+  nested_layouts "layouts/admin"
 
   before_action :require_admin
 

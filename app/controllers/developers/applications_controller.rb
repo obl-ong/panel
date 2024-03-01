@@ -1,5 +1,5 @@
 class Developers::ApplicationsController < ApplicationController
-  nested_layouts "layouts/admin", "layouts/application"
+  nested_layouts "layouts/admin"
 
   before_action do
     @developers = true
