@@ -33,6 +33,12 @@
     </div>
 </div>
 
+<noscript>
+  <% Broadcast.unexpired.each do |b| %>
+    <%= render partial: "application/broadcast", object: b, locals: { open: true } %>
+  <% end %>
+</noscript>
+
 <% Broadcast.unexpired.each do |b| %>
  <%= render partial: "application/broadcast", object: b %>
 <% end %>
