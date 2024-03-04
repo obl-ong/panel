@@ -67,7 +67,7 @@ group :test do
 end
 
 # Use Solid Cache, which uses the database, as the cache store
-gem "solid_cache", "~> 0.4.2"
+gem "solid_cache", "~> 0.5.3"
 
 # Use Solid Queue (database) and Mission Control dashboard as the backend for Active Job
 gem "solid_queue", "~> 0.2.0"
