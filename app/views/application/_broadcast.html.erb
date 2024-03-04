@@ -1,4 +1,4 @@
-<dialog open="" class="broadcast" data-controller="broadcast" id="<%= dom_id(broadcast) %>" data-broadcast-target="dialog">
+<dialog <% if local_assigns[:open] %> open="" <% end %> class="broadcast" data-controller="broadcast" id="<%= dom_id(broadcast) %>" data-broadcast-target="dialog">
   <p style="overflow-y: auto;flex-grow: 0.5;scrollbar-color: var(--lemon-glacier) rgba(251, 255, 18,0.1);word-wrap: break-word; font-size: larger;">
     <%= local_time(broadcast.created_at) %>
     <br>
