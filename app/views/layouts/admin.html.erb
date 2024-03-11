@@ -32,6 +32,17 @@
         <% end %>
     </div>
 </div>
+
+<noscript>
+  <% Broadcast.unexpired.each do |b| %>
+    <%= render partial: "application/broadcast", object: b, locals: { open: true } %>
+  <% end %>
+</noscript>
+
+<% Broadcast.unexpired.each do |b| %>
+ <%= render partial: "application/broadcast", object: b %>
+<% end %>
+
 <div class="px-8 md:px-16 lg:px-24 py-4">
     <%= yield_nested %>
 </div>

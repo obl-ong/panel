@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_20_173759) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_22_185700) do
   create_table "audits1984_audits", force: :cascade do |t|
     t.integer "status", default: 0, null: false
     t.text "notes"
@@ -20,6 +20,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_173759) do
     t.datetime "updated_at", null: false
     t.index ["auditor_id"], name: "index_audits1984_audits_on_auditor_id"
     t.index ["session_id"], name: "index_audits1984_audits_on_session_id"
+  end
+
+  create_table "broadcasts", force: :cascade do |t|
+    t.string "type"
+    t.text "content"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "subject"
   end
 
   create_table "console1984_commands", force: :cascade do |t|
