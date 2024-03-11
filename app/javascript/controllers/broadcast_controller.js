@@ -5,7 +5,7 @@ export default class extends Controller {
   connect() {
     console.log("connected")
     if (!localStorage.getItem(this.dialogTarget.id)) {
-      this.dialogTarget.addAttribute("open")
+      this.dialogTarget.setAttribute("open","")
     }
   }
 
