@@ -1,5 +1,5 @@
 class AnnouncementMailer < ApplicationMailer
-  default from: "announcements@obl.ong", return_path: "team@obl.ong", message_steam: "broadcast"
+  default from: "announcements@obl.ong", return_path: "team@obl.ong", message_steam: "broadcasts"
   def announce(user, subject, content)
     mail(to: user.email, subject: subject, body: content)
   end
