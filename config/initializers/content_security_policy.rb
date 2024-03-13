@@ -13,7 +13,6 @@ Rails.application.configure do
     policy.script_src :self, "https://rebound.postmarkapp.com"
     policy.style_src :self, "https://unpkg.com/cursor-chat/dist/style.css"
     policy.style_src_attr :self, "'unsafe-inline'"
-    policy.style_src_elem :self, "'unsafe-inline'"
     # Specify URI for violation reports
     # policy.report_uri "/csp-violation-report-endpoint"
   end
