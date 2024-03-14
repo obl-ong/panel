@@ -1,40 +1,54 @@
 <h1 class="font-heading text-3 lg:text-4 xl:text-5">Request an application</h1>
 <br><br>
-<% flash.each do |type, msg| %>
-  <div class="flash flash-<%= type %>">
-    <%= msg %>
-  </div>
-<% end %>
-<%= form_with url: provision_developers_applications_path do |form| %>
-  <%= form.label :name, "What is the name of the app?" %><br>
-  <br>
-  <%= form.text_field :name, placeholder: "Dynamic" %>
-  <br><br><br>
-  <%= form.label :redirect_uri, "Add a Redirect URI" %><br>
-  <p>This is where we'll redirect after the user authorizes your app</p>
-  <br>
-  <%= form.text_field :redirect_uri, placeholder: "https://oidcdebugger.com/debug" %>
-  <br><br><br>
-  <%= form.label :plan, "What are you planning on using it for?" %><br>
-  <p>Don't worry, it doesn't need to be anything important or serious (it can be
-    if you want though!)</p><br>
-  <%= form.text_area :plan, placeholder: "I'm going to make a Dynamic DNS app" %>
-  <br><br><br>
-  <%= form.label :coc, "Do you agree to our Code of Conduct?" %><br>
-  <p>We want to make sure our domains aren't used for bad purposes. Please read
-    our Code of Conduct and Acceptable Use Policy:
-    <a href="https://github.com/obl-ong/code-of-conduct">https://github.com/obl-ong/code-of-conduct</a></p>
-  <br>
-  <%= form.check_box :coc, required: true %>
-  <br><br>
 
-  <%= form.submit "Request" %>
+<%= form_with url: provision_developers_applications_path do |form| %>
+    <%= form.label :name, "What is the name of the app?" %><br>
+    <br>
+    <%= form.text_field :name, placeholder: "Dynamic" %>
+    <br><br><br>
+    <%= form.label :redirect_uri, "Add a Redirect URI" %><br>
+    <p>This is where we'll redirect after the user authorizes your app</p>
+    <br>
+    <%= form.text_field :redirect_uri, placeholder: "https://oidcdebugger.com/debug" %>
+    <br><br><br>
+    <%= form.label :plan, "What are you planning on using it for?" %><br>
+    <p>Don't worry, it doesn't need to be anything important or serious (it can be if you want though!)</p><br>
+    <%= form.text_area :plan, placeholder: "I'm going to make a Dynamic DNS app" %>
+    <br><br><br>
+    <%= form.label :coc, "Do you agree to our Code of Conduct?" %><br>
+    <p>We want to make sure our domains aren't used for bad purposes. Please read our Code of Conduct and Acceptable Use Policy: <a href="https://github.com/obl-ong/code-of-conduct">https://github.com/obl-ong/code-of-conduct</a></p>
+    <br>
+    <%= form.check_box :coc, required: true %>
+    <br><br>
+
+    <%= form.submit "Request" %>
 <% end %>
+
 
 <%= style_tag nonce: true do %>
-  form { max-width: 50vw; } .domain { font-size: 2rem; } label { font-size:
-  2rem; font-weight: 600; } textarea { background-color: #f5f5f51a !important;
-  border: 1.5px solid var(--cultured) !important; border-radius: 5px
-  !important; color: #fff; min-width: 450px; min-height: 10rem; } a { color:
-  var(--winter-sky); }
+    form {
+        max-width: 50vw;
+    }
+
+    .domain {
+        font-size: 2rem;
+    }
+
+    label {
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    textarea {
+        background-color: #f5f5f51a !important;
+        border: 1.5px solid var(--cultured) !important;
+        border-radius: 5px !important;
+        color: #fff;
+        min-width: 450px;
+        min-height: 10rem;
+    }
+
+    a {
+        color: var(--winter-sky);
+    }
 <% end %>
