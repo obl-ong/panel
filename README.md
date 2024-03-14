@@ -19,8 +19,10 @@ Built by Obl.ong, a membership-first nonprofit -- we encourage contributions!
 
 - Install Ruby **3.3.0**
 - Install Ruby on Rails with Bundler
-- Install Bun for compiling tailwind
-- Pull submodules
+- Install [Bun](https://bun.sh) for compiling tailwind (`curl -fsSL https://bun.sh/install | bash`)
+- Pull submodules (`git submoudle init && git submodule update`)
+- Compile tailwind (`bun run build:css`)
+- Generate active record encryption keys (`bin/rails db:encryption:init`)
 - Run `rails credentials:edit` and add these keys:
   
   ```
@@ -30,9 +32,13 @@ Built by Obl.ong, a membership-first nonprofit -- we encourage contributions!
 
   postmark_api_token: "POSTMARK_API_TOKEN"
   sentry: SENTRY_URI
+  active_record_encryption:
+    primary_key: PRIMARY_KEY
+    deterministic_key: DETERMINISTIC_KEY
+    key_derivation_salt: KEY_DERIVATION_SALT
   ```
-  
-- Run `rails assets:precompile` (if building for prod - DO NOT DO IN DEVELOPMENT)
+  Note: Sentry isn't required.
+- If you are building for production, run `rails assets:precompile`. Don't do this in development.
 - Copy `app/javascript/application.js` to `public/assets/application-{hash}.js` (must be done every time assets is recompiled)
 - Edit `config/application.rb` to reflect your environment
 - Start the server with `bin/rails server`
@@ -46,4 +52,3 @@ We are working to integrate with [Weblate](https://hosted.weblate.org/projects/o
 ![Domains index showing 3 domains](https://github.com/obl-ong/admin/assets/19589006/227d0a2e-70a2-4227-befc-7d3ce6fdc1bb)
 
 ![DNS page for fionaho.obl.ong showing 2 records, an A record to 1.1.1.1, and a CNAME at demo to example.com](https://github.com/obl-ong/admin/assets/19589006/b3cd0329-9380-4758-b5e6-22afc7601333)
-
