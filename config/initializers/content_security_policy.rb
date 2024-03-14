@@ -13,7 +13,6 @@ Rails.application.configure do
     policy.script_src :self, "https://rebound.postmarkapp.com", "https://code.ionicframework.com", "https://cdn.jsdelivr.net/npm/toastify-js"
     policy.style_src :self, "https://unpkg.com/cursor-chat/dist/style.css", "https://code.ionicframework.com", "https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
     policy.style_src_attr :self, "'unsafe-inline'"
-    policy.style_src_elem :self, "'unsafe-inline'"
     # Specify URI for violation reports
     # policy.report_uri "/csp-violation-report-endpoint"
   end
