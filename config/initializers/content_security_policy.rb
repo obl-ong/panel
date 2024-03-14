@@ -10,8 +10,8 @@ Rails.application.configure do
     policy.font_src :self, :data
     policy.img_src :self, :data
     policy.object_src :none
-    policy.script_src :self, "https://rebound.postmarkapp.com"
-    policy.style_src :self, "https://unpkg.com/cursor-chat/dist/style.css"
+    policy.script_src :self, "https://rebound.postmarkapp.com", "https://code.ionicframework.com", "https://cdn.jsdelivr.net/npm/toastify-js"
+    policy.style_src :self, "https://unpkg.com/cursor-chat/dist/style.css", "https://code.ionicframework.com", "https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
     policy.style_src_attr :self, "'unsafe-inline'"
     # Specify URI for violation reports
     # policy.report_uri "/csp-violation-report-endpoint"

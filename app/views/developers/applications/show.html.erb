@@ -96,9 +96,9 @@
 
         <section id="redirect_uris">
           <h2>Redirect URIs</h2>
-          <%= form_with method: :post, url: redirect_uris_developers_application_path(id: @application.id), id: "add_scope" do |form| %>
+          <%= form_with method: :post, url: redirect_uris_developers_application_path(id: @application.id), id: "add_redirect_uri" do |form| %>
             <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <label for="scope">Add scope:</label>
+              <%= form.label :redirect_uri, "Add redirect URI:" %>
               <%= form.text_field :redirect_uri %>
               <%= form.submit "Add" %>      
             </div>
