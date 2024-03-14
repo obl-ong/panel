@@ -48,6 +48,11 @@ class Developers::ApplicationsController < ApplicationController
   end
 
   def add_redirect_uri
+    uri = URI.parse(params[:redirect_uri])
+    if uri.scheme != "https"
+      redirect_back(fallback_location: developers_applications_path, notice: "URIs must use HTTPS")
+      return
+    end
     @application = current_application
     uris = @application.redirect_uri.split("\r\n")
     uris.push(params[:redirect_uri])
@@ -90,6 +95,11 @@ class Developers::ApplicationsController < ApplicationController
   end
 
   def provision
+    uri = URI.parse(params[:redirect_uri])
+    if uri.scheme != "https"
+      redirect_back(fallback_location: developers_applications_path, notice: "URIs must use HTTPS")
+      return
+    end
     @application = Doorkeeper::Application.new(name: params[:name], redirect_uri: params[:redirect_uri], plan: params[:plan], confidential: true, provisional: true)
     @application.owner = current_user
     @application.save!
