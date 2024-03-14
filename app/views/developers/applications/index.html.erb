@@ -3,7 +3,12 @@
 <% end %>
 
 <div class="flex flex-col items-center gap-8" style="scroll-behavior: smooth;">
+<% flash.each do |type, msg| %>
 
+      <div class="flash flash-<%= type %>">
+        <%= msg %>
+      </div>
+<% end %>
   <a href="/"><h2 class="text-yellow p-none m-none">← Back to Obl.ong</h2></a>
   <h1 class="text-center text-yellow text-4 lg:text-5 xl:text-6 font-heading">Manage your applications</h1>
 

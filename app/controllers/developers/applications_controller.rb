@@ -1,20 +1,18 @@
 class Developers::ApplicationsController < ApplicationController
-  nested_layouts "layouts/admin"
+  nested_layouts 'layouts/admin'
 
   before_action do
     @developers = true
   end
 
-  before_action except: [:index, :request, :provision, :create] do
+  before_action except: %i[index request provision create] do
     if (current_application.provisional? || current_application.owner_id != current_user.id) && !current_user.admin?
-      render plain: "403 Forbidden or Provisional Domain", status: 403
+      render plain: '403 Forbidden or Provisional Domain', status: 403
     end
   end
 
   before_action only: [:create] do
-    if !current_user.admin?
-      render plain: "403 Forbidden", status: 403
-    end
+    render plain: '403 Forbidden', status: 403 unless current_user.admin?
   end
 
   def index
@@ -44,10 +42,16 @@ class Developers::ApplicationsController < ApplicationController
     scopes = @application.scopes.to_a
     scopes.delete(params[:scope])
     @application.update!(scopes: Doorkeeper::OAuth::Scopes.from_array(scopes))
-    redirect_back(fallback_location: developers_applications_path(id: params[:id]), notice: "Destroyed scope #{params[:scope]}")
+    redirect_back(fallback_location: developers_applications_path(id: params[:id]),
+                  notice: "Destroyed scope #{params[:scope]}")
   end
 
   def add_redirect_uri
+    uri = URI.parse(params[:redirect_uri])
+    if uri.scheme != 'https'
+      redirect_back(fallback_location: developers_applications_path, notice: 'URIs must use HTTPS')
+      return
+    end
     @application = current_application
     uris = @application.redirect_uri.split("\r\n")
     uris.push(params[:redirect_uri])
@@ -56,7 +60,7 @@ class Developers::ApplicationsController < ApplicationController
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique => e
       flash.notice = e.message
     else
-      flash.notice = "Added Redirect URI"
+      flash.notice = 'Added Redirect URI'
     ensure
       redirect_back(fallback_location: developers_applications_path(id: params[:id]))
     end
@@ -67,14 +71,14 @@ class Developers::ApplicationsController < ApplicationController
     uris = @application.redirect_uri.split("\r\n")
     uris.delete(params[:redirect_uri])
     @application.update!(redirect_uri: uris.join("\r\n"))
-    redirect_back(fallback_location: developers_applications_path(id: params[:id]), notice: "Destroyed Redirect URI")
+    redirect_back(fallback_location: developers_applications_path(id: params[:id]), notice: 'Destroyed Redirect URI')
   end
 
   def update
     @application = current_application
     @application.update!(name: params[:name]) if params[:name]
     @application.update!(confidential: params[:confidential].to_i.zero?) if params[:confidential]
-    redirect_back(fallback_location: developers_applications_path(id: params[:id]), notice: "Updated application")
+    redirect_back(fallback_location: developers_applications_path(id: params[:id]), notice: 'Updated application')
   end
 
   def destroy
@@ -83,14 +87,22 @@ class Developers::ApplicationsController < ApplicationController
   end
 
   def create
-    @application = Doorkeeper::Application.new(name: params[:name], redirect_uri: params[:redirect_uri], confidential: true)
+    @application = Doorkeeper::Application.new(name: params[:name], redirect_uri: params[:redirect_uri],
+                                               confidential: true)
     @application.owner = current_user
     @application.save!
     redirect_to developers_application_path(id: @application.id)
   end
 
   def provision
-    @application = Doorkeeper::Application.new(name: params[:name], redirect_uri: params[:redirect_uri], plan: params[:plan], confidential: true, provisional: true)
+    uri = URI.parse(params[:redirect_uri])
+    if uri.scheme != 'https'
+      redirect_back(fallback_location: developers_applications_path, notice: 'URIs must use HTTPS')
+      return
+    end
+
+    @application = Doorkeeper::Application.new(name: params[:name], redirect_uri: params[:redirect_uri],
+                                               plan: params[:plan], confidential: true, provisional: true)
     @application.owner = current_user
     @application.save!
     redirect_to developers_path
