@@ -21,7 +21,7 @@ Built by Obl.ong, a membership-first nonprofit -- we encourage contributions!
 - Install Ruby on Rails with Bundler
 - Install [Bun](https://bun.sh) for compiling tailwind (`curl -fsSL https://bun.sh/install | bash`)
 - Pull submodules (`git submoudle init && git submodule update`)
-- Compile tailwind (`bun run build:css`)
+- Compile tailwind (`rails css:build`)
 - Generate active record encryption keys (`bin/rails db:encryption:init`)
 - Run `rails credentials:edit` and add these keys:
   
@@ -40,7 +40,7 @@ Built by Obl.ong, a membership-first nonprofit -- we encourage contributions!
   Note: Sentry isn't required.
 - If you are building for production, run `rails assets:precompile`. Don't do this in development.
 - Copy `app/javascript/application.js` to `public/assets/application-{hash}.js` (must be done every time assets is recompiled)
-- Edit `config/application.rb` to reflect your environment
+- Edit `config/application.rb` to reflect your environment. If you didn't provide a Sentry URI, please set `config.sentry` to false.
 - Start the server with `bin/rails server`
 
 ## Translations
