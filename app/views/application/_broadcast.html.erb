@@ -2,7 +2,7 @@
   <p style="overflow-y: auto;flex-grow: 0.5;scrollbar-color: var(--lemon-glacier) rgba(251, 255, 18,0.1);word-wrap: break-word; font-size: larger;">
     <%= local_time(broadcast.created_at) %>
     <br>
-    <%= broadcast.content %>
+    <%= broadcast.content.gsub(/\n/, '<br>').html_safe %>
   </p>
   
   <form method="dialog" style="width: fit-content;height: fit-content;" data-action="broadcast#close">
@@ -11,7 +11,7 @@
 
 </dialog>
 
-<style>
+<%= style_tag nonce: true do %>
   .broadcast[open] {
     position: initial;
     padding: 1rem;
@@ -31,4 +31,4 @@
       font-size: small;
     }
   }
-</style>
+<% end %>
