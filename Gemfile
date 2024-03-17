@@ -94,9 +94,9 @@ gem "postmark-rails"
 
 gem "pg"
 
-gem 'stackprof'
+gem "stackprof"
 
-gem 'sentry-ruby'
+gem "sentry-ruby"
 
 gem "sentry", "~> 0.5.3"
 
