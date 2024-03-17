@@ -7,9 +7,7 @@ if Rails.application.config.sentry == true
     # of transactions for performance monitoring.
     # We recommend adjusting this value in production.
     config.traces_sample_rate = 1.0
-    # or
-    config.traces_sampler = lambda do |context|
-      true
-    end
+
+    config.profiles_sample_rate = 1.0
   end
 end

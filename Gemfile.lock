@@ -386,6 +386,7 @@ GEM
     sqlite3 (1.7.2-arm64-darwin)
     sqlite3 (1.7.2-x86_64-darwin)
     sqlite3 (1.7.2-x86_64-linux)
+    stackprof (0.2.26)
     standard (1.33.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -508,11 +509,13 @@ DEPENDENCIES
   selenium-webdriver
   sentry (~> 0.5.3)
   sentry-rails (~> 5.13)
+  sentry-ruby
   solargraph
   solid_cache (~> 0.2.0)
   solid_queue (~> 0.2.1)
   sorbet-runtime
   sqlite3 (~> 1.4)
+  stackprof
   standard (~> 1.33)
   standard-rails (~> 1.0)
   stimulus-rails
