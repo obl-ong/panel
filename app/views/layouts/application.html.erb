@@ -8,6 +8,33 @@
     <%= stylesheet_link_tag "application", "inter-font", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
+    <% if Rails.application.config.sentry == true %>
+      <%= javascript_tag nonce: true, type: "module" do %>
+        import * as Sentry from "@sentry/browser";
+
+        console.log("sentryyyyyy")
+      
+        Sentry.init({
+          dsn: "<%=Rails.application.credentials.sentry %>}",
+        
+          // This sets the sample rate to be 10%. You may want this to be 100% while
+          // in development and sample at a lower rate in production
+          replaysSessionSampleRate: 0.1,
+        
+          // If the entire session is not sampled, use the below sample rate to sample
+          // sessions when an error occurs.
+          replaysOnErrorSampleRate: 1.0,
+        
+          integrations: [
+            Sentry.replayIntegration({
+              // Additional SDK configuration goes in here, for example:
+              maskAllText: true,
+              blockAllMedia: true,
+            }),
+          ],
+        });
+      <% end %>
+    <% end %>
     <%= yield :head %>
   </head>
 
