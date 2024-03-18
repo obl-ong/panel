@@ -20,7 +20,7 @@ Also, please do **not** submit security issues via GitHub issues. Please send an
 
 1. Install the currently supported version Ruby. You can use a tool like [rbenv](https://github.com/rbenv/rbenv) to install ruby. Check the `.ruby-version` file to find it. Usually, it's the latest version, but it never hurts to check.
 2. Install Rails. A lot of times it may come preinstalled. Run `rails -v` to check.
-3. Install [bun.sh](https://bun.sh). You can do this by running `curl -fsSL https://bun.sh/install | bash
+3. Install [bun.sh](https://bun.sh). You can do this by running `curl -fsSL https://bun.sh/install | bash`
 4. Pull the submodules. Run `git submodule init && git submodule update`
 5. Compile the CSS. Run `rails css:build` to do this.
 6. Generate active record encryption keys. Save those keys for step 7.
