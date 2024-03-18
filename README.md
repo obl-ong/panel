@@ -25,7 +25,7 @@ Built by Obl.ong, a membership-first nonprofit -- we encourage contributions!
 - Generate active record encryption keys (`bin/rails db:encryption:init`)
 - Run `rails credentials:edit` and add these keys:
   
-  ```
+  ```yaml
   dnsimple:
     access_token: DNSIMPLE_ACCESS_TOKEN
     account_id: ACCOUNT_ID
