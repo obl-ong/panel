@@ -104,7 +104,7 @@ gem "sentry-rails", "~> 5.13"
 
 gem "solid_cache", "~> 0.2.0"
 
-gem "importmap-rails", "~> 1.2"
+gem "importmap-rails", "~> 2.0"
 
 gem "tailwindcss-rails", "~> 2.1"
 
