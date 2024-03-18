@@ -116,7 +116,7 @@ gem "solid_queue", "~> 0.2.1"
 
 gem "activejob-status", "~> 1.0"
 
-gem "standard", "~> 1.33"
+gem "standard", "~> 1.35"
 
 gem "standard-rails", "~> 1.0"
 
