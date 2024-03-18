@@ -11,7 +11,7 @@ Rails.application.configure do
     policy.font_src :self, :data
     policy.img_src :self, :data
     policy.object_src :none
-    policy.script_src :self, "'strict-dynamic'", "/assets/application-fc375a13c2567d620a5507305e2b53993b07847f.js" "https://code.ionicframework.com", "https://cdn.jsdelivr.net/npm/toastify-js", "https://ga.jspm.io/npm:@sentry/", "https://ga.jspm.io/npm:@sentry-internal/", "https://rebound.postmarkapp.com/", "https://esm.sh/v135/selectlist-polyfill@0.3.0/", "https://ga.jspm.io/npm:local-time@3.0.2/", "https://esm.sh/selectlist-polyfill@0.3.0/"
+    policy.script_src :self, "'strict-dynamic'", "/assets/application-fc375a13c2567d620a5507305e2b53993b07847f.js", "https://code.ionicframework.com", "https://cdn.jsdelivr.net/npm/toastify-js", "https://ga.jspm.io/npm:@sentry/", "https://ga.jspm.io/npm:@sentry-internal/", "https://rebound.postmarkapp.com/", "https://esm.sh/v135/selectlist-polyfill@0.3.0/", "https://ga.jspm.io/npm:local-time@3.0.2/", "https://esm.sh/selectlist-polyfill@0.3.0/"
     policy.style_src :self, "https://unpkg.com/cursor-chat/dist/style.css", "https://code.ionicframework.com", "https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
     policy.style_src_attr :self, "'unsafe-inline'"
     policy.script_src_attr :self, "'unsafe-inline'"
