@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: bf96dcfa0d0e0e88ebada8cbc3b64b93298dd0e4
+  revision: 5411787a155e2d1c633a74314edc164d5b300c34
   branch: main
   specs:
     actioncable (7.2.0.alpha)
@@ -106,7 +106,7 @@ GEM
       kaminari (~> 1.2.2)
     ast (2.4.2)
     base64 (0.2.0)
-    bigdecimal (3.1.6)
+    bigdecimal (3.1.7)
     bindex (0.8.1)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
@@ -209,7 +209,7 @@ GEM
     net-smtp (0.4.0.1)
       net-protocol
     nio4r (2.7.0)
-    nokogiri (1.16.2-x86_64-linux)
+    nokogiri (1.16.3-x86_64-linux)
       racc (~> 1.4)
     parallel (1.24.0)
     parser (3.3.0.5)
@@ -273,7 +273,7 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.13.0)
-    rubocop (1.60.2)
+    rubocop (1.62.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
@@ -281,11 +281,11 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml (>= 3.2.5, < 4.0)
-      rubocop-ast (>= 1.30.0, < 2.0)
+      rubocop-ast (>= 1.31.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
-    rubocop-ast (1.30.0)
-      parser (>= 3.2.1.0)
+    rubocop-ast (1.31.2)
+      parser (>= 3.3.0.4)
     rubocop-performance (1.20.2)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.30.0, < 2.0)
@@ -309,10 +309,10 @@ GEM
       rails (~> 7.1)
     spring (4.1.3)
     sqlite3 (1.7.3-x86_64-linux)
-    standard (1.34.0)
+    standard (1.35.1)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
-      rubocop (~> 1.60)
+      rubocop (~> 1.62.0)
       standard-custom (~> 1.0.0)
       standard-performance (~> 1.3)
     standard-custom (1.0.2)
