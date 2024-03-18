@@ -343,10 +343,11 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     sentry (0.5.3)
-    sentry-rails (5.16.1)
+    sentry-rails (5.17.1)
       railties (>= 5.0)
-      sentry-ruby (~> 5.16.1)
-    sentry-ruby (5.16.1)
+      sentry-ruby (~> 5.17.1)
+    sentry-ruby (5.17.1)
+      bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     solargraph (0.50.0)
       backport (~> 1.2)
@@ -506,7 +507,7 @@ DEPENDENCIES
   rubocop
   selenium-webdriver
   sentry (~> 0.5.3)
-  sentry-rails (~> 5.13)
+  sentry-rails (~> 5.17)
   sentry-ruby
   solargraph
   solid_cache (~> 0.2.0)

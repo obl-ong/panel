@@ -100,7 +100,7 @@ gem "sentry-ruby"
 
 gem "sentry", "~> 0.5.3"
 
-gem "sentry-rails", "~> 5.13"
+gem "sentry-rails", "~> 5.17"
 
 gem "solid_cache", "~> 0.2.0"
 
