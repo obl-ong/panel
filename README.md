@@ -1,7 +1,7 @@
 
 ![Obl.ong: Free, quality domains backed by a nonprofit](https://github.com/obl-ong/admin/assets/19589006/2ee94019-99db-499e-8076-7fd52fd28629)
 
-# Admin by Obl.ong
+# Panel by Obl.ong
 
 
 [![produced by human, not by AI](https://github.com/obl-ong/admin/assets/19589006/470f71c5-7338-43ae-b42b-b386ad69468c#gh-dark-mode-only)](https://notbyai.fyi#gh-dark-mode-only)
